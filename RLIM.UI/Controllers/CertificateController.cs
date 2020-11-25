@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using RLIM.DataAccess;
+﻿using Microsoft.AspNetCore.Mvc;
+using RLIM.BusinessLogic;
 using RLIM.UI.Models;
+using System.Collections.Generic;
 
 namespace RLIM.UI.Controllers
 {
@@ -12,7 +9,19 @@ namespace RLIM.UI.Controllers
     {
         public IActionResult GetAll()
         {
-            return View();
+            List<CertificateModel> certificates = new List<CertificateModel>();
+
+            foreach (Certificate certificate in new CertificateCollection().GetaAll())
+            {
+                certificates.Add(new CertificateModel 
+                { 
+                    Id = certificate.Id,
+                    Name = certificate.Name,
+                    Tier = certificate.Tier
+                });
+            }
+
+            return View(certificates);
         }
 
         public IActionResult Create()
@@ -26,7 +35,8 @@ namespace RLIM.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                new CertificateCollection().Create(model.Name, model.Tier);
+                return RedirectToAction("GetAll");
             }
                 
             return View();

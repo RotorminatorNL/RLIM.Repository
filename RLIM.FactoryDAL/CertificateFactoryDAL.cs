@@ -5,12 +5,12 @@ namespace RLIM.FactoryDAL
 {
     public static class CertificateFactoryDAL
     {
-        public static ICertificateDAL CertificateDAL()
+        public static ICertificateDAL GetDAL()
         {
             return new CertificateDAL();
         }
 
-        public static ICertificateCollectionDAL CertificateCollectionDAL()
+        public static ICertificateCollectionDAL GetCollectionDAL()
         {
             return new CertificateDAL();
         }

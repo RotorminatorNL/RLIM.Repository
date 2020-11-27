@@ -7,7 +7,7 @@ namespace RLIM.UI.Controllers
 {
     public class CertificateController : Controller
     {
-        public IActionResult GetAll()
+        public IActionResult Index()
         {
             List<CertificateModel> certificates = new List<CertificateModel>();
 

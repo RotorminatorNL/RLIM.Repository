@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<RLIM.UI.Models.CertificateModel>
 
 @{
-    RLIM.UI.Models.CertificateModel certificate = new RLIM.UI.Models.CertificateModel();
-    ViewData["Title"] = "Get all Certificates";
+    ViewData["Title"] = "Certificates";
 }
 
-<h1>Get all Certificates</h1>
+<h1>Certificates</h1>
 
 <table class="table">
     <thead>
@@ -49,15 +48,3 @@
         }
     </tbody>
 </table>
-
-@*<form asp-controller="Certificate" asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <input asp-for="@certificate.Name" class="form-control" />
-    <span asp-validation-for="@certificate.Name" class="text-danger"></span>
-
-    <input asp-for="@certificate.Tier" class="form-control" />
-    <span asp-validation-for="@certificate.Tier" class="text-danger"></span>
-
-    <input type="submit" value="Create Certificate" class="btn btn-primary" />
-</form>*@

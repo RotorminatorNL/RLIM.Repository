@@ -19,7 +19,7 @@ namespace RLIM.DataAccess
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = colorDTO.Name;
-                cmd.Parameters.Add("@Hex", SqlDbType.Int).Value = colorDTO.Hex;
+                cmd.Parameters.Add("@Hex", SqlDbType.NVarChar).Value = colorDTO.Hex;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -110,7 +110,7 @@ namespace RLIM.DataAccess
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@Id", SqlDbType.Int).Value = colorDTO.Id;
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = colorDTO.Name;
-                cmd.Parameters.Add("@Hex", SqlDbType.Int).Value = colorDTO.Hex;
+                cmd.Parameters.Add("@Hex", SqlDbType.NVarChar).Value = colorDTO.Hex;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();

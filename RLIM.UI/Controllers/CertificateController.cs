@@ -36,7 +36,7 @@ namespace RLIM.UI.Controllers
             if (ModelState.IsValid)
             {
                 new CertificateCollection().Create(model.Name, model.Tier);
-                return RedirectToAction("GetAll");
+                return RedirectToAction("Index");
             }
                 
             return View();
@@ -60,7 +60,7 @@ namespace RLIM.UI.Controllers
                 return View(certificateModel);
             }
 
-            return RedirectToAction("GetAll");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -72,7 +72,7 @@ namespace RLIM.UI.Controllers
                 new CertificateCollection().Get(model.Id).Update(model.Name, model.Tier);
             }
 
-            return RedirectToAction("GetAll");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -93,7 +93,7 @@ namespace RLIM.UI.Controllers
                 return View(certificateModel);
             }
 
-            return RedirectToAction("GetAll");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -105,7 +105,7 @@ namespace RLIM.UI.Controllers
                 new CertificateCollection().Delete(model.Id);
             }
 
-            return RedirectToAction("GetAll");
+            return RedirectToAction("Index");
         }
     }
 }

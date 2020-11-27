@@ -1,14 +1,14 @@
-﻿@model RLIM.UI.Models.CertificateModel
+﻿@model RLIM.UI.Models.ColorModel
 
 @{
-    ViewData["Title"] = "Create Certificate";
+    ViewData["Title"] = "Create Color";
 }
 
 <h1>@ViewData["Title"]</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-controller="Certificate" asp-action="Create">
+        <form asp-controller="Color" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -16,9 +16,9 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tier" class="control-label"></label>
-                <input asp-for="Tier" class="form-control" />
-                <span asp-validation-for="Tier" class="text-danger"></span>
+                <label asp-for="Hex" class="control-label"></label>
+                <input asp-for="Hex" class="form-control" />
+                <span asp-validation-for="Hex" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -4,9 +4,8 @@
     ViewData["Title"] = "Update Certificate";
 }
 
-<h1>Update Certificate</h1>
+<h1>@ViewData["Title"]</h1>
 <hr />
-
 <div class="row">
     <div class="col-md-4">
         <form asp-controller="Certificate" asp-action="Updating">
@@ -22,7 +21,7 @@
                 <span asp-validation-for="Tier" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="hidden" asp-for="Id" />
+                <input asp-for="Id" type="hidden" />
                 <input type="submit" value="Save" class="btn btn-primary" />
                 &nbsp;
                 <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>

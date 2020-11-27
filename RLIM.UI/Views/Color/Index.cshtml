@@ -1,7 +1,7 @@
-﻿@model IEnumerable<RLIM.UI.Models.CertificateModel>
+﻿@model IEnumerable<RLIM.UI.Models.ColorModel>
 
 @{
-    ViewData["Title"] = "Certificates";
+    ViewData["Title"] = "Colors";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -13,7 +13,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tier)
+                @Html.DisplayNameFor(model => model.Hex)
             </th>
             <th>Actions</th>
         </tr>
@@ -22,7 +22,7 @@
         <tr>
             <td></td>
             <td></td>
-            <td><a asp-action="Create" class="btn btn-primary">New Certificate</a></td>
+            <td><a asp-action="Create" class="btn btn-primary">New Color</a></td>
         </tr>
         @foreach (var item in Model)
         {
@@ -31,7 +31,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td style="vertical-align: middle">
-                    @Html.DisplayFor(modelItem => item.Tier)
+                    @Html.DisplayFor(modelItem => item.Hex)
                 </td>
                 <td>
                     <form asp-action="Update" style="display: inline-block">

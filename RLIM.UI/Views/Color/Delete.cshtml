@@ -1,7 +1,7 @@
-﻿@model RLIM.UI.Models.CertificateModel
+﻿@model RLIM.UI.Models.ColorModel
 
 @{
-    ViewData["Title"] = "Delete Certificate";
+    ViewData["Title"] = "Delete Color";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -15,7 +15,7 @@
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Tier)
+                    @Html.DisplayNameFor(model => model.Hex)
                 </th>
             </tr>
         </thead>
@@ -25,16 +25,16 @@
                     @Html.DisplayFor(model => model.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.Tier)
+                    @Html.DisplayFor(model => model.Hex)
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <form asp-controller="Certificate" asp-action="Deleting">
+    <form asp-controller="Color" asp-action="Deleting">
         <input asp-for="Id" type="hidden" />
         <input asp-for="Name" type="hidden" />
-        <input asp-for="Tier" type="hidden" />
+        <input asp-for="Hex" type="hidden" />
         <input type="submit" value="Yes, I want to" class="btn btn-danger" />
         &nbsp;
         <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>

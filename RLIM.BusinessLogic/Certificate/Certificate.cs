@@ -21,9 +21,19 @@ namespace RLIM.BusinessLogic
             Tier = certificateDTO.Tier;
         }
 
-        public void Update()
+        public void Update(string name, int tier)
         {
-            // code
+            Name = name;
+            Tier = tier;
+
+            CertificateDTO certificateDTO = new CertificateDTO
+            {
+                Id = Id,
+                Name = Name,
+                Tier = Tier
+            };
+
+            certificateDAL.Update(certificateDTO);
         }
     }
 }

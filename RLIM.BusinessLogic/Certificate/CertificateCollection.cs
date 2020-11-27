@@ -8,7 +8,6 @@ namespace RLIM.BusinessLogic
 {
     public class CertificateCollection
     {
-        List<Certificate> certificates = new List<Certificate>();
         private ICertificateCollectionDAL certificateCollectionDAL = CertificateFactoryDAL.GetCollectionDAL();
 
         public void Create(string name, int tier)
@@ -24,6 +23,8 @@ namespace RLIM.BusinessLogic
 
         public List<Certificate> GetaAll()
         {
+            List<Certificate> certificates = new List<Certificate>();
+
             foreach (CertificateDTO certificateDTO in certificateCollectionDAL.GetAll())
             {
                 certificates.Add(new Certificate(certificateDTO));
@@ -32,14 +33,14 @@ namespace RLIM.BusinessLogic
             return certificates;
         }
 
-        public void Get()
+        public Certificate Get(int id)
         {
-            // code
+            return new Certificate(certificateCollectionDAL.Get(id));
         }
 
-        public void Delete()
+        public void Delete(int id)
         {
-            // code
+            certificateCollectionDAL.Delete(id);
         }
     }
 }

@@ -6,6 +6,6 @@ namespace RLIM.ContractLayer
 {
     public interface ICertificateDAL
     {
-        void Update(int id, string name, int tier);
+        void Update(CertificateDTO certificateDTO);
     }
 }

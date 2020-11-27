@@ -23,16 +23,48 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
 
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
             }
         }
 
         public CertificateDTO Get(int id)
         {
-            return null;
+            CertificateDTO certificateDTO = null;
+
+            try
+            {
+                string sql = "SELECT * FROM dbo.Certificates WHERE Id = @id";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader(); 
+                
+                while (reader.Read())
+                {
+                    certificateDTO = new CertificateDTO
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Name = reader["Name"].ToString(),
+                        Tier = Convert.ToInt32(reader["Tier"])
+
+                    };
+                }
+
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
+            }
+
+            return certificateDTO;
         }
 
         public List<CertificateDTO> GetAll()
@@ -58,18 +90,37 @@ namespace RLIM.DataAccess
 
                     certificateDTOs.Add(certificateDTO);
                 }
+
+                conn.Close();
             }
             catch (SqlException exception)
             {
-
+                Console.WriteLine(exception);
             }
 
             return certificateDTOs;
         }
 
-        public void Update(int id, string name, int tier)
+        public void Update(CertificateDTO certificateDTO)
         {
+            try
+            {
+                string sql = "UPDATE dbo.Certificates SET Name = @name, Tier = @tier WHERE Id = @id";
 
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = certificateDTO.Id;
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = certificateDTO.Name;
+                cmd.Parameters.Add("@tier", SqlDbType.Int).Value = certificateDTO.Tier;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
 
         public void Delete(int id)

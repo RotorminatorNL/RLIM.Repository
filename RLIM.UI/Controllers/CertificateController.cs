@@ -47,7 +47,16 @@ namespace RLIM.UI.Controllers
         {
             if (id >= 0)
             {
+                Certificate certificate = new CertificateCollection().Get(id);
 
+                CertificateModel certificateModel = new CertificateModel
+                {
+                    Id = certificate.Id,
+                    Name = certificate.Name,
+                    Tier = certificate.Tier
+                };
+
+                return View(certificateModel);
             }
 
             return RedirectToAction("GetAll");
@@ -57,7 +66,7 @@ namespace RLIM.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                new CertificateCollection().Get(model.Id).Update(model.Name, model.Tier);
             }
 
             return RedirectToAction("GetAll");

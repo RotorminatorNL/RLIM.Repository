@@ -22,20 +22,22 @@
         </tr>
     </thead>
     <tbody>
-       @foreach (var item in Model)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.mainItem.Name)
+                    @Html.DisplayFor(modelItem => item.MainItemID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.certificate.Name)
+                    @Html.DisplayFor(modelItem => item.Certificate.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.color.Name)
+                    @Html.DisplayFor(modelItem => item.Color.Name)
                 </td>
                 <td>None</td>
             </tr>
         }
     </tbody>
 </table>
+
+<h2>Work in progress...</h2>

@@ -11,11 +11,11 @@ namespace RLIM.UI.Controllers
         {
             List<ColorModel> colors = new List<ColorModel>();
 
-            foreach (Color color in new ColorCollection().GetaAll())
+            foreach (Color color in new ColorCollection().GetAll())
             {
                 colors.Add(new ColorModel
                 {
-                    Id = color.Id,
+                    ID = color.ID,
                     Name = color.Name,
                     Hex = color.Hex
                 });
@@ -52,7 +52,7 @@ namespace RLIM.UI.Controllers
 
                 ColorModel colorModel = new ColorModel
                 {
-                    Id = color.Id,
+                    ID = color.ID,
                     Name = color.Name,
                     Hex = color.Hex
                 };
@@ -69,7 +69,7 @@ namespace RLIM.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                new ColorCollection().Get(model.Id).Update(model.Name, model.Hex);
+                new ColorCollection().Get(model.ID).Update(model.Name, model.Hex);
             }
 
             return RedirectToAction("Index");
@@ -85,7 +85,7 @@ namespace RLIM.UI.Controllers
 
                 ColorModel ColorModel = new ColorModel
                 {
-                    Id = color.Id,
+                    ID = color.ID,
                     Name = color.Name,
                     Hex = color.Hex
                 };
@@ -102,7 +102,7 @@ namespace RLIM.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                new ColorCollection().Delete(model.Id);
+                new ColorCollection().Delete(model.ID);
             }
 
             return RedirectToAction("Index");

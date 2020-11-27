@@ -11,11 +11,11 @@ namespace RLIM.UI.Controllers
         {
             List<CertificateModel> certificates = new List<CertificateModel>();
 
-            foreach (Certificate certificate in new CertificateCollection().GetaAll())
+            foreach (Certificate certificate in new CertificateCollection().GetAll())
             {
                 certificates.Add(new CertificateModel 
                 { 
-                    Id = certificate.Id,
+                    ID = certificate.ID,
                     Name = certificate.Name,
                     Tier = certificate.Tier
                 });
@@ -52,7 +52,7 @@ namespace RLIM.UI.Controllers
 
                 CertificateModel certificateModel = new CertificateModel
                 {
-                    Id = certificate.Id,
+                    ID = certificate.ID,
                     Name = certificate.Name,
                     Tier = certificate.Tier
                 };
@@ -69,7 +69,7 @@ namespace RLIM.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                new CertificateCollection().Get(model.Id).Update(model.Name, model.Tier);
+                new CertificateCollection().Get(model.ID).Update(model.Name, model.Tier);
             }
 
             return RedirectToAction("Index");
@@ -85,7 +85,7 @@ namespace RLIM.UI.Controllers
 
                 CertificateModel certificateModel = new CertificateModel
                 {
-                    Id = certificate.Id,
+                    ID = certificate.ID,
                     Name = certificate.Name,
                     Tier = certificate.Tier
                 };
@@ -102,7 +102,7 @@ namespace RLIM.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                new CertificateCollection().Delete(model.Id);
+                new CertificateCollection().Delete(model.ID);
             }
 
             return RedirectToAction("Index");

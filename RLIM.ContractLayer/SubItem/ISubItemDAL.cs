@@ -4,9 +4,8 @@ using System.Text;
 
 namespace RLIM.ContractLayer
 {
-    public class CategoryDTO
+    public interface ISubItemDAL
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
+        void Update(SubItemDTO subItemDTO);
     }
 }

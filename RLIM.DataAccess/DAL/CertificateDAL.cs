@@ -3,23 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace RLIM.DataAccess
 {
-    public class ColorDAL : IColorCollectionDAL, IColorDAL
+    public class CertificateDAL : ICertificateCollectionDAL, ICertificateDAL
     {
-        private SqlConnection conn = Db.Connect();
+        private readonly SqlConnection conn = Db.Connect();
 
-        public void Create(ColorDTO colorDTO)
+        public void Create(CertificateDTO certificateDTO)
         {
             try
             {
-                string sql = "INSERT INTO dbo.Colors (Name, Hex) VALUES(@Name, @Hex)";
+                string sql = "INSERT INTO Certificates (Name, Tier) VALUES(@name, @tier)";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = colorDTO.Name;
-                cmd.Parameters.Add("@Hex", SqlDbType.NVarChar).Value = colorDTO.Hex;
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = certificateDTO.Name;
+                cmd.Parameters.Add("@tier", SqlDbType.Int).Value = certificateDTO.Tier;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -32,27 +31,27 @@ namespace RLIM.DataAccess
             }
         }
 
-        public ColorDTO Get(int id)
+        public CertificateDTO Get(int id)
         {
-            ColorDTO colorDTO = null;
+            CertificateDTO certificateDTO = null;
 
             try
             {
-                string sql = "SELECT * FROM dbo.Colors WHERE Id = @Id";
+                string sql = "SELECT * FROM dbo.Certificates WHERE Id = @id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = id;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                SqlDataReader reader = cmd.ExecuteReader(); 
+                
+                if (reader.Read())
                 {
-                    colorDTO = new ColorDTO
+                    certificateDTO = new CertificateDTO
                     {
-                        Id = Convert.ToInt32(reader["Id"]),
+                        ID = Convert.ToInt32(reader["Id"]),
                         Name = reader["Name"].ToString(),
-                        Hex = reader["Hex"].ToString()
+                        Tier = Convert.ToInt32(reader["Tier"])
 
                     };
                 }
@@ -64,31 +63,32 @@ namespace RLIM.DataAccess
                 Console.WriteLine(exception);
             }
 
-            return colorDTO;
+            return certificateDTO;
         }
 
-        public List<ColorDTO> GetAll()
+        public List<CertificateDTO> GetAll()
         {
-            List<ColorDTO> colorDTOs = new List<ColorDTO>();
+            List<CertificateDTO> certificateDTOs = new List<CertificateDTO>();
 
             try
             {
-                string sql = "SELECT * FROM dbo.Colors";
+                string sql = "SELECT * FROM dbo.Certificates";
                 SqlCommand cmd = new SqlCommand(sql, conn);
+
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    ColorDTO colorDTO = new ColorDTO
+                    CertificateDTO certificateDTO = new CertificateDTO
                     {
-                        Id = Convert.ToInt32(reader["Id"]),
+                        ID = Convert.ToInt32(reader["Id"]),
                         Name = reader["Name"].ToString(),
-                        Hex = reader["Hex"].ToString()
+                        Tier = Convert.ToInt32(reader["Tier"])
 
                     };
 
-                    colorDTOs.Add(colorDTO);
+                    certificateDTOs.Add(certificateDTO);
                 }
 
                 conn.Close();
@@ -98,19 +98,19 @@ namespace RLIM.DataAccess
                 Console.WriteLine(exception);
             }
 
-            return colorDTOs;
+            return certificateDTOs;
         }
 
-        public void Update(ColorDTO colorDTO)
+        public void Update(CertificateDTO certificateDTO)
         {
             try
             {
-                string sql = "UPDATE dbo.Colors SET Name = @Name, Hex = @Hex WHERE Id = @Id";
+                string sql = "UPDATE dbo.Certificates SET Name = @name, Tier = @tier WHERE Id = @id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = colorDTO.Id;
-                cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = colorDTO.Name;
-                cmd.Parameters.Add("@Hex", SqlDbType.NVarChar).Value = colorDTO.Hex;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = certificateDTO.ID;
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = certificateDTO.Name;
+                cmd.Parameters.Add("@tier", SqlDbType.Int).Value = certificateDTO.Tier;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -127,10 +127,10 @@ namespace RLIM.DataAccess
         {
             try
             {
-                string sql = "DELETE dbo.Colors WHERE Id = @Id";
+                string sql = "DELETE dbo.Certificates WHERE Id = @id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = id;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();

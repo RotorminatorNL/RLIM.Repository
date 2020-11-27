@@ -6,7 +6,7 @@ namespace RLIM.BusinessLogic
 {
     public class ColorCollection
     {
-        private IColorCollectionDAL colorCollectionDAL = ColorFactoryDAL.GetCollectionDAL();
+        private readonly IColorCollectionDAL colorCollectionDAL = ColorFactoryDAL.GetCollectionDAL();
 
         public void Create(string name, string hex)
         {
@@ -19,7 +19,7 @@ namespace RLIM.BusinessLogic
             colorCollectionDAL.Create(certificateDTO);
         }
 
-        public List<Color> GetaAll()
+        public List<Color> GetAll()
         {
             List<Color> colors = new List<Color>();
 

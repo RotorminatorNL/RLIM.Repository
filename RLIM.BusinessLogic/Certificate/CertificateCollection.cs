@@ -8,7 +8,7 @@ namespace RLIM.BusinessLogic
 {
     public class CertificateCollection
     {
-        private ICertificateCollectionDAL certificateCollectionDAL = CertificateFactoryDAL.GetCollectionDAL();
+        private readonly ICertificateCollectionDAL certificateCollectionDAL = CertificateFactoryDAL.GetCollectionDAL();
 
         public void Create(string name, int tier)
         {
@@ -21,7 +21,7 @@ namespace RLIM.BusinessLogic
             certificateCollectionDAL.Create(certificateDTO);
         }
 
-        public List<Certificate> GetaAll()
+        public List<Certificate> GetAll()
         {
             List<Certificate> certificates = new List<Certificate>();
 

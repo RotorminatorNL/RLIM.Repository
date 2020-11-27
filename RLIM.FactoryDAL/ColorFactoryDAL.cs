@@ -5,12 +5,12 @@ namespace RLIM.FactoryDAL
 {
     public static class ColorFactoryDAL
     {
-        public static IColorDAL GetDAL()
+        public static IColorCollectionDAL GetCollectionDAL()
         {
             return new ColorDAL();
         }
 
-        public static IColorCollectionDAL GetCollectionDAL()
+        public static IColorDAL GetDAL()
         {
             return new ColorDAL();
         }

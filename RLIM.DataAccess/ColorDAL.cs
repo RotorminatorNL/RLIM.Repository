@@ -3,22 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace RLIM.DataAccess
 {
-    public class CertificateDAL : ICertificateCollectionDAL, ICertificateDAL
+    public class ColorDAL : IColorCollectionDAL, IColorDAL
     {
         private SqlConnection conn = Db.Connect();
 
-        public void Create(CertificateDTO certificateDTO)
+        public void Create(ColorDTO colorDTO)
         {
             try
             {
-                string sql = "INSERT INTO Certificates (Name, Tier) VALUES(@name, @tier)";
+                string sql = "INSERT INTO dbo.Colors (Name, Hex) VALUES(@Name, @Hex)";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = certificateDTO.Name;
-                cmd.Parameters.Add("@tier", SqlDbType.Int).Value = certificateDTO.Tier;
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = colorDTO.Name;
+                cmd.Parameters.Add("@Hex", SqlDbType.Int).Value = colorDTO.Hex;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -31,64 +32,29 @@ namespace RLIM.DataAccess
             }
         }
 
-        public CertificateDTO Get(int id)
+        public ColorDTO Get(int id)
         {
-            CertificateDTO certificateDTO = null;
+            ColorDTO colorDTO = null;
 
             try
             {
-                string sql = "SELECT * FROM dbo.Certificates WHERE Id = @id";
+                string sql = "SELECT * FROM dbo.Colors WHERE Id = @Id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
-
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader(); 
-                
-                while (reader.Read())
-                {
-                    certificateDTO = new CertificateDTO
-                    {
-                        Id = Convert.ToInt32(reader["Id"]),
-                        Name = reader["Name"].ToString(),
-                        Tier = Convert.ToInt32(reader["Tier"])
-
-                    };
-                }
-
-                conn.Close();
-            }
-            catch (SqlException exception)
-            {
-                Console.WriteLine(exception);
-            }
-
-            return certificateDTO;
-        }
-
-        public List<CertificateDTO> GetAll()
-        {
-            List<CertificateDTO> certificateDTOs = new List<CertificateDTO>();
-
-            try
-            {
-                string sql = "SELECT * FROM dbo.Certificates";
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = id;
 
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    CertificateDTO certificateDTO = new CertificateDTO
+                    colorDTO = new ColorDTO
                     {
                         Id = Convert.ToInt32(reader["Id"]),
                         Name = reader["Name"].ToString(),
-                        Tier = Convert.ToInt32(reader["Tier"])
+                        Hex = reader["Hex"].ToString()
 
                     };
-
-                    certificateDTOs.Add(certificateDTO);
                 }
 
                 conn.Close();
@@ -98,19 +64,53 @@ namespace RLIM.DataAccess
                 Console.WriteLine(exception);
             }
 
-            return certificateDTOs;
+            return colorDTO;
         }
 
-        public void Update(CertificateDTO certificateDTO)
+        public List<ColorDTO> GetAll()
+        {
+            List<ColorDTO> colorDTOs = new List<ColorDTO>();
+
+            try
+            {
+                string sql = "SELECT * FROM dbo.Colors";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ColorDTO colorDTO = new ColorDTO
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Name = reader["Name"].ToString(),
+                        Hex = reader["Hex"].ToString()
+
+                    };
+
+                    colorDTOs.Add(colorDTO);
+                }
+
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
+            }
+
+            return colorDTOs;
+        }
+
+        public void Update(ColorDTO colorDTO)
         {
             try
             {
-                string sql = "UPDATE dbo.Certificates SET Name = @name, Tier = @tier WHERE Id = @id";
+                string sql = "UPDATE dbo.Colors SET Name = @Name, Hex = @Hex WHERE Id = @Id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = certificateDTO.Id;
-                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = certificateDTO.Name;
-                cmd.Parameters.Add("@tier", SqlDbType.Int).Value = certificateDTO.Tier;
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = colorDTO.Id;
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = colorDTO.Name;
+                cmd.Parameters.Add("@Hex", SqlDbType.Int).Value = colorDTO.Hex;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -127,10 +127,10 @@ namespace RLIM.DataAccess
         {
             try
             {
-                string sql = "DELETE dbo.Certificates WHERE Id = @id";
+                string sql = "DELETE dbo.Colors WHERE Id = @Id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = id;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();

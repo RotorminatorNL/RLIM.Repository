@@ -33,6 +33,8 @@
 
     <form asp-controller="Certificate" asp-action="Deleting">
         <input asp-for="Id" type="hidden" />
+        <input asp-for="Name" type="hidden" />
+        <input asp-for="Tier" type="hidden" />
         <input type="submit" value="Yes, I want to" class="btn btn-danger" />
         &nbsp;
         <a asp-action="GetAll" class="btn btn-outline-primary">Back to List</a>

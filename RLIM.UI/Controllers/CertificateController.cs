@@ -43,6 +43,7 @@ namespace RLIM.UI.Controllers
         }
 
         [HttpPost]
+        [Route("[controller]/Update")]
         public IActionResult Update(int id)
         {
             if (id >= 0)
@@ -62,7 +63,9 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("GetAll");
         }
 
-        public IActionResult Updating(CertificateModel model)
+        [HttpPost]
+        [Route("[controller]/Updating")]
+        public IActionResult Update(CertificateModel model)
         {
             if (ModelState.IsValid)
             {
@@ -73,6 +76,7 @@ namespace RLIM.UI.Controllers
         }
 
         [HttpPost]
+        [Route("[controller]/Delete")]
         public IActionResult Delete(int id)
         {
             if (id >= 0)
@@ -93,11 +97,12 @@ namespace RLIM.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Deleting(int id)
+        [Route("[controller]/Deleting")]
+        public IActionResult Delete(CertificateModel model)
         {
             if (ModelState.IsValid)
             {
-                new CertificateCollection().Delete(id);
+                new CertificateCollection().Delete(model.Id);
             }
 
             return RedirectToAction("GetAll");

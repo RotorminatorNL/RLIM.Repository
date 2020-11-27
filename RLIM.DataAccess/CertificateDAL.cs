@@ -125,7 +125,22 @@ namespace RLIM.DataAccess
 
         public void Delete(int id)
         {
+            try
+            {
+                string sql = "DELETE dbo.Certificates WHERE Id = @id";
 
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
     }
 }

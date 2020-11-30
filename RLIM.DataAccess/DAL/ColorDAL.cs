@@ -9,21 +9,20 @@ namespace RLIM.DataAccess
 {
     public class ColorDAL : IColorCollectionDAL, IColorDAL
     {
-        private readonly SqlConnection conn = Db.Connect();
-
         public void Create(ColorDTO colorDTO)
         {
             try
             {
-                string sql = "INSERT INTO dbo.Color (Name, Hex) VALUES(@name, @hex)";
+                using SqlConnection conn = Db.Connect();
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "INSERT INTO dbo.Color (Name, Hex) ";
+                sql += "VALUES(@name, @hex)";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = colorDTO.Name;
                 cmd.Parameters.Add("@hex", SqlDbType.NVarChar).Value = colorDTO.Hex;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-
                 conn.Close();
             }
             catch (SqlException exception)
@@ -38,25 +37,24 @@ namespace RLIM.DataAccess
 
             try
             {
-                string sql = "SELECT * FROM dbo.Color WHERE ID = @id";
+                using SqlConnection conn = Db.Connect();
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "SELECT * FROM dbo.Color ";
+                sql += "WHERE ID = @id";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
                 {
-                    colorDTO = new ColorDTO
+                    colorDTO = new ColorDTO 
                     {
                         ID = Convert.ToInt32(reader["Id"]),
                         Name = reader["Name"].ToString(),
                         Hex = reader["Hex"].ToString()
-
                     };
                 }
-
                 conn.Close();
             }
             catch (SqlException exception)
@@ -73,24 +71,24 @@ namespace RLIM.DataAccess
 
             try
             {
-                string sql = "SELECT * FROM dbo.Color";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                using SqlConnection conn = Db.Connect();
 
+                string sql = "SELECT * ";
+                sql += "FROM dbo.Color";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    ColorDTO colorDTO = new ColorDTO
-                    {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        Name = reader["Name"].ToString(),
-                        Hex = reader["Hex"].ToString()
-
-                    };
-
-                    colorDTOs.Add(colorDTO);
+                    colorDTOs.Add(
+                        new ColorDTO 
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            Name = reader["Name"].ToString(),
+                            Hex = reader["Hex"].ToString()
+                        });
                 }
-
                 conn.Close();
             }
             catch (SqlException exception)
@@ -105,16 +103,18 @@ namespace RLIM.DataAccess
         {
             try
             {
-                string sql = "UPDATE dbo.Color SET Name = @name, Hex = @hex WHERE ID = @id";
+                using SqlConnection conn = Db.Connect();
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "UPDATE dbo.Color ";
+                sql += "SET Name = @name, Hex = @hex ";
+                sql += "WHERE ID = @id";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = colorDTO.ID;
                 cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = colorDTO.Name;
                 cmd.Parameters.Add("@hex", SqlDbType.NVarChar).Value = colorDTO.Hex;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-
                 conn.Close();
             }
             catch (SqlException exception)
@@ -127,14 +127,15 @@ namespace RLIM.DataAccess
         {
             try
             {
-                string sql = "DELETE dbo.Color WHERE Id = @id";
+                using SqlConnection conn = Db.Connect();
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "DELETE dbo.Color ";
+                sql += "WHERE ID = @id";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-
                 conn.Close();
             }
             catch (SqlException exception)

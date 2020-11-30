@@ -8,20 +8,19 @@ namespace RLIM.DataAccess
 {
     public class PlatformDAL : IPlatformCollectionDAL, IPlatformDAL
     {
-        private readonly SqlConnection conn = Db.Connect();
-
         public void Create(PlatformDTO platformDTO)
         {
             try
             {
-                string sql = "INSERT INTO dbo.Platform (Name) VALUES(@name)";
+                using SqlConnection conn = Db.Connect();
 
+                string sql = "INSERT INTO dbo.Platform (Name) ";
+                sql += "VALUES(@name)";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = platformDTO.Name;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-
                 conn.Close();
             }
             catch (SqlException exception)
@@ -34,7 +33,32 @@ namespace RLIM.DataAccess
         {
             PlatformDTO platformDTO = null;
 
-            // code
+            try
+            {
+                using SqlConnection conn = Db.Connect();
+
+                string sql = "SELECT * ";
+                sql += "FROM dbo.Platform ";
+                sql += "WHERE ID = @id";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    platformDTO = new PlatformDTO
+                    {
+                        ID = Convert.ToInt32(reader["ID"]),
+                        Name = reader["Name"].ToString()
+                    };
+                }
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
+            }
 
             return platformDTO;
         }
@@ -43,19 +67,77 @@ namespace RLIM.DataAccess
         {
             List<PlatformDTO> platformDTOs = new List<PlatformDTO>();
 
-            // code
+            try
+            {
+                using SqlConnection conn = Db.Connect();
+
+                string sql = "SELECT * ";
+                sql += "FROM dbo.Platform";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    platformDTOs.Add(
+                        new PlatformDTO
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            Name = reader["Name"].ToString()
+                        });
+                }
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
+            }
 
             return platformDTOs;
         }
 
         public void Update(PlatformDTO platformDTO)
         {
-            // code
+            try
+            {
+                using SqlConnection conn = Db.Connect();
+
+                string sql = "UPDATE dbo.Platform ";
+                sql += "SET Name = @name ";
+                sql += "WHERE ID = @id";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = platformDTO.ID;
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = platformDTO.Name;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
 
         public void Delete(int id)
         {
-            // code
+            try
+            {
+                using SqlConnection conn = Db.Connect();
+
+                string sql = "DELETE dbo.Platform ";
+                sql += "WHERE ID = @id";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
     }
 }

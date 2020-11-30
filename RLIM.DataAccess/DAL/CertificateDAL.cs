@@ -8,21 +8,20 @@ namespace RLIM.DataAccess
 {
     public class CertificateDAL : ICertificateCollectionDAL, ICertificateDAL
     {
-        private readonly SqlConnection conn = Db.Connect();
-
         public void Create(CertificateDTO certificateDTO)
         {
             try
             {
-                string sql = "INSERT INTO dbo.Certificate (Name, Tier) VALUES(@name, @tier)";
+                using SqlConnection conn = Db.Connect();
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "INSERT INTO dbo.Certificate (Name, Tier) ";
+                sql += "VALUES(@name, @tier)";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = certificateDTO.Name;
                 cmd.Parameters.Add("@tier", SqlDbType.Int).Value = certificateDTO.Tier;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-
                 conn.Close();
             }
             catch (SqlException exception)
@@ -37,14 +36,16 @@ namespace RLIM.DataAccess
 
             try
             {
-                string sql = "SELECT * FROM dbo.Certificate WHERE ID = @id";
+                using SqlConnection conn = Db.Connect();
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                string sql = "SELECT * ";
+                sql += "FROM dbo.Certificate ";
+                sql += "WHERE ID = @id";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader(); 
-                
+                using SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
                     certificateDTO = new CertificateDTO
@@ -52,10 +53,8 @@ namespace RLIM.DataAccess
                         ID = Convert.ToInt32(reader["ID"]),
                         Name = reader["Name"].ToString(),
                         Tier = Convert.ToInt32(reader["Tier"])
-
                     };
                 }
-
                 conn.Close();
             }
             catch (SqlException exception)
@@ -72,25 +71,24 @@ namespace RLIM.DataAccess
 
             try
             {
-                string sql = "SELECT * FROM dbo.Certificate";
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                using SqlConnection conn = Db.Connect();
+
+                string sql = "SELECT * ";
+                sql += "FROM dbo.Certificate";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
 
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
+                using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    CertificateDTO certificateDTO = new CertificateDTO
-                    {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        Name = reader["Name"].ToString(),
-                        Tier = Convert.ToInt32(reader["Tier"])
-
-                    };
-
-                    certificateDTOs.Add(certificateDTO);
+                    certificateDTOs.Add(
+                        new CertificateDTO 
+                        { 
+                            ID = Convert.ToInt32(reader["ID"]), 
+                            Name = reader["Name"].ToString(), 
+                            Tier = Convert.ToInt32(reader["Tier"]) 
+                        });
                 }
-
                 conn.Close();
             }
             catch (SqlException exception)
@@ -105,8 +103,11 @@ namespace RLIM.DataAccess
         {
             try
             {
-                string sql = "UPDATE dbo.Certificate SET Name = @name, Tier = @tier WHERE ID = @id";
+                using SqlConnection conn = Db.Connect();
 
+                string sql = "UPDATE dbo.Certificate ";
+                sql += "SET Name = @name, Tier = @tier ";
+                sql += "WHERE ID = @id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = certificateDTO.ID;
                 cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = certificateDTO.Name;
@@ -114,7 +115,6 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-
                 conn.Close();
             }
             catch (SqlException exception)
@@ -127,14 +127,15 @@ namespace RLIM.DataAccess
         {
             try
             {
-                string sql = "DELETE dbo.Certificate WHERE ID = @id";
+                using SqlConnection conn = Db.Connect();
 
+                string sql = "DELETE dbo.Certificate ";
+                sql += "WHERE ID = @id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-
                 conn.Close();
             }
             catch (SqlException exception)

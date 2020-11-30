@@ -14,7 +14,7 @@ namespace RLIM.DataAccess
         {
             try
             {
-                string sql = "INSERT INTO Certificates (Name, Tier) VALUES(@name, @tier)";
+                string sql = "INSERT INTO dbo.Certificate (Name, Tier) VALUES(@name, @tier)";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = certificateDTO.Name;
@@ -37,7 +37,7 @@ namespace RLIM.DataAccess
 
             try
             {
-                string sql = "SELECT * FROM dbo.Certificates WHERE Id = @id";
+                string sql = "SELECT * FROM dbo.Certificate WHERE ID = @id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
@@ -49,7 +49,7 @@ namespace RLIM.DataAccess
                 {
                     certificateDTO = new CertificateDTO
                     {
-                        ID = Convert.ToInt32(reader["Id"]),
+                        ID = Convert.ToInt32(reader["ID"]),
                         Name = reader["Name"].ToString(),
                         Tier = Convert.ToInt32(reader["Tier"])
 
@@ -72,7 +72,7 @@ namespace RLIM.DataAccess
 
             try
             {
-                string sql = "SELECT * FROM dbo.Certificates";
+                string sql = "SELECT * FROM dbo.Certificate";
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
                 conn.Open();
@@ -82,7 +82,7 @@ namespace RLIM.DataAccess
                 {
                     CertificateDTO certificateDTO = new CertificateDTO
                     {
-                        ID = Convert.ToInt32(reader["Id"]),
+                        ID = Convert.ToInt32(reader["ID"]),
                         Name = reader["Name"].ToString(),
                         Tier = Convert.ToInt32(reader["Tier"])
 
@@ -105,7 +105,7 @@ namespace RLIM.DataAccess
         {
             try
             {
-                string sql = "UPDATE dbo.Certificates SET Name = @name, Tier = @tier WHERE Id = @id";
+                string sql = "UPDATE dbo.Certificate SET Name = @name, Tier = @tier WHERE ID = @id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = certificateDTO.ID;
@@ -127,7 +127,7 @@ namespace RLIM.DataAccess
         {
             try
             {
-                string sql = "DELETE dbo.Certificates WHERE Id = @id";
+                string sql = "DELETE dbo.Certificate WHERE ID = @id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;

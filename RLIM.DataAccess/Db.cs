@@ -5,11 +5,11 @@ using System.Text;
 
 namespace RLIM.DataAccess
 {
-    public class Db
+    internal class Db
     {
         private static readonly string connString = "Server=mssql.fhict.local;Database=dbi451244;User Id=dbi451244;Password=SecureW8Woord!;";
 
-        public static SqlConnection Connect()
+        internal protected static SqlConnection Connect()
         {
             return new SqlConnection(connString);
         }

@@ -27,7 +27,7 @@ namespace RLIM.DataAccess
 
             try
             {
-                string sql = "SELECT * FROM dbo.SubItems";
+                string sql = "SELECT * FROM dbo.SubItem";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -37,9 +37,9 @@ namespace RLIM.DataAccess
                     SubItemDTO subItemDTO = new SubItemDTO
                     {
                         ID = Convert.ToInt32(reader["Id"]),
-                        MainItemID = Convert.ToInt32(reader["MainItemId"]),
-                        CertificateID = reader["CertificateId"].ToString() != "" ? Convert.ToInt32(reader["CertificateId"]) : 0,
-                        ColorID = Convert.ToInt32(reader["ColorId"])
+                        MainItemID = Convert.ToInt32(reader["MainItemID"]),
+                        CertificateID = reader["CertificateID"].ToString() != "" ? Convert.ToInt32(reader["CertificateID"]) : 0,
+                        ColorID = Convert.ToInt32(reader["ColorID"])
                     };
 
                     subItemDTOs.Add(subItemDTO);

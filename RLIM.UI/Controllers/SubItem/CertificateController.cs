@@ -7,21 +7,38 @@ namespace RLIM.UI.Controllers
 {
     public class CertificateController : Controller
     {
-        public IActionResult Index()
+        private List<CertificateModel> GetCertificates()
         {
             List<CertificateModel> certificates = new List<CertificateModel>();
 
             foreach (Certificate certificate in new CertificateCollection().GetAll())
             {
-                certificates.Add(new CertificateModel 
-                { 
+                certificates.Add(new CertificateModel
+                {
                     ID = certificate.ID,
                     Name = certificate.Name,
                     Tier = certificate.Tier
                 });
             }
 
-            return View(certificates);
+            return certificates;
+        }
+
+        private CertificateModel GetCertificate(int id)
+        {
+            Certificate certificate = new CertificateCollection().Get(id);
+
+            return new CertificateModel
+            {
+                ID = certificate.ID,
+                Name = certificate.Name,
+                Tier = certificate.Tier
+            };
+        }
+
+        public IActionResult Index()
+        {
+            return View(GetCertificates());
         }
 
         public IActionResult Create()
@@ -43,69 +60,47 @@ namespace RLIM.UI.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]/Update")]
         public IActionResult Update(int id)
         {
             if (id >= 0)
             {
-                Certificate certificate = new CertificateCollection().Get(id);
-
-                CertificateModel certificateModel = new CertificateModel
-                {
-                    ID = certificate.ID,
-                    Name = certificate.Name,
-                    Tier = certificate.Tier
-                };
-
-                return View(certificateModel);
+                return View(GetCertificate(id));
             }
 
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        [Route("[controller]/Updating")]
-        public IActionResult Update(CertificateModel model)
+        public IActionResult UpdateCertificate(CertificateModel model)
         {
             if (ModelState.IsValid)
             {
                 new CertificateCollection().Get(model.ID).Update(model.Name, model.Tier);
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Update");
         }
 
         [HttpPost]
-        [Route("[controller]/Delete")]
         public IActionResult Delete(int id)
         {
             if (id >= 0)
             {
-                Certificate certificate = new CertificateCollection().Get(id);
-
-                CertificateModel certificateModel = new CertificateModel
-                {
-                    ID = certificate.ID,
-                    Name = certificate.Name,
-                    Tier = certificate.Tier
-                };
-
-                return View(certificateModel);
+                return View(GetCertificate(id));
             }
 
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        [Route("[controller]/Deleting")]
-        public IActionResult Delete(CertificateModel model)
+        public IActionResult DeleteCertificate(CertificateModel model)
         {
             if (ModelState.IsValid)
             {
                 new CertificateCollection().Delete(model.ID);
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Delete");
         }
     }
 }

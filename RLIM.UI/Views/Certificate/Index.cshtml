@@ -22,7 +22,7 @@
         <tr>
             <td></td>
             <td></td>
-            <td><a asp-action="Create" class="btn btn-primary">New Certificate</a></td>
+            <td><a asp-controller="Certificate" asp-action="Create" class="btn btn-primary">New Certificate</a></td>
         </tr>
         @foreach (var item in Model)
         {
@@ -34,12 +34,12 @@
                     @Html.DisplayFor(modelItem => item.Tier)
                 </td>
                 <td>
-                    <form asp-action="Update" style="display: inline-block">
+                    <form asp-controller="Certificate" asp-action="Update" style="display: inline-block">
                         <input asp-for="@item.ID" name="id" type="hidden" />
                         <input type="submit" value="Update" class="btn btn-warning" />
                     </form>
                     &nbsp;
-                    <form asp-action="Delete" style="display: inline-block">
+                    <form asp-controller="Certificate" asp-action="Delete" style="display: inline-block">
                         <input asp-for="@item.ID" name="id" type="hidden" />
                         <input type="submit" value="Delete" class="btn btn-danger" />
                     </form>

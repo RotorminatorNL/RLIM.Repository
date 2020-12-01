@@ -7,7 +7,7 @@ namespace RLIM.UI.Controllers
 {
     public class ColorController : Controller
     {
-        public IActionResult Index()
+        private List<ColorModel> GetColors()
         {
             List<ColorModel> colors = new List<ColorModel>();
 
@@ -21,7 +21,24 @@ namespace RLIM.UI.Controllers
                 });
             }
 
-            return View(colors);
+            return colors;
+        }
+
+        private ColorModel GetColor(int id)
+        {
+            Color color = new ColorCollection().Get(id);
+
+            return new ColorModel
+            {
+                ID = color.ID,
+                Name = color.Name,
+                Hex = color.Hex
+            };
+        }
+
+        public IActionResult Index()
+        {
+            return View(GetColors());
         }
 
         public IActionResult Create()
@@ -43,69 +60,49 @@ namespace RLIM.UI.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]/Update")]
         public IActionResult Update(int id)
         {
             if (id >= 0)
             {
-                Color color = new ColorCollection().Get(id);
-
-                ColorModel colorModel = new ColorModel
-                {
-                    ID = color.ID,
-                    Name = color.Name,
-                    Hex = color.Hex
-                };
-
-                return View(colorModel);
+                return View(GetColor(id));
             }
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        [Route("[controller]/Updating")]
-        public IActionResult Update(ColorModel model)
+        public IActionResult UpdateColor(ColorModel model)
         {
             if (ModelState.IsValid)
             {
                 new ColorCollection().Get(model.ID).Update(model.Name, model.Hex);
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Update");
         }
 
         [HttpPost]
-        [Route("[controller]/Delete")]
         public IActionResult Delete(int id)
         {
             if (id >= 0)
             {
-                Color color = new ColorCollection().Get(id);
-
-                ColorModel ColorModel = new ColorModel
-                {
-                    ID = color.ID,
-                    Name = color.Name,
-                    Hex = color.Hex
-                };
-
-                return View(ColorModel);
+                return View(GetColor(id));
             }
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        [Route("[controller]/Deleting")]
-        public IActionResult Delete(ColorModel model)
+        public IActionResult DeleteColor(ColorModel model)
         {
             if (ModelState.IsValid)
             {
                 new ColorCollection().Delete(model.ID);
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Delete");
         }
     }
 }

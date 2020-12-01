@@ -13,7 +13,7 @@ namespace RLIM.DataAccess
         {
             using SqlConnection conn = Db.Connect();
 
-            string sql = "INSERT INTO dbo.SubItem (MainItemID, CertificateID, ColorID)";
+            string sql = "INSERT INTO dbo.SubItem (MainItemID, CertificateID, ColorID) ";
             sql += "VALUES(@mainItemID, @certificateID, @colorID)";
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.Parameters.Add("@mainItemID", SqlDbType.Int).Value = subItemDTO.MainItemID;
@@ -77,7 +77,7 @@ namespace RLIM.DataAccess
                 while (reader.Read())
                 {
                     subItemDTOs.Add(new SubItemDTO {
-                        ID = Convert.ToInt32(reader["Id"]),
+                        ID = Convert.ToInt32(reader["ID"]),
                         MainItemID = Convert.ToInt32(reader["MainItemID"]),
                         CertificateID = reader["CertificateID"].ToString() != "" ? Convert.ToInt32(reader["CertificateID"]) : 0,
                         ColorID = Convert.ToInt32(reader["ColorID"])

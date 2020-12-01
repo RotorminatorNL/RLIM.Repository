@@ -8,8 +8,6 @@ namespace RLIM.BusinessLogic
 {
     public class Certificate
     {
-        private readonly ICertificateDAL certificateDAL = CertificateFactoryDAL.GetDAL();
-
         public int ID { get; private set; }
         public string Name { get; private set; }
         public int Tier { get; private set; }
@@ -26,14 +24,12 @@ namespace RLIM.BusinessLogic
             Name = name;
             Tier = tier;
 
-            CertificateDTO certificateDTO = new CertificateDTO
+            CertificateFactoryDAL.GetDAL().Update(new CertificateDTO
             {
                 ID = ID,
                 Name = Name,
                 Tier = Tier
-            };
-
-            certificateDAL.Update(certificateDTO);
+            });
         }
     }
 }

@@ -8,8 +8,6 @@ namespace RLIM.BusinessLogic
 {
     public class CertificateCollection
     {
-        private readonly ICertificateCollectionDAL certificateCollectionDAL = CertificateFactoryDAL.GetCollectionDAL();
-
         public void Create(string name, int tier)
         {
             CertificateDTO certificateDTO = new CertificateDTO
@@ -18,14 +16,19 @@ namespace RLIM.BusinessLogic
                 Tier = tier
             };
 
-            certificateCollectionDAL.Create(certificateDTO);
+            CertificateFactoryDAL.GetCollectionDAL().Create(certificateDTO);
+        }
+
+        public Certificate Get(int id)
+        {
+            return new Certificate(CertificateFactoryDAL.GetCollectionDAL().Get(id));
         }
 
         public List<Certificate> GetAll()
         {
             List<Certificate> certificates = new List<Certificate>();
 
-            foreach (CertificateDTO certificateDTO in certificateCollectionDAL.GetAll())
+            foreach (CertificateDTO certificateDTO in CertificateFactoryDAL.GetCollectionDAL().GetAll())
             {
                 certificates.Add(new Certificate(certificateDTO));
             }
@@ -33,14 +36,9 @@ namespace RLIM.BusinessLogic
             return certificates;
         }
 
-        public Certificate Get(int id)
-        {
-            return new Certificate(certificateCollectionDAL.Get(id));
-        }
-
         public void Delete(int id)
         {
-            certificateCollectionDAL.Delete(id);
+            CertificateFactoryDAL.GetCollectionDAL().Delete(id);
         }
     }
 }

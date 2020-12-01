@@ -6,8 +6,6 @@ namespace RLIM.BusinessLogic
 {
     public class ColorCollection
     {
-        private readonly IColorCollectionDAL colorCollectionDAL = ColorFactoryDAL.GetCollectionDAL();
-
         public void Create(string name, string hex)
         {
             ColorDTO certificateDTO = new ColorDTO
@@ -16,14 +14,19 @@ namespace RLIM.BusinessLogic
                 Hex = hex
             };
 
-            colorCollectionDAL.Create(certificateDTO);
+            ColorFactoryDAL.GetCollectionDAL().Create(certificateDTO);
+        }
+
+        public Color Get(int id)
+        {
+            return new Color(ColorFactoryDAL.GetCollectionDAL().Get(id));
         }
 
         public List<Color> GetAll()
         {
             List<Color> colors = new List<Color>();
 
-            foreach (ColorDTO colorDTO in colorCollectionDAL.GetAll())
+            foreach (ColorDTO colorDTO in ColorFactoryDAL.GetCollectionDAL().GetAll())
             {
                 colors.Add(new Color(colorDTO));
             }
@@ -31,14 +34,9 @@ namespace RLIM.BusinessLogic
             return colors;
         }
 
-        public Color Get(int id)
-        {
-            return new Color(colorCollectionDAL.Get(id));
-        }
-
         public void Delete(int id)
         {
-            colorCollectionDAL.Delete(id);
+            ColorFactoryDAL.GetCollectionDAL().Delete(id);
         }
     }
 }

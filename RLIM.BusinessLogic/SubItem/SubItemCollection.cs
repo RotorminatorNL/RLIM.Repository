@@ -8,18 +8,38 @@ namespace RLIM.BusinessLogic
 {
     public class SubItemCollection
     {
-        private readonly ISubItemCollectionDAL CollectionDAL = SubItemFactoryDAL.GetCollectionDAL();
+        public void Create(int mainItemID, int certificateID, int colorID)
+        {
+            SubItemDTO subItemDTO = new SubItemDTO
+            {
+                MainItemID = mainItemID,
+                CertificateID = certificateID,
+                ColorID = colorID
+            };
+
+            SubItemFactoryDAL.GetCollectionDAL().Create(subItemDTO);
+        }
+
+        public SubItem Get(int id)
+        {
+            return new SubItem(SubItemFactoryDAL.GetCollectionDAL().Get(id));
+        }
 
         public List<SubItem> GetAll()
         {
             List<SubItem> subItems = new List<SubItem>();
 
-            foreach (SubItemDTO subItemDTO in CollectionDAL.GetAll())
+            foreach (SubItemDTO subItemDTO in SubItemFactoryDAL.GetCollectionDAL().GetAll())
             {
                 subItems.Add(new SubItem(subItemDTO));
             }
 
             return subItems;
+        }
+
+        public void Delete(int id)
+        {
+            SubItemFactoryDAL.GetCollectionDAL().Delete(id);
         }
     }
 }

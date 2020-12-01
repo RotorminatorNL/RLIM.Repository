@@ -8,8 +8,6 @@ namespace RLIM.BusinessLogic
 {
     public class Color
     {
-        private readonly IColorDAL colorDAL = ColorFactoryDAL.GetDAL();
-
         public int ID { get; private set; }
         public string Name { get; private set; }
         public string Hex { get; private set; }
@@ -26,14 +24,12 @@ namespace RLIM.BusinessLogic
             Name = name;
             Hex = hex;
 
-            ColorDTO colorDTO = new ColorDTO
+            ColorFactoryDAL.GetDAL().Update(new ColorDTO
             {
                 ID = ID,
                 Name = Name,
                 Hex = Hex
-            };
-
-            colorDAL.Update(colorDTO);
+            });
         }
     }
 }

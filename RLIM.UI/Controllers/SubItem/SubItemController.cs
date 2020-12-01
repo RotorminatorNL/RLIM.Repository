@@ -7,9 +7,28 @@ namespace RLIM.UI.Controllers
 {
     public class SubItemController : Controller
     {
-        public IActionResult Index()
+        private CertificateModel GetCertificate(int id)
         {
-            return View(GetSubItems());
+            Certificate certificate = new CertificateCollection().Get(id);
+
+            return new CertificateModel
+            {
+                ID = certificate.ID,
+                Name = certificate.Name,
+                Tier = certificate.Tier
+            };
+        }
+
+        private ColorModel GetColor(int id)
+        {
+            Color color = new ColorCollection().Get(id);
+
+            return new ColorModel
+            {
+                ID = color.ID,
+                Name = color.Name,
+                Hex = color.Hex
+            };
         }
 
         private List<SubItemModel> GetSubItems()
@@ -18,30 +37,21 @@ namespace RLIM.UI.Controllers
 
             foreach (SubItem subItem in new SubItemCollection().GetAll())
             {
-                CertificateModel certificateModel = new CertificateModel
-                {
-                    ID = subItem.CertifcateDTO.ID,
-                    Name = subItem.CertifcateDTO.Name,
-                    Tier = subItem.CertifcateDTO.Tier
-                };
-
-                ColorModel colorModel = new ColorModel
-                {
-                    ID = subItem.ColorDTO.ID,
-                    Name = subItem.ColorDTO.Name,
-                    Hex = subItem.ColorDTO.Hex
-                };
-
                 subItemModels.Add(new SubItemModel
                 {
                     ID = subItem.ID,
                     MainItemID = subItem.MainItemID,
-                    Certificate = certificateModel,
-                    Color = colorModel
+                    Certificate = GetCertificate(subItem.CertificateID),
+                    Color = GetColor(subItem.ColorID)
                 });
             }
 
             return subItemModels;
+        }
+
+        public IActionResult Index()
+        {
+            return View(GetSubItems());
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Create Main-Item";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="MainItem" asp-action="Create">
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                &nbsp;
+                <a asp-action="Index" class="btn btn-outline-primary">Back to Main-items</a>
+            </div>
+        </form>
+    </div>
+</div>

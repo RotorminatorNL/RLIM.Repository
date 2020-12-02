@@ -54,5 +54,10 @@ namespace RLIM.UI.Controllers
         {
             return View(GetMainItems());
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

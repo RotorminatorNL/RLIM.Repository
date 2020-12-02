@@ -17,19 +17,27 @@
         </tr>
     </thead>
     <tbody>
-       @foreach (var item in Model) {
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Category)</td>
-            <td>@Html.DisplayFor(modelItem => item.Platform)</td>
-            <td>@Html.DisplayFor(modelItem => item.Quality)</td>
-            <td>
-                <form asp-controller="SubItem" asp-action="Index" style="display: inline-block">
-                    <input asp-for="@item.ID" name="id" type="hidden" />
-                    <input type="submit" value="See Sub-Items" class="btn btn-primary" />
-                </form>
-            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a asp-controller="MainItem" asp-action="Create" class="btn btn-primary">New Main-Item</a></td>
         </tr>
+       @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Category)</td>
+                <td>@Html.DisplayFor(modelItem => item.Platform)</td>
+                <td>@Html.DisplayFor(modelItem => item.Quality)</td>
+                <td>
+                    <form asp-controller="SubItem" asp-action="Index" style="display: inline-block">
+                        <input asp-for="@item.ID" name="id" type="hidden" />
+                        <input type="submit" value="See Sub-Items" class="btn btn-primary" />
+                    </form>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

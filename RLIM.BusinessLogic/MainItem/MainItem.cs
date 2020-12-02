@@ -1,5 +1,6 @@
 ﻿using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
+using System.Collections.Generic;
 
 namespace RLIM.BusinessLogic
 {
@@ -35,6 +36,18 @@ namespace RLIM.BusinessLogic
                 PlatformID = PlatformID,
                 QualityID = QualityID
             });
+        }
+
+        public List<SubItem> GetAllWithMainItemID()
+        {
+            List<SubItem> subItems = new List<SubItem>();
+
+            foreach (SubItemDTO subItemDTO in SubItemFactoryDAL.GetCollectionDAL().GetAllWithMainItemID(ID))
+            {
+                subItems.Add(new SubItem(subItemDTO));
+            }
+
+            return subItems;
         }
     }
 }

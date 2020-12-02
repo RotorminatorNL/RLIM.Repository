@@ -55,6 +55,15 @@ namespace RLIM.DataAccess
                         Tier = Convert.ToInt32(reader["Tier"])
                     };
                 }
+                else
+                {
+                    certificateDTO = new CertificateDTO
+                    {
+                        ID = 0,
+                        Name = "None",
+                        Tier = 0
+                    };
+                }
                 conn.Close();
             }
             catch (SqlException exception)

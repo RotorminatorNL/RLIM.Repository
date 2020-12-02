@@ -42,7 +42,7 @@ namespace RLIM.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=MainItem}/{action=Index}/{id?}");
             });
         }
     }

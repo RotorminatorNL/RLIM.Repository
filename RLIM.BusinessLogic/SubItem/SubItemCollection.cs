@@ -37,18 +37,6 @@ namespace RLIM.BusinessLogic
             return subItems;
         }
 
-        public List<SubItem> GetAllWithMainItemID(int mainItemID)
-        {
-            List<SubItem> subItems = new List<SubItem>();
-
-            foreach (SubItemDTO subItemDTO in SubItemFactoryDAL.GetCollectionDAL().GetAllWithMainItemID(mainItemID))
-            {
-                subItems.Add(new SubItem(subItemDTO));
-            }
-
-            return subItems;
-        }
-
         public void Delete(int id)
         {
             SubItemFactoryDAL.GetCollectionDAL().Delete(id);

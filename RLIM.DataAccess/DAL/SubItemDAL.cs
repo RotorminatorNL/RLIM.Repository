@@ -93,42 +93,6 @@ namespace RLIM.DataAccess
             return subItemDTOs;
         }
 
-        public List<SubItemDTO> GetAllWithMainItemID(int mainItemID)
-        {
-            List<SubItemDTO> subItemDTOs = new List<SubItemDTO>();
-
-            try
-            {
-                using SqlConnection conn = Db.Connect();
-
-                string sql = "SELECT * ";
-                sql += "FROM dbo.SubItem ";
-                sql += "WHERE MainItemID = @id";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = mainItemID;
-
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    subItemDTOs.Add(new SubItemDTO
-                    {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        MainItemID = Convert.ToInt32(reader["MainItemID"]),
-                        CertificateID = reader["CertificateID"].ToString() != "" ? Convert.ToInt32(reader["CertificateID"]) : 0,
-                        ColorID = Convert.ToInt32(reader["ColorID"])
-                    });
-                }
-                conn.Close();
-            }
-            catch (SqlException exception)
-            {
-                Console.WriteLine(exception);
-            }
-
-            return subItemDTOs;
-        }
-
         public void Update(SubItemDTO subItemDTO)
         {
             try

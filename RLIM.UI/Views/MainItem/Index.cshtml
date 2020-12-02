@@ -10,9 +10,9 @@
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>Category</th>
-            <th>Platform</th>
-            <th>Quality</th>
+            <th>@Html.DisplayNameFor(model => model.Category)</th>
+            <th>@Html.DisplayNameFor(model => model.Platform)</th>
+            <th>@Html.DisplayNameFor(model => model.Quality)</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -20,9 +20,9 @@
        @foreach (var item in Model) {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Platform.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Quality.Rank) | @Html.DisplayFor(modelItem => item.Quality.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Category)</td>
+            <td>@Html.DisplayFor(modelItem => item.Platform)</td>
+            <td>@Html.DisplayFor(modelItem => item.Quality)</td>
             <td>
                 <form asp-controller="SubItem" asp-action="Index" style="display: inline-block">
                     <input asp-for="@item.ID" name="id" type="hidden" />

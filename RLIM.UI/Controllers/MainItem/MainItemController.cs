@@ -10,38 +10,25 @@ namespace RLIM.UI.Controllers
 {
     public class MainItemController : Controller
     {
-        private CategoryModel GetCategory(int id)
+        private string GetCategory(int id)
         {
             Category category = new CategoryCollection().Get(id);
 
-            return new CategoryModel
-            {
-                ID = category.ID,
-                Name = category.Name
-            };
+            return category.Name;
         }
 
-        private PlatformModel GetPlatform(int id)
+        private string GetPlatform(int id)
         {
             Platform platform = new PlatformCollection().Get(id);
 
-            return new PlatformModel
-            {
-                ID = platform.ID,
-                Name = platform.Name
-            };
+            return platform.Name;
         }
 
-        private QualityModel GetQuality(int id)
+        private string GetQuality(int id)
         {
             Quality quality = new QualityCollection().Get(id);
 
-            return new QualityModel
-            {
-                ID = quality.ID,
-                Name = quality.Name,
-                Rank = quality.Rank
-            };
+            return $"{quality.Name} ({quality.Rank})";
         }
 
         private List<MainItemModel> GetMainItems()

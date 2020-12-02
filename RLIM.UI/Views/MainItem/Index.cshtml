@@ -28,9 +28,9 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Category)</td>
-                <td>@Html.DisplayFor(modelItem => item.Platform)</td>
-                <td>@Html.DisplayFor(modelItem => item.Quality)</td>
+                <td>@Html.DisplayFor(modelItem => item.CategoryDisplay)</td>
+                <td>@Html.DisplayFor(modelItem => item.PlatformDisplay)</td>
+                <td>@Html.DisplayFor(modelItem => item.QualityDisplay)</td>
                 <td>
                     <form asp-controller="SubItem" asp-action="Index" style="display: inline-block">
                         <input asp-for="@item.ID" name="id" type="hidden" />

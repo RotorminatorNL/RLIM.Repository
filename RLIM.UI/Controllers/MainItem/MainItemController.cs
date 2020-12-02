@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RLIM.BusinessLogic;
 using RLIM.UI.Models;
 using System;
@@ -10,25 +11,86 @@ namespace RLIM.UI.Controllers
 {
     public class MainItemController : Controller
     {
-        private string GetCategory(int id)
+        private CategoryModel GetCategory(int id)
         {
             Category category = new CategoryCollection().Get(id);
 
-            return category.Name;
+            return new CategoryModel
+            {
+                ID = category.ID,
+                Name = category.Name
+            };
         }
 
-        private string GetPlatform(int id)
+        private List<CategoryModel> GetCategories()
+        {
+            List<CategoryModel> categories = new List<CategoryModel>();
+
+            foreach (Category category in new CategoryCollection().GetAll())
+            {
+                categories.Add(new CategoryModel
+                {
+                    ID = category.ID,
+                    Name = category.Name
+                });
+            }
+
+            return categories;
+        }
+
+        private PlatformModel GetPlatform(int id)
         {
             Platform platform = new PlatformCollection().Get(id);
 
-            return platform.Name;
+            return new PlatformModel
+            {
+                ID = platform.ID,
+                Name = platform.Name
+            };
         }
 
-        private string GetQuality(int id)
+        private List<PlatformModel> GetPlatforms()
+        {
+            List<PlatformModel> platforms = new List<PlatformModel>();
+
+            foreach (Platform platform in new PlatformCollection().GetAll())
+            {
+                platforms.Add(new PlatformModel
+                {
+                    ID = platform.ID,
+                    Name = platform.Name
+                });
+            }
+
+            return platforms;
+        }
+
+        private QualityModel GetQuality(int id)
         {
             Quality quality = new QualityCollection().Get(id);
 
-            return $"{quality.Name} ({quality.Rank})";
+            return new QualityModel
+            {
+                ID = quality.ID,
+                Name = quality.Name,
+                Rank = quality.Rank
+            };
+        }
+
+        private List<QualityModel> GetQualities()
+        {
+            List<QualityModel> qualities = new List<QualityModel>();
+
+            foreach (Quality quality in new QualityCollection().GetAll())
+            {
+                qualities.Add(new QualityModel
+                {
+                    ID = quality.ID,
+                    Name = $"{quality.Name} ({quality.Rank})"
+                });
+            }
+
+            return qualities;
         }
 
         private List<MainItemModel> GetMainItems()
@@ -41,9 +103,9 @@ namespace RLIM.UI.Controllers
                 {
                     ID = mainItem.ID,
                     Name = mainItem.Name,
-                    Category = GetCategory(mainItem.CategoryID),
-                    Platform = GetPlatform(mainItem.PlatformID),
-                    Quality = GetQuality(mainItem.QualityID)
+                    CategoryDisplay = GetCategory(mainItem.CategoryID).Name,
+                    PlatformDisplay = GetPlatform(mainItem.PlatformID).Name,
+                    QualityDisplay = $"{GetQuality(mainItem.QualityID).Name} ({GetQuality(mainItem.QualityID).Rank})"
                 });
             }
 
@@ -57,7 +119,21 @@ namespace RLIM.UI.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.Categories = GetCategories();
+            ViewBag.Platforms = GetPlatforms();
+            ViewBag.Qualities = GetQualities();
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(MainItemModel mainItem)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Create");
         }
     }
 }

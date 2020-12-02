@@ -7,40 +7,32 @@ namespace RLIM.UI.Controllers
 {
     public class SubItemController : Controller
     {
-        private CertificateModel GetCertificate(int id)
+        private string GetCertificate(int id)
         {
             Certificate certificate = new CertificateCollection().Get(id);
 
-            return new CertificateModel
-            {
-                ID = certificate.ID,
-                Name = certificate.Name,
-                Tier = certificate.Tier
-            };
+            return certificate.Name == "None" ? certificate.Name : $"{certificate.Name} ({certificate.Tier})";
         }
 
-        private ColorModel GetColor(int id)
+        private string GetColor(int id)
         {
             Color color = new ColorCollection().Get(id);
 
-            return new ColorModel
-            {
-                ID = color.ID,
-                Name = color.Name,
-                Hex = color.Hex
-            };
+            return color.Name == "Default" ? color.Name : $"{color.Name} ({color.Hex})";
         }
 
-        private List<SubItemModel> GetSubItems()
+        private List<SubItemModel> GetSubItems(int mainItemID)
         {
             List<SubItemModel> subItemModels = new List<SubItemModel>();
 
-            foreach (SubItem subItem in new SubItemCollection().GetAll())
+            MainItem mainItem = new MainItemCollection().Get(mainItemID);
+
+            foreach (SubItem subItem in mainItem.GetSubItems())
             {
                 subItemModels.Add(new SubItemModel
                 {
                     ID = subItem.ID,
-                    MainItemID = subItem.MainItemID,
+                    MainItem = mainItem.Name,
                     Certificate = GetCertificate(subItem.CertificateID),
                     Color = GetColor(subItem.ColorID)
                 });
@@ -49,9 +41,9 @@ namespace RLIM.UI.Controllers
             return subItemModels;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
-            return View(GetSubItems());
+            return View(GetSubItems(id));
         }
     }
 }

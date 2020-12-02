@@ -4,20 +4,13 @@
     ViewData["Title"] = "Sub-Items";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>@ViewData["Title"] van @Html.DisplayFor(model => model.ToList()[0].MainItem)</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th>
-                Main-Item
-            </th>
-            <th>
-                Certificate
-            </th>
-            <th>
-                Color
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Certificate)</th>
+            <th>@Html.DisplayNameFor(model => model.Color)</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -25,15 +18,8 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MainItemID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Certificate.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color.Name)
-                </td>
+                <td>@Html.DisplayFor(modelItem => item.Certificate)</td>
+                <td>@Html.DisplayFor(modelItem => item.Color)</td>
                 <td>None</td>
             </tr>
         }

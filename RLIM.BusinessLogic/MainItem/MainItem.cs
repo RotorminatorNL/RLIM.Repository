@@ -38,7 +38,7 @@ namespace RLIM.BusinessLogic
             });
         }
 
-        public List<SubItem> GetAllWithMainItemID()
+        public List<SubItem> GetSubItems()
         {
             List<SubItem> subItems = new List<SubItem>();
 

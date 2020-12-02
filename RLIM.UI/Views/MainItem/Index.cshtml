@@ -1,21 +1,18 @@
 ﻿@model IEnumerable<RLIM.UI.Models.MainItemModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Main-Items";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>Category</th>
             <th>Platform</th>
-            <th>Quality (rank | name)</th>
+            <th>Quality</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -26,7 +23,12 @@
             <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.Platform.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.Quality.Rank) | @Html.DisplayFor(modelItem => item.Quality.Name)</td>
-            <td></td>
+            <td>
+                <form asp-controller="SubItem" asp-action="Index" style="display: inline-block">
+                    <input asp-for="@item.ID" name="id" type="hidden" />
+                    <input type="submit" value="See Sub-Items" class="btn btn-primary" />
+                </form>
+            </td>
         </tr>
         }
     </tbody>

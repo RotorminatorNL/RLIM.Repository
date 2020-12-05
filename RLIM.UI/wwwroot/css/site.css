@@ -37,6 +37,10 @@ a.navbar-brand {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+td {
+    vertical-align: middle;
+}
+
 form.subitem-form .inputfields {
     display: flex;
     flex-direction: row;

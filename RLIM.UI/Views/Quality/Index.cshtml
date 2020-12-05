@@ -1,5 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<RLIM.UI.Models.QualityModel>
+
 @{
+    ViewData["Title"] = "Qualities";
 }
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Rank)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><a asp-controller="Quality" asp-action="Create" class="btn btn-primary">New Quality</a></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Rank)</td>
+                <td>
+                    <form asp-controller="Quality" asp-action="Update" style="display: inline-block">
+                        <input asp-for="@item.ID" name="id" type="hidden" />
+                        <input type="submit" value="Update" class="btn btn-warning" />
+                    </form>
+                    &nbsp;
+                    <form asp-controller="Quality" asp-action="Delete" style="display: inline-block">
+                        <input asp-for="@item.ID" name="id" type="hidden" />
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

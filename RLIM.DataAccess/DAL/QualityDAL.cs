@@ -16,7 +16,7 @@ namespace RLIM.DataAccess
             sql += "VALUES(@name, @rank)";
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = qualityDTO.Name;
-            cmd.Parameters.Add("@rank", SqlDbType.NVarChar).Value = qualityDTO.Rank;
+            cmd.Parameters.Add("@rank", SqlDbType.Int).Value = qualityDTO.Rank;
 
             conn.Open();
             cmd.ExecuteNonQuery();
@@ -104,7 +104,7 @@ namespace RLIM.DataAccess
                 using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = qualityDTO.ID;
                 cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = qualityDTO.Name;
-                cmd.Parameters.Add("@rank", SqlDbType.NVarChar).Value = qualityDTO.Rank;
+                cmd.Parameters.Add("@rank", SqlDbType.Int).Value = qualityDTO.Rank;
 
                 conn.Open();
                 cmd.ExecuteNonQuery();

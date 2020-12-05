@@ -11,5 +11,7 @@ namespace RLIM.UI.Models
 
         [Required(ErrorMessage = "You need to give it a Rank.")]
         public int Rank { get; set; }
+
+        public string Display { get; set; }
     }
 }

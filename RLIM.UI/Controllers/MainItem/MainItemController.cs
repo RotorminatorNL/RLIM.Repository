@@ -73,7 +73,8 @@ namespace RLIM.UI.Controllers
             {
                 ID = quality.ID,
                 Name = quality.Name,
-                Rank = quality.Rank
+                Rank = quality.Rank,
+                Display = $"{quality.Name} ({quality.Rank})"
             };
         }
 
@@ -86,7 +87,9 @@ namespace RLIM.UI.Controllers
                 qualities.Add(new QualityModel
                 {
                     ID = quality.ID,
-                    Name = $"{quality.Name} ({quality.Rank})"
+                    Name = quality.Name,
+                    Rank = quality.Rank,
+                    Display = $"{quality.Name} ({quality.Rank})"
                 });
             }
 
@@ -105,7 +108,7 @@ namespace RLIM.UI.Controllers
                     Name = mainItem.Name,
                     CategoryDisplay = GetCategory(mainItem.CategoryID).Name,
                     PlatformDisplay = GetPlatform(mainItem.PlatformID).Name,
-                    QualityDisplay = $"{GetQuality(mainItem.QualityID).Name} ({GetQuality(mainItem.QualityID).Rank})"
+                    QualityDisplay = GetQuality(mainItem.QualityID).Display
                 });
             }
 
@@ -126,7 +129,7 @@ namespace RLIM.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(MainItemModel mainItem)
+        public IActionResult Create(MainItemModel model)
         {
             if (ModelState.IsValid)
             {

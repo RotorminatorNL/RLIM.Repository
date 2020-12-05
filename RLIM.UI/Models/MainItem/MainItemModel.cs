@@ -10,19 +10,19 @@ namespace RLIM.UI.Models
         [Required(ErrorMessage = "You need to give it a Name.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "You need to select a Category.")]
+        [Range(1, int.MaxValue, ErrorMessage = "You need to select a Category.")]
         public int CategoryID { get; set; }
-        public CategoryModel Category { get; set; }
+        [Display(Name = "Categorie")]
         public string CategoryDisplay { get; set; }
 
-        [Required(ErrorMessage = "You need to select a Platform.")]
+        [Range(1, int.MaxValue, ErrorMessage = "You need to select a Platform.")]
         public int PlatformID { get; set; }
-        public PlatformModel Platform { get; set; }
+        [Display(Name = "Platform")]
         public string PlatformDisplay { get; set; }
 
-        [Required(ErrorMessage = "You need to select a Quality.")]
+        [Range(1, int.MaxValue, ErrorMessage = "You need to select a Quality.")]
         public int QualityID { get; set; }
-        public QualityModel Quality { get; set; }
+        [Display(Name = "Quality")]
         public string QualityDisplay { get; set; }
     }
 }

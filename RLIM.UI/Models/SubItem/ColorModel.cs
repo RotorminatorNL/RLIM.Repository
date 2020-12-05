@@ -11,5 +11,7 @@ namespace RLIM.UI.Models
 
         [Required(ErrorMessage = "You need to give it a Hex.")]
         public string Hex { get; set; }
+
+        public string Display { get; set; }
     }
 }

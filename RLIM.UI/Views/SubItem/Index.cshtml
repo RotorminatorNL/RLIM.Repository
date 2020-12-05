@@ -4,22 +4,27 @@
     ViewData["Title"] = "Sub-Items";
 }
 
-<h1>@ViewData["Title"] of @Html.DisplayFor(model => model.ToList()[0].MainItem)</h1>
+<h1>@ViewData["Title"] of @Html.DisplayNameFor(model => model.MainItemDisplay)</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Certificate)</th>
-            <th>@Html.DisplayNameFor(model => model.Color)</th>
+            <th>@Html.DisplayNameFor(model => model.CertificateDisplay)</th>
+            <th>@Html.DisplayNameFor(model => model.ColorDisplay)</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><a asp-controller="SubItem" asp-action="Create" class="btn btn-primary">New Sub-Item</a></td>
+        </tr>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Certificate)</td>
-                <td>@Html.DisplayFor(modelItem => item.Color)</td>
+                <td>@Html.DisplayFor(modelItem => item.CertificateDisplay)</td>
+                <td>@Html.DisplayFor(modelItem => item.ColorDisplay)</td>
                 <td>None</td>
             </tr>
         }

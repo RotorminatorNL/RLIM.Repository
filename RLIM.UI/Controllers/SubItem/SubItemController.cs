@@ -75,6 +75,9 @@ namespace RLIM.UI.Controllers
 
             MainItem mainItem = new MainItemCollection().Get(mainItemID);
 
+            ViewData["MainItemID"] = mainItem.ID;
+            ViewData["MainItemName"] = mainItem.Name;
+
             foreach (SubItem subItem in mainItem.GetSubItems())
             {
                 subItemModels.Add(new SubItemModel
@@ -95,19 +98,28 @@ namespace RLIM.UI.Controllers
             return View(GetSubItems(id));
         }
 
-        public IActionResult Create()
+        [HttpPost]
+        public IActionResult Create(int id, string name)
         {
-            ViewBag.Certificates = GetCertificates();
-            ViewBag.Colors = GetColors();
-            return View();
+            ViewData["Certificates"] = GetCertificates();
+            ViewData["Colors"] = GetColors();
+            ViewData["MainItemID"] = id;
+            ViewData["MainItemName"] = name;
+
+            return View(new SubItemModel 
+            { 
+                MainItemID = id,
+                MainItemDisplay = name
+            });
         }
 
         [HttpPost]
-        public IActionResult Create(SubItemModel model)
+        public IActionResult Creating(SubItemModel model)
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
+                return RedirectToAction("Index", model.MainItemID);
             }
 
             return RedirectToAction("Create");

@@ -11,10 +11,10 @@ namespace RLIM.DataAccess
     {
         public void Create(ColorDTO colorDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "INSERT INTO dbo.Color (Name, Hex) ";
                 sql += "VALUES(@name, @hex)";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -27,6 +27,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
@@ -35,10 +36,10 @@ namespace RLIM.DataAccess
         {
             ColorDTO colorDTO = null;
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * FROM dbo.Color ";
                 sql += "WHERE ID = @id";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -59,6 +60,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -69,10 +71,10 @@ namespace RLIM.DataAccess
         {
             List<ColorDTO> colorDTOs = new List<ColorDTO>();
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.Color";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -93,6 +95,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -101,10 +104,10 @@ namespace RLIM.DataAccess
 
         public void Update(ColorDTO colorDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "UPDATE dbo.Color ";
                 sql += "SET Name = @name, Hex = @hex ";
                 sql += "WHERE ID = @id";
@@ -119,16 +122,17 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
 
         public void Delete(int id)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "DELETE dbo.Color ";
                 sql += "WHERE ID = @id";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -140,6 +144,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }

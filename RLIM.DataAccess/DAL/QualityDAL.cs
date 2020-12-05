@@ -12,25 +12,33 @@ namespace RLIM.DataAccess
         {
             using SqlConnection conn = Db.Connect();
 
-            string sql = "INSERT INTO dbo.Quality (Name, Rank) ";
-            sql += "VALUES(@name, @rank)";
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = qualityDTO.Name;
-            cmd.Parameters.Add("@rank", SqlDbType.Int).Value = qualityDTO.Rank;
+            try
+            {
+                string sql = "INSERT INTO dbo.Quality (Name, Rank) ";
+                sql += "VALUES(@name, @rank)";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = qualityDTO.Name;
+                cmd.Parameters.Add("@rank", SqlDbType.Int).Value = qualityDTO.Rank;
 
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
         }
 
         public QualityDTO Get(int id)
         {
             QualityDTO qualityDTO = null;
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.Quality ";
                 sql += "WHERE ID = @id";
@@ -52,6 +60,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -62,10 +71,10 @@ namespace RLIM.DataAccess
         {
             List<QualityDTO> qualityDTOs = new List<QualityDTO>();
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.Quality";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -86,6 +95,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -94,10 +104,10 @@ namespace RLIM.DataAccess
 
         public void Update(QualityDTO qualityDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "UPDATE dbo.Quality ";
                 sql += "SET Name = @name, Rank = @rank ";
                 sql += "WHERE ID = @id";
@@ -112,16 +122,17 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
 
         public void Delete(int id)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "DELETE dbo.Quality ";
                 sql += "WHERE ID = @id";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -133,6 +144,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }

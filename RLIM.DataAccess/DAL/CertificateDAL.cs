@@ -10,10 +10,10 @@ namespace RLIM.DataAccess
     {
         public void Create(CertificateDTO certificateDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "INSERT INTO dbo.Certificate (Name, Tier) ";
                 sql += "VALUES(@name, @tier)";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -26,6 +26,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
@@ -34,10 +35,10 @@ namespace RLIM.DataAccess
         {
             CertificateDTO certificateDTO = null;
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.Certificate ";
                 sql += "WHERE ID = @id";
@@ -68,6 +69,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -78,10 +80,10 @@ namespace RLIM.DataAccess
         {
             List<CertificateDTO> certificateDTOs = new List<CertificateDTO>();
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.Certificate";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -102,6 +104,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -110,10 +113,10 @@ namespace RLIM.DataAccess
 
         public void Update(CertificateDTO certificateDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "UPDATE dbo.Certificate ";
                 sql += "SET Name = @name, Tier = @tier ";
                 sql += "WHERE ID = @id";
@@ -128,16 +131,17 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
 
         public void Delete(int id)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "DELETE dbo.Certificate ";
                 sql += "WHERE ID = @id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -149,6 +153,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }

@@ -13,26 +13,34 @@ namespace RLIM.DataAccess
         {
             using SqlConnection conn = Db.Connect();
 
-            string sql = "INSERT INTO dbo.SubItem (MainItemID, CertificateID, ColorID) ";
-            sql += "VALUES(@mainItemID, @certificateID, @colorID)";
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.Add("@mainItemID", SqlDbType.Int).Value = subItemDTO.MainItemID;
-            cmd.Parameters.Add("@certificateID", SqlDbType.Int).Value = subItemDTO.CertificateID;
-            cmd.Parameters.Add("@colorID", SqlDbType.Int).Value = subItemDTO.ColorID;
+            try
+            {
+                string sql = "INSERT INTO dbo.SubItem (MainItemID, CertificateID, ColorID) ";
+                sql += "VALUES(@mainItemID, @certificateID, @colorID)";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@mainItemID", SqlDbType.Int).Value = subItemDTO.MainItemID;
+                cmd.Parameters.Add("@certificateID", SqlDbType.Int).Value = subItemDTO.CertificateID;
+                cmd.Parameters.Add("@colorID", SqlDbType.Int).Value = subItemDTO.ColorID;
 
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
         }
 
         public SubItemDTO Get(int id)
         {
             SubItemDTO subItemDTO = null;
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.SubItem ";
                 sql += "WHERE ID = @id";
@@ -55,6 +63,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
             return subItemDTO;
@@ -64,10 +73,10 @@ namespace RLIM.DataAccess
         {
             List<SubItemDTO> subItemDTOs = new List<SubItemDTO>();
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.SubItem";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -88,6 +97,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -98,10 +108,10 @@ namespace RLIM.DataAccess
         {
             List<SubItemDTO> subItemDTOs = new List<SubItemDTO>();
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.SubItem ";
                 sql += "WHERE MainItemID = @id";
@@ -124,6 +134,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -132,10 +143,10 @@ namespace RLIM.DataAccess
 
         public void Update(SubItemDTO subItemDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "UPDATE dbo.SubItem ";
                 sql += "SET MainItemID = @mainItemID, CertificateID = @certificateID, ColorID = @colorID ";
                 sql += "WHERE ID = @id";
@@ -150,16 +161,17 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
 
         public void Delete(int id)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "DELETE dbo.SubItem ";
                 sql += "WHERE ID = @id";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -171,6 +183,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }

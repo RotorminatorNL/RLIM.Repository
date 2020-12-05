@@ -10,10 +10,10 @@ namespace RLIM.DataAccess
     {
         public void Create(PlatformDTO platformDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "INSERT INTO dbo.Platform (Name) ";
                 sql += "VALUES(@name)";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -25,6 +25,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
@@ -33,10 +34,10 @@ namespace RLIM.DataAccess
         {
             PlatformDTO platformDTO = null;
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.Platform ";
                 sql += "WHERE ID = @id";
@@ -57,6 +58,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -66,11 +68,11 @@ namespace RLIM.DataAccess
         public List<PlatformDTO> GetAll()
         {
             List<PlatformDTO> platformDTOs = new List<PlatformDTO>();
+            
+            using SqlConnection conn = Db.Connect();
 
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.Platform";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -90,6 +92,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -98,10 +101,10 @@ namespace RLIM.DataAccess
 
         public void Update(PlatformDTO platformDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "UPDATE dbo.Platform ";
                 sql += "SET Name = @name ";
                 sql += "WHERE ID = @id";
@@ -115,16 +118,17 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
 
         public void Delete(int id)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "DELETE dbo.Platform ";
                 sql += "WHERE ID = @id";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -136,6 +140,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }

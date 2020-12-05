@@ -10,10 +10,10 @@ namespace RLIM.DataAccess
     {
         public void Create(CategoryDTO categoryDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "INSERT INTO dbo.Category (Name) ";
                 sql += "VALUES(@name)";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
@@ -25,6 +25,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
@@ -33,10 +34,10 @@ namespace RLIM.DataAccess
         {
             CategoryDTO categoryDTO = null;
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * ";
                 sql += "FROM dbo.Category ";
                 sql += "WHERE ID = @id";
@@ -57,6 +58,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -67,10 +69,10 @@ namespace RLIM.DataAccess
         {
             List<CategoryDTO> categoryDTOs = new List<CategoryDTO>();
 
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "SELECT * FROM dbo.Category";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -89,6 +91,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
 
@@ -97,10 +100,10 @@ namespace RLIM.DataAccess
 
         public void Update(CategoryDTO categoryDTO)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "UPDATE dbo.Category ";
                 sql += "SET Name = @name ";
                 sql += "WHERE ID = @id";
@@ -114,16 +117,17 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }
 
         public void Delete(int id)
         {
+            using SqlConnection conn = Db.Connect();
+
             try
             {
-                using SqlConnection conn = Db.Connect();
-
                 string sql = "DELETE dbo.Category ";
                 sql += "WHERE ID = @id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -135,6 +139,7 @@ namespace RLIM.DataAccess
             }
             catch (SqlException exception)
             {
+                conn.Close();
                 Console.WriteLine(exception);
             }
         }

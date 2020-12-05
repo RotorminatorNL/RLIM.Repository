@@ -95,6 +95,10 @@ namespace RLIM.UI.Controllers
 
         public IActionResult Index(int id)
         {
+            if (id == 0)
+            {
+                id = (int)TempData["MainItemID"];
+            }
             return View(GetSubItems(id));
         }
 
@@ -119,7 +123,8 @@ namespace RLIM.UI.Controllers
             if (ModelState.IsValid)
             {
                 new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
-                return RedirectToAction("Index", model.MainItemID);
+                TempData["MainItemID"] = model.MainItemID;
+                return RedirectToAction("Index");
             }
 
             return RedirectToAction("Create");

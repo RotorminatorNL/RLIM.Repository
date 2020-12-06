@@ -54,6 +54,14 @@ namespace RLIM.DataAccess
                         Name = reader["Name"].ToString()
                     };
                 }
+                else
+                {
+                    platformDTO = new PlatformDTO
+                    {
+                        ID = 0,
+                        Name = "No Platform"
+                    };
+                }
                 conn.Close();
             }
             catch (SqlException exception)

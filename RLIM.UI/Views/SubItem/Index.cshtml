@@ -2,8 +2,6 @@
 
 @{
     ViewData["Title"] = $"Sub-Items of {ViewData["MainItemName"]}";
-    TempData["MainItemID"] = ViewData["MainItemID"];
-    TempData["MainItemName"] = ViewData["MainItemName"];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -20,7 +18,7 @@
         <tr>
             <td></td>
             <td></td>
-            <td><a asp-controller="SubItem" asp-action="Create" class="btn btn-primary">New Sub-Item</a></td>
+            <td><a href="Sub-Item/Create" class="btn btn-primary">New Sub-Item</a></td>
         </tr>
         @foreach (var item in Model)
         {
@@ -28,10 +26,8 @@
                 <td>@Html.DisplayFor(modelItem => item.CertificateDisplay)</td>
                 <td>@Html.DisplayFor(modelItem => item.ColorDisplay)</td>
                 <td>
-                    <form asp-controller="SubItem" asp-action="Delete" style="display: inline-block">
-                        <input asp-for="@item.ID" name="id" type="hidden" />
-                        <input type="submit" value="Delete" class="btn btn-danger" />
-                    </form>
+                    <a href="Sub-Item/@item.ID/Update" class="btn btn-warning">Update</a>
+                    <a href="Sub-Item/@item.ID/Delete" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

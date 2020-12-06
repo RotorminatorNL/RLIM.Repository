@@ -54,6 +54,14 @@ namespace RLIM.DataAccess
                         Name = reader["Name"].ToString()
                     };
                 }
+                else
+                {
+                    categoryDTO = new CategoryDTO
+                    {
+                        ID = 0,
+                        Name = "No Category"
+                    };
+                }
                 conn.Close();
             }
             catch (SqlException exception)

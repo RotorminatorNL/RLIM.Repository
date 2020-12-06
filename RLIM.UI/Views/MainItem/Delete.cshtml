@@ -7,7 +7,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <h3>Are you sure you want to delete this?</h3>
-<div class="col-md-4" style="padding-left: 0">
+<div class="col-md-6" style="padding-left: 0">
     <table class="table">
         <thead>
             <tr>
@@ -27,7 +27,7 @@
         </tbody>
     </table>
 
-    <form asp-controller="MainItem" asp-action="DeleteMainItem">
+    <form asp-controller="MainItem" asp-action="Delete">
         <input asp-for="ID" type="hidden" />
         <input asp-for="Name" type="hidden" />
         <input asp-for="CategoryID" type="hidden" />

@@ -53,13 +53,12 @@ namespace RLIM.UI.Controllers
             if (ModelState.IsValid)
             {
                 new ColorCollection().Create(model.Name, model.Hex);
-                return RedirectToAction("Index");
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Update(int id)
         {
             if (id > 0)
@@ -71,18 +70,18 @@ namespace RLIM.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateColor(ColorModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(ColorModel model)
         {
             if (ModelState.IsValid)
             {
                 new ColorCollection().Get(model.ID).Update(model.Name, model.Hex);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Update");
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -94,15 +93,15 @@ namespace RLIM.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteColor(ColorModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(ColorModel model)
         {
             if (ModelState.IsValid)
             {
                 new ColorCollection().Delete(model.ID);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Delete");
+            return RedirectToAction("Index");
         }
     }
 }

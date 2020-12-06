@@ -23,15 +23,8 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>
-                    <form asp-controller="Platform" asp-action="Update" style="display: inline-block">
-                        <input asp-for="@item.ID" name="id" type="hidden" />
-                        <input type="submit" value="Update" class="btn btn-warning" />
-                    </form>
-                    &nbsp;
-                    <form asp-controller="Platform" asp-action="Delete" style="display: inline-block">
-                        <input asp-for="@item.ID" name="id" type="hidden" />
-                        <input type="submit" value="Delete" class="btn btn-danger" />
-                    </form>
+                    <a asp-controller="Platform" asp-action="Update" asp-route-id="@item.ID" class="btn btn-warning">Update</a>
+                    <a asp-controller="Platform" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

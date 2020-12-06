@@ -56,6 +56,14 @@ namespace RLIM.DataAccess
                         Rank = Convert.ToInt32(reader["Rank"])
                     };
                 }
+                else
+                {
+                    qualityDTO = new QualityDTO
+                    {
+                        ID = 0,
+                        Name = "No Quality"
+                    };
+                }
                 conn.Close();
             }
             catch (SqlException exception)

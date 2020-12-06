@@ -103,71 +103,82 @@ namespace RLIM.UI.Controllers
             return subItemModels;
         }
 
-        public IActionResult Index(int id)
+        [HttpGet("/{mainItemName}/{mainItemID}/Sub-Items")]
+        public IActionResult Index(int mainItemID)
         {
-            if (id == 0)
+            if (mainItemID != 0)
             {
-                if (TempData["MainItemID"] == null)
-                {
-                    return RedirectToAction("Index", "MainItem");
-                }
-
-                id = (int)TempData["MainItemID"];
+                return View(GetSubItems(mainItemID));
             }
-            return View(GetSubItems(id));
+
+            return RedirectToAction("Index", "MainItem");
         }
 
-        public IActionResult Create()
+        [HttpGet("/{mainItemName}/{mainItemID}/Sub-Item/Create")]
+        public IActionResult Create(int mainItemID, string mainItemName)
         {
-            if (TempData["MainItemID"] != null && TempData["MainItemName"] != null)
+            if (mainItemID != 0 && mainItemName != "")
             {
                 ViewData["Certificates"] = GetCertificates();
                 ViewData["Colors"] = GetColors();
-                ViewData["MainItemID"] = TempData["MainItemID"];
-                ViewData["MainItemName"] = TempData["MainItemName"];
+                ViewData["MainItemID"] = mainItemID;
+                ViewData["MainItemName"] = mainItemName;
 
                 return View(new SubItemModel
                 {
-                    MainItemID = (int)TempData["MainItemID"]
+                    MainItemID = mainItemID,
+                    MainItemDisplay = mainItemName
                 });
             }
 
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpPost]
-        public IActionResult CreateSubItem(SubItemModel model)
+        [HttpPost("/Sub-Item/Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(SubItemModel model)
         {
             if (model.ID == 0 && model.MainItemID > 0 && model.CertificateID >= 0 && model.ColorID >= 0)
             {
                 new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
-                TempData["MainItemID"] = model.MainItemID;
-                return RedirectToAction("Index");
+                return RedirectToRoute("SubItems", new { mainItemName = model.MainItemDisplay, mainItemID = model.MainItemID });
             }
 
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpPost]
-        public IActionResult Delete(int id)
+        [HttpGet("/{mainItemName}/{mainItemID}/Sub-Item/{ID}/Update")]
+        public IActionResult Update(int mainItemID, string mainItemName, int ID)
         {
-            if (id > 0 && TempData["MainItemID"] != null && TempData["MainItemName"] != null)
+            if (mainItemID != 0 && mainItemName != "" && ID != 0)
             {
-                ViewData["MainItemID"] = TempData["MainItemID"];
-                ViewData["MainItemName"] = TempData["MainItemName"];
-                return View(GetSubItem(id));
+                return View();
             }
 
             return RedirectToAction("Index", "MainItem");
         }
 
-        public IActionResult DeleteSubItem(SubItemModel model)
+        [HttpGet("/{mainItemName}/{mainItemID}/Sub-Item/{ID}/Delete")]
+        public IActionResult Delete(int mainItemID, string mainItemName, int ID)
+        {
+            if (mainItemID != 0 && mainItemName != "" && ID != 0)
+            {
+                ViewData["MainItemID"] = mainItemID;
+                ViewData["MainItemName"] = mainItemName;
+                return View(GetSubItem(ID));
+            }
+
+            return RedirectToAction("Index", "MainItem");
+        }
+
+        [HttpPost("/Sub-Item/Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(SubItemModel model)
         {
             if (ModelState.IsValid)
             {
                 new SubItemCollection().Delete(model.ID);
-                TempData["MainItemID"] = model.MainItemID;
-                return RedirectToAction("Index");
+                return RedirectToRoute("SubItems", new { mainItemName = model.MainItemDisplay, mainItemID = model.MainItemID });
             }
 
             return RedirectToAction("Index", "MainItem");

@@ -26,15 +26,9 @@
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.Tier)</td>
                 <td>
-                    <form asp-controller="Certificate" asp-action="Update" style="display: inline-block">
-                        <input asp-for="@item.ID" name="id" type="hidden" />
-                        <input type="submit" value="Update" class="btn btn-warning" />
-                    </form>
+                    <a asp-controller="Certificate" asp-action="Update" asp-route-id="@item.ID" class="btn btn-warning">Update</a>
                     &nbsp;
-                    <form asp-controller="Certificate" asp-action="Delete" style="display: inline-block">
-                        <input asp-for="@item.ID" name="id" type="hidden" />
-                        <input type="submit" value="Delete" class="btn btn-danger" />
-                    </form>
+                    <a asp-controller="Certificate" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

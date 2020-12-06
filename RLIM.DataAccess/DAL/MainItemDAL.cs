@@ -60,6 +60,14 @@ namespace RLIM.DataAccess
                         QualityID = Convert.ToInt32(reader["QualityID"])
                     };
                 }
+                else
+                {
+                    mainItemDTO = new MainItemDTO
+                    {
+                        ID = 0,
+                        Name = "No Main-Item"
+                    };
+                }
                 conn.Close();
             }
             catch (SqlException exception)

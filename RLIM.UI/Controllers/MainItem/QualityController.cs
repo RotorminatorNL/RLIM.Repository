@@ -56,16 +56,15 @@ namespace RLIM.UI.Controllers
             if (ModelState.IsValid)
             {
                 new QualityCollection().Create(model.Name, model.Rank);
-                return RedirectToAction("Index");
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Update(int id)
         {
-            if (id >= 0)
+            if (id > 0)
             {
                 return View(GetQuality(id));
             }
@@ -73,21 +72,22 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdateQuality(QualityModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(QualityModel model)
         {
             if (ModelState.IsValid)
             {
                 new QualityCollection().Get(model.ID).Update(model.Name, model.Rank);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Update");
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            if (id >= 0)
+            if (id > 0)
             {
                 return View(GetQuality(id));
             }
@@ -95,15 +95,16 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteQuality(QualityModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(QualityModel model)
         {
             if (ModelState.IsValid)
             {
                 new QualityCollection().Delete(model.ID);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Delete");
+            return RedirectToAction("Index");
         }
     }
 }

@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = $"Delete Sub-Item of {ViewData["MainItemName"]}";
-    TempData["MainItemID"] = ViewData["MainItemID"];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -24,13 +23,13 @@
         </tbody>
     </table>
 
-    <form asp-controller="SubItem" asp-action="DeleteSubItem">
+    <form action="/Sub-Item/Delete" method="post" asp-antiforgery="true">
         <input asp-for="ID" type="hidden" />
         <input asp-for="MainItemID" type="hidden" />
+        <input asp-for="MainItemDisplay" type="hidden" value="@ViewData["MainItemName"]" />
         <input asp-for="CertificateID" type="hidden" />
         <input asp-for="ColorID" type="hidden" />
         <input type="submit" value="Yes, I want to" class="btn btn-danger" />
-        &nbsp;
-        <a asp-controller="SubItem" asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+        <a href="../../Sub-Items" class="btn btn-outline-primary">Back to List</a>
     </form>
 </div>

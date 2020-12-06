@@ -54,13 +54,12 @@ namespace RLIM.UI.Controllers
             if (ModelState.IsValid)
             {
                 new PlatformCollection().Create(model.Name);
-                return RedirectToAction("Index");
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Update(int id)
         {
             if (id >= 0)
@@ -71,18 +70,19 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdatePlatform(PlatformModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(PlatformModel model)
         {
             if (ModelState.IsValid)
             {
                 new PlatformCollection().Get(model.ID).Update(model.Name);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Update");
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             if (id >= 0)
@@ -93,15 +93,16 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeletePlatform(PlatformModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(PlatformModel model)
         {
             if (ModelState.IsValid)
             {
                 new PlatformCollection().Delete(model.ID);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Delete");
+            return RedirectToAction("Index");
         }
     }
 }

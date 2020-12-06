@@ -142,17 +142,18 @@ namespace RLIM.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(MainItemModel model)
         {
             if (ModelState.IsValid)
             {
                 new MainItemCollection().Create(model.Name, model.CategoryID, model.PlatformID, model.QualityID);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
-
+        
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -162,8 +163,10 @@ namespace RLIM.UI.Controllers
 
             return RedirectToAction("Index");
         }
-        
-        public IActionResult DeleteMainItem(MainItemModel model)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(MainItemModel model)
         {
             if (ModelState.IsValid)
             {

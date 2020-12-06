@@ -59,6 +59,13 @@ namespace RLIM.DataAccess
                         ColorID = reader["ColorID"].ToString() != "" ? Convert.ToInt32(reader["ColorID"]) : 0
                     };
                 }
+                else
+                {
+                    subItemDTO = new SubItemDTO
+                    {
+                        ID = 0
+                    };
+                }
                 conn.Close();
             }
             catch (SqlException exception)
@@ -66,6 +73,7 @@ namespace RLIM.DataAccess
                 conn.Close();
                 Console.WriteLine(exception);
             }
+
             return subItemDTO;
         }
 

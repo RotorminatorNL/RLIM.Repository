@@ -51,16 +51,15 @@ namespace RLIM.UI.Controllers
             if (ModelState.IsValid)
             {
                 new CategoryCollection().Create(model.Name);
-                return RedirectToAction("Index");
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Update(int id)
         {
-            if (id >= 0)
+            if (id > 0)
             {
                 return View(GetCategory(id));
             }
@@ -68,21 +67,22 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdateCategory(CategoryModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(CategoryModel model)
         {
             if (ModelState.IsValid)
             {
                 new CategoryCollection().Get(model.ID).Update(model.Name);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Update");
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            if (id >= 0)
+            if (id > 0)
             {
                 return View(GetCategory(id));
             }
@@ -90,15 +90,16 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteCategory(CategoryModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(CategoryModel model)
         {
             if (ModelState.IsValid)
             {
                 new CategoryCollection().Delete(model.ID);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Delete");
+            return RedirectToAction("Index");
         }
     }
 }

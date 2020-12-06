@@ -53,13 +53,12 @@ namespace RLIM.UI.Controllers
             if (ModelState.IsValid)
             {
                 new CertificateCollection().Create(model.Name, model.Tier);
-                return RedirectToAction("Index");
             }
-                
-            return View();
+
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Update(int id)
         {
             if (id > 0)
@@ -70,18 +69,19 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdateCertificate(CertificateModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(CertificateModel model)
         {
             if (ModelState.IsValid)
             {
                 new CertificateCollection().Get(model.ID).Update(model.Name, model.Tier);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Update");
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -92,15 +92,16 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult DeleteCertificate(CertificateModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(CertificateModel model)
         {
             if (ModelState.IsValid)
             {
                 new CertificateCollection().Delete(model.ID);
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Delete");
+            return RedirectToAction("Index");
         }
     }
 }

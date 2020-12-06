@@ -1,5 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model RLIM.UI.Models.SubItemModel
+
 @{
+    ViewData["Title"] = $"Delete Sub-Item of {ViewData["MainItemName"]}";
+    TempData["MainItemID"] = ViewData["MainItemID"];
 }
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div class="col-md-4" style="padding-left: 0">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.CertificateDisplay)</th>
+                <th>@Html.DisplayNameFor(model => model.ColorDisplay)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.CertificateDisplay)</td>
+                <td>@Html.DisplayFor(model => model.ColorDisplay)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form asp-controller="SubItem" asp-action="DeleteSubItem">
+        <input asp-for="ID" type="hidden" />
+        <input asp-for="MainItemID" type="hidden" />
+        <input asp-for="CertificateID" type="hidden" />
+        <input asp-for="ColorID" type="hidden" />
+        <input type="submit" value="Yes, I want to" class="btn btn-danger" />
+        &nbsp;
+        <a asp-controller="SubItem" asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+    </form>
+</div>

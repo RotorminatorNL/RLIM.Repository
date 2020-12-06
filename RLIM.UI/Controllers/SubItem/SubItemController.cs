@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RLIM.BusinessLogic;
 using RLIM.UI.Models;
 using System.Collections.Generic;
@@ -14,9 +15,7 @@ namespace RLIM.UI.Controllers
             return new CertificateModel
             {
                 ID = certificate.ID,
-                Name = certificate.Name,
-                Tier = certificate.Tier,
-                Display = certificate.Name == "None" ? certificate.Name : $"{certificate.Name} ({certificate.Tier})"
+                Display = certificate.ID == 0 ? certificate.Name : $"{certificate.Name} ({certificate.Tier})"
             };
         }
 
@@ -29,9 +28,7 @@ namespace RLIM.UI.Controllers
                 certificates.Add(new CertificateModel
                 {
                     ID = certificate.ID,
-                    Name = certificate.Name,
-                    Tier = certificate.Tier,
-                    Display = certificate.Name == "None" ? certificate.Name : $"{certificate.Name} ({certificate.Tier})"
+                    Display = $"{certificate.Name} ({certificate.Tier})"
                 });
             }
 
@@ -45,9 +42,7 @@ namespace RLIM.UI.Controllers
             return new ColorModel
             {
                 ID = color.ID,
-                Name = color.Name,
-                Hex = color.Hex,
-                Display = color.Name == "Default" ? color.Name : $"{color.Name} ({color.Hex})"
+                Display = color.ID == 0 ? color.Name : $"{color.Name} ({color.Hex})"
             };
         }
 
@@ -60,20 +55,36 @@ namespace RLIM.UI.Controllers
                 colors.Add(new ColorModel
                 {
                     ID = color.ID,
-                    Name = color.Name,
-                    Hex = color.Hex,
-                    Display = color.Name == "Default" ? color.Name : $"{color.Name} ({color.Hex})"
+                    Display = $"{color.Name} ({color.Hex})"
                 });
             }
 
             return colors;
         }
 
-        private List<SubItemModel> GetSubItems(int mainItemID)
+        private SubItemModel GetSubItem(int id)
+        {
+            SubItem subItem = new SubItemCollection().Get(id);
+
+            CertificateModel certificate = GetCertificate(subItem.CertificateID);
+            ColorModel color = GetColor(subItem.ColorID);
+
+            return new SubItemModel 
+            { 
+                ID = subItem.ID,
+                MainItemID = subItem.MainItemID,
+                CertificateID = certificate.ID,
+                CertificateDisplay = certificate.Display,
+                ColorID = color.ID,
+                ColorDisplay = color.Display
+            };
+        }
+
+        private List<SubItemModel> GetSubItems(int id)
         {
             List<SubItemModel> subItemModels = new List<SubItemModel>();
 
-            MainItem mainItem = new MainItemCollection().Get(mainItemID);
+            MainItem mainItem = new MainItemCollection().Get(id);
 
             ViewData["MainItemID"] = mainItem.ID;
             ViewData["MainItemName"] = mainItem.Name;
@@ -83,7 +94,6 @@ namespace RLIM.UI.Controllers
                 subItemModels.Add(new SubItemModel
                 {
                     ID = subItem.ID,
-                    MainItemDisplay = mainItem.Name,
                     MainItemID = mainItem.ID,
                     CertificateDisplay = GetCertificate(subItem.CertificateID).Display,
                     ColorDisplay = GetColor(subItem.ColorID).Display
@@ -97,37 +107,69 @@ namespace RLIM.UI.Controllers
         {
             if (id == 0)
             {
+                if (TempData["MainItemID"] == null)
+                {
+                    return RedirectToAction("Index", "MainItem");
+                }
+
                 id = (int)TempData["MainItemID"];
             }
             return View(GetSubItems(id));
         }
 
-        [HttpPost]
-        public IActionResult Create(int id, string name)
+        public IActionResult Create()
         {
-            ViewData["Certificates"] = GetCertificates();
-            ViewData["Colors"] = GetColors();
-            ViewData["MainItemID"] = id;
-            ViewData["MainItemName"] = name;
+            if (TempData["MainItemID"] != null && TempData["MainItemName"] != null)
+            {
+                ViewData["Certificates"] = GetCertificates();
+                ViewData["Colors"] = GetColors();
+                ViewData["MainItemID"] = TempData["MainItemID"];
+                ViewData["MainItemName"] = TempData["MainItemName"];
 
-            return View(new SubItemModel 
-            { 
-                MainItemID = id,
-                MainItemDisplay = name
-            });
+                return View(new SubItemModel
+                {
+                    MainItemID = (int)TempData["MainItemID"]
+                });
+            }
+
+            return RedirectToAction("Index", "MainItem");
         }
 
         [HttpPost]
-        public IActionResult Creating(SubItemModel model)
+        public IActionResult CreateSubItem(SubItemModel model)
         {
-            if (ModelState.IsValid)
+            if (model.ID == 0 && model.MainItemID > 0 && model.CertificateID >= 0 && model.ColorID >= 0)
             {
                 new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
                 TempData["MainItemID"] = model.MainItemID;
                 return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Create");
+            return RedirectToAction("Index", "MainItem");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            if (id > 0 && TempData["MainItemID"] != null && TempData["MainItemName"] != null)
+            {
+                ViewData["MainItemID"] = TempData["MainItemID"];
+                ViewData["MainItemName"] = TempData["MainItemName"];
+                return View(GetSubItem(id));
+            }
+
+            return RedirectToAction("Index", "MainItem");
+        }
+
+        public IActionResult DeleteSubItem(SubItemModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                new SubItemCollection().Delete(model.ID);
+                TempData["MainItemID"] = model.MainItemID;
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index", "MainItem");
         }
     }
 }

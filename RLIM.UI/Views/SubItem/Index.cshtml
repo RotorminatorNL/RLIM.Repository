@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Sub-Items";
+    TempData["MainItemID"] = ViewData["MainItemID"];
+    TempData["MainItemName"] = ViewData["MainItemName"];
 }
 
 <h1>@ViewData["Title"] of @ViewData["MainItemName"]</h1>
@@ -18,20 +20,19 @@
         <tr>
             <td></td>
             <td></td>
-            <td>
-                <form asp-controller="SubItem" asp-action="Create" style="display: inline-block">
-                    <input asp-for="@ViewData["MainItemID"]" name="id" type="hidden" />
-                    <input asp-for="@ViewData["MainItemName"]" name="name" type="hidden" />
-                    <input type="submit" value="New Sub-Item" class="btn btn-primary" />
-                </form>
-            </td>
+            <td><a asp-controller="SubItem" asp-action="Create" class="btn btn-primary">New Sub-Item</a></td>
         </tr>
         @foreach (var item in Model)
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.CertificateDisplay)</td>
                 <td>@Html.DisplayFor(modelItem => item.ColorDisplay)</td>
-                <td>None</td>
+                <td>
+                    <form asp-controller="SubItem" asp-action="Delete" style="display: inline-block">
+                        <input asp-for="@item.ID" name="id" type="hidden" />
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                </td>
             </tr>
         }
     </tbody>

@@ -56,6 +56,14 @@ namespace RLIM.DataAccess
                         Hex = reader["Hex"].ToString()
                     };
                 }
+                else
+                {
+                    colorDTO = new ColorDTO
+                    {
+                        ID = 0,
+                        Name = "Default"
+                    };
+                }
                 conn.Close();
             }
             catch (SqlException exception)

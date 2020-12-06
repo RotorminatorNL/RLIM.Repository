@@ -56,7 +56,7 @@ namespace RLIM.DataAccess
                         ID = Convert.ToInt32(reader["ID"]),
                         MainItemID = Convert.ToInt32(reader["MainItemID"]),
                         CertificateID = reader["CertificateID"].ToString() != "" ? Convert.ToInt32(reader["CertificateID"]) : 0,
-                        ColorID = Convert.ToInt32(reader["ColorID"])
+                        ColorID = reader["ColorID"].ToString() != "" ? Convert.ToInt32(reader["ColorID"]) : 0
                     };
                 }
                 conn.Close();
@@ -90,7 +90,7 @@ namespace RLIM.DataAccess
                         ID = Convert.ToInt32(reader["ID"]),
                         MainItemID = Convert.ToInt32(reader["MainItemID"]),
                         CertificateID = reader["CertificateID"].ToString() != "" ? Convert.ToInt32(reader["CertificateID"]) : 0,
-                        ColorID = Convert.ToInt32(reader["ColorID"])
+                        ColorID = reader["ColorID"].ToString() != "" ? Convert.ToInt32(reader["ColorID"]) : 0
                     });
                 }
                 conn.Close();
@@ -127,7 +127,7 @@ namespace RLIM.DataAccess
                         ID = Convert.ToInt32(reader["ID"]),
                         MainItemID = Convert.ToInt32(reader["MainItemID"]),
                         CertificateID = reader["CertificateID"].ToString() != "" ? Convert.ToInt32(reader["CertificateID"]) : 0,
-                        ColorID = Convert.ToInt32(reader["ColorID"])
+                        ColorID = reader["ColorID"].ToString() != "" ? Convert.ToInt32(reader["ColorID"]) : 0
                     });
                 }
                 conn.Close();

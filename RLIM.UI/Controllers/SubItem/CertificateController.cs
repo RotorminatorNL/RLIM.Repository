@@ -62,7 +62,7 @@ namespace RLIM.UI.Controllers
         [HttpPost]
         public IActionResult Update(int id)
         {
-            if (id >= 0)
+            if (id > 0)
             {
                 return View(GetCertificate(id));
             }
@@ -84,7 +84,7 @@ namespace RLIM.UI.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            if (id >= 0)
+            if (id > 0)
             {
                 return View(GetCertificate(id));
             }

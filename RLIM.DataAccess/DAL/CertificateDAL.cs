@@ -61,8 +61,7 @@ namespace RLIM.DataAccess
                     certificateDTO = new CertificateDTO
                     {
                         ID = 0,
-                        Name = "None",
-                        Tier = 0
+                        Name = "No Certificate"
                     };
                 }
                 conn.Close();

@@ -6,16 +6,17 @@ namespace RLIM.UI.Models
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Without a Main-Item there cannot be a Sub-Item.")]
+        [Display(Name = "Main-Item")]
         public int MainItemID { get; set; }
+        [Display(Name = "Main-Item")]
         public string MainItemDisplay { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "You need to select a Certificate.")]
+        [Display(Name = "Certificate")]
         public int CertificateID { get; set; }
         [Display(Name = "Certificate")]
         public string CertificateDisplay { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "You need to select a Color.")]
+        [Display(Name = "Color")]
         public int ColorID { get; set; }
         [Display(Name = "Color")]
         public string ColorDisplay { get; set; }

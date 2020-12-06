@@ -133,6 +133,7 @@ namespace RLIM.UI.Controllers
         {
             if (ModelState.IsValid)
             {
+                new MainItemCollection().Create(model.Name, model.CategoryID, model.PlatformID, model.QualityID);
                 return RedirectToAction("Index");
             }
 

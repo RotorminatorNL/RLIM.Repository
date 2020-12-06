@@ -148,6 +148,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index", "MainItem");
         }
 
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             if (id > 0 && TempData["MainItemID"] != null && TempData["MainItemName"] != null)

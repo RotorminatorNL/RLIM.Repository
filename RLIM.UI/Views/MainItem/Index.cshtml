@@ -36,6 +36,10 @@
                         <input asp-for="@item.ID" name="id" type="hidden" />
                         <input type="submit" value="See Sub-Items" class="btn btn-primary" />
                     </form>
+                    <form asp-controller="MainItem" asp-action="Delete" style="display: inline-block">
+                        <input asp-for="@item.ID" name="id" type="hidden" />
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
                 </td>
             </tr>
         }

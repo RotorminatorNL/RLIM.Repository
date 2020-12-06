@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<RLIM.UI.Models.SubItemModel>
 
 @{
-    ViewData["Title"] = "Sub-Items";
+    ViewData["Title"] = $"Sub-Items of {ViewData["MainItemName"]}";
     TempData["MainItemID"] = ViewData["MainItemID"];
     TempData["MainItemName"] = ViewData["MainItemName"];
 }
 
-<h1>@ViewData["Title"] of @ViewData["MainItemName"]</h1>
+<h1>@ViewData["Title"]</h1>
 
 <table class="table">
     <thead>

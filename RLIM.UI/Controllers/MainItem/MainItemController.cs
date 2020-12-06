@@ -72,8 +72,6 @@ namespace RLIM.UI.Controllers
             return new QualityModel
             {
                 ID = quality.ID,
-                Name = quality.Name,
-                Rank = quality.Rank,
                 Display = $"{quality.Name} ({quality.Rank})"
             };
         }
@@ -87,13 +85,28 @@ namespace RLIM.UI.Controllers
                 qualities.Add(new QualityModel
                 {
                     ID = quality.ID,
-                    Name = quality.Name,
-                    Rank = quality.Rank,
                     Display = $"{quality.Name} ({quality.Rank})"
                 });
             }
 
             return qualities;
+        }
+
+        private MainItemModel GetMainItem(int id)
+        {
+            MainItem mainItem = new MainItemCollection().Get(id);
+
+            return new MainItemModel
+            {
+                ID = mainItem.ID,
+                Name = mainItem.Name,
+                CategoryID = mainItem.CategoryID,
+                CategoryDisplay = GetCategory(mainItem.CategoryID).Name,
+                PlatformID = mainItem.PlatformID,
+                PlatformDisplay = GetPlatform(mainItem.PlatformID).Name,
+                QualityID = mainItem.QualityID,
+                QualityDisplay = GetQuality(mainItem.QualityID).Display
+            };
         }
 
         private List<MainItemModel> GetMainItems()
@@ -138,6 +151,26 @@ namespace RLIM.UI.Controllers
             }
 
             return RedirectToAction("Create");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            if (id > 0)
+            {
+                return View(GetMainItem(id));
+            }
+
+            return RedirectToAction("Index");
+        }
+        
+        public IActionResult DeleteMainItem(MainItemModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                new MainItemCollection().Delete(model.ID);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

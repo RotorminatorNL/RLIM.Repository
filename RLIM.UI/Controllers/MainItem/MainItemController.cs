@@ -142,7 +142,7 @@ namespace RLIM.UI.Controllers
             return View();
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/Main-Item/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(MainItemModel model)
         {
@@ -165,7 +165,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/Main-Item/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(MainItemModel model)
         {

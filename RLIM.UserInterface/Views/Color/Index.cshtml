@@ -1,0 +1,35 @@
+﻿@model IEnumerable<RLIM.UserInterface.Models.ColorModel>
+
+@{
+    ViewData["Title"] = "Colors";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Hex)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><a asp-controller="Color" asp-action="Create" class="btn btn-primary">New Color</a></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Hex)</td>
+                <td>
+                    <a href="Color/@item.ID/Update" class="btn btn-warning">Update</a>
+                    <a href="Color/@item.ID/Delete" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

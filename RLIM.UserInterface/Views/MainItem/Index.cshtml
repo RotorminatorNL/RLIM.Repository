@@ -1,0 +1,41 @@
+﻿@model IEnumerable<RLIM.UserInterface.Models.MainItemModel>
+
+@{
+    ViewData["Title"] = "Main-Items";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.CategoryDisplay)</th>
+            <th>@Html.DisplayNameFor(model => model.PlatformDisplay)</th>
+            <th>@Html.DisplayNameFor(model => model.QualityDisplay)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a asp-controller="MainItem" asp-action="Create" class="btn btn-primary">New Main-Item</a></td>
+        </tr>
+       @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.CategoryDisplay)</td>
+                <td>@Html.DisplayFor(modelItem => item.PlatformDisplay)</td>
+                <td>@Html.DisplayFor(modelItem => item.QualityDisplay)</td>
+                <td>
+                    <a href="/@item.Name/@item.ID/Sub-Items" class="btn btn-primary">See Sub-Items</a>
+                    <a href="/Main-Item/@item.ID/Delete" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

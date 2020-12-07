@@ -38,11 +38,7 @@ namespace RLIM.BusinessLogic
 
         public void Delete(int id)
         {
-            foreach (SubItem subItem in Get(id).GetSubItems())
-            {
-                SubItemFactoryDAL.GetCollectionDAL().Delete(subItem.ID);
-            }
-
+            SubItemFactoryDAL.GetCollectionDAL().DeleteAllWithMainItemID(id);
             MainItemFactoryDAL.GetCollectionDAL().Delete(id);
         }
     }

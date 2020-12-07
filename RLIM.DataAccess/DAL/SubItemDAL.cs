@@ -195,5 +195,27 @@ namespace RLIM.DataAccess
                 Console.WriteLine(exception);
             }
         }
+
+        public void DeleteAllWithMainItemID(int maintItemID)
+        {
+            using SqlConnection conn = Db.Connect();
+
+            try
+            {
+                string sql = "DELETE dbo.SubItem ";
+                sql += "WHERE MainItemID = @id";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = maintItemID;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
+        }
     }
 }

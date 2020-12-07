@@ -8,14 +8,17 @@ namespace RLIM.DataAccess
 {
     public class MainItemDAL : IMainItemCollectionDAL, IMainItemDAL
     {
-        public void Create(MainItemDTO mainItemDTO)
+        public int Create(MainItemDTO mainItemDTO)
         {
             using SqlConnection conn = Db.Connect();
+
+            int id = 0;
 
             try
             {
                 string sql = "INSERT INTO dbo.MainItem (Name, CategoryID, PlatformID, QualityID) ";
-                sql += "VALUES(@name, @categoryID, @platformID, @qualityID)";
+                sql += "VALUES(@name, @categoryID, @platformID, @qualityID) ";
+                sql += "SELECT CAST(scope_identity() AS int)";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = mainItemDTO.Name;
                 cmd.Parameters.Add("@categoryID", SqlDbType.Int).Value = mainItemDTO.CategoryID;
@@ -23,7 +26,7 @@ namespace RLIM.DataAccess
                 cmd.Parameters.Add("@qualityID", SqlDbType.Int).Value = mainItemDTO.QualityID;
 
                 conn.Open();
-                cmd.ExecuteNonQuery();
+                id = (int)cmd.ExecuteScalar();
                 conn.Close();
             }
             catch (SqlException exception)
@@ -31,6 +34,8 @@ namespace RLIM.DataAccess
                 conn.Close();
                 Console.WriteLine(exception);
             }
+
+            return id;
         }
 
         public MainItemDTO Get(int id)

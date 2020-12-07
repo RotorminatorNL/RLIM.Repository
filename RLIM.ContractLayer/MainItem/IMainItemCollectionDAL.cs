@@ -6,7 +6,7 @@ namespace RLIM.ContractLayer
 {
     public interface IMainItemCollectionDAL
     {
-        void Create(MainItemDTO mainItemDTO);
+        int Create(MainItemDTO mainItemDTO);
         MainItemDTO Get(int id);
         List<MainItemDTO> GetAll();
         void Delete(int id);

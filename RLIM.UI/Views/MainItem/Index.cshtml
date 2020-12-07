@@ -33,7 +33,7 @@
                 <td>@Html.DisplayFor(modelItem => item.QualityDisplay)</td>
                 <td>
                     <a href="/@item.Name/@item.ID/Sub-Items" class="btn btn-primary">See Sub-Items</a>
-                    <a asp-controller="MainItem" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                    <a href="/Main-Item/@item.ID/Delete" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

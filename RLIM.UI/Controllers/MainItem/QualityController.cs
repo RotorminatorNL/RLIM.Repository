@@ -39,6 +39,7 @@ namespace RLIM.UI.Controllers
             };
         }
 
+        [Route("/Qualities")]
         public IActionResult Index()
         {
             return View(GetQualitys());
@@ -61,7 +62,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet("/[controller]/{id}/[action]")]
         public IActionResult Update(int id)
         {
             if (id > 0)
@@ -72,7 +73,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpPost("/[controller]/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(QualityModel model)
         {
@@ -84,7 +85,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet("/[controller]/{id}/[action]")]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -95,7 +96,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpPost("/[controller]/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(QualityModel model)
         {

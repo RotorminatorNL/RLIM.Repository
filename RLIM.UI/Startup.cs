@@ -46,7 +46,7 @@ namespace RLIM.UI
 
                 endpoints.MapControllerRoute(
                     name: "SubItems",
-                    pattern: "{mainItemName=MainItemUnknown}/{mainItemID=0}/Sub-Items");
+                    pattern: "{MainItemName=Unknown}/{MainItemID=0}/Sub-Items");
             });
         }
     }

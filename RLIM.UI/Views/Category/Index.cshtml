@@ -23,8 +23,8 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>
-                    <a asp-controller="Category" asp-action="Update" asp-route-id="@item.ID" class="btn btn-warning">Update</a>
-                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                    <a href="Category/@item.ID/Update" class="btn btn-warning">Update</a>
+                    <a href="Category/@item.ID/Delete" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

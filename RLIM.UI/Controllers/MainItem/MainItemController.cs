@@ -133,6 +133,7 @@ namespace RLIM.UI.Controllers
             return View(GetMainItems());
         }
 
+        [Route("/Main-Item/[action]")]
         public IActionResult Create()
         {
             ViewBag.Categories = GetCategories();
@@ -141,7 +142,7 @@ namespace RLIM.UI.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("/[controller]/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(MainItemModel model)
         {
@@ -153,7 +154,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
         
-        [HttpGet]
+        [HttpGet("/Main-Item/{id}/[action]")]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -164,7 +165,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpPost("/[controller]/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(MainItemModel model)
         {

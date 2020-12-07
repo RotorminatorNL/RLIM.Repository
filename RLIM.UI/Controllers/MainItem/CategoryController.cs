@@ -34,6 +34,7 @@ namespace RLIM.UI.Controllers
             };
         }
 
+        [Route("/Categories")]
         public IActionResult Index()
         {
             return View(GetCategorys());
@@ -56,7 +57,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet("/[controller]/{id}/[action]")]
         public IActionResult Update(int id)
         {
             if (id > 0)
@@ -67,7 +68,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpPost("/[controller]/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(CategoryModel model)
         {
@@ -79,7 +80,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet("/[controller]/{id}/[action]")]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -90,7 +91,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpPost("/[controller]/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(CategoryModel model)
         {

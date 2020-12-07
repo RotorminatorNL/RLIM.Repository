@@ -103,54 +103,54 @@ namespace RLIM.UI.Controllers
             return subItemModels;
         }
 
-        [HttpGet("/{mainItemName}/{mainItemID}/Sub-Items")]
-        public IActionResult Index(int mainItemID)
+        [HttpGet("/{MainItemName}/{MainItemID}/Sub-Items")]
+        public IActionResult Index(int MainItemID)
         {
-            if (mainItemID != 0)
+            if (MainItemID != 0)
             {
-                return View(GetSubItems(mainItemID));
+                return View(GetSubItems(MainItemID));
             }
 
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpGet("/{mainItemName}/{mainItemID}/Sub-Item/Create")]
-        public IActionResult Create(int mainItemID, string mainItemName)
+        [HttpGet("/{MainItemName}/{MainItemID}/Sub-Item/[action]")]
+        public IActionResult Create(int MainItemID, string MainItemName)
         {
-            if (mainItemID != 0 && mainItemName != "")
+            if (MainItemID != 0 && MainItemName != "")
             {
                 ViewData["Certificates"] = GetCertificates();
                 ViewData["Colors"] = GetColors();
-                ViewData["MainItemID"] = mainItemID;
-                ViewData["MainItemName"] = mainItemName;
+                ViewData["MainItemID"] = MainItemID;
+                ViewData["MainItemName"] = MainItemName;
 
                 return View(new SubItemModel
                 {
-                    MainItemID = mainItemID,
-                    MainItemDisplay = mainItemName
+                    MainItemID = MainItemID,
+                    MainItemDisplay = MainItemName
                 });
             }
 
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpPost("/Sub-Item/Create")]
+        [HttpPost("/Sub-Item/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(SubItemModel model)
         {
             if (model.ID == 0 && model.MainItemID > 0 && model.CertificateID >= 0 && model.ColorID >= 0)
             {
                 new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
-                return RedirectToRoute("SubItems", new { mainItemName = model.MainItemDisplay, mainItemID = model.MainItemID });
+                return RedirectToRoute("SubItems", new { MainItemName = model.MainItemDisplay, MainItemID = model.MainItemID });
             }
 
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpGet("/{mainItemName}/{mainItemID}/Sub-Item/{ID}/Update")]
-        public IActionResult Update(int mainItemID, string mainItemName, int ID)
+        [HttpGet("/{MainItemName}/{MainItemID}/Sub-Item/{id}/[action]")]
+        public IActionResult Update(int MainItemID, string MainItemName, int id)
         {
-            if (mainItemID != 0 && mainItemName != "" && ID != 0)
+            if (MainItemID != 0 && MainItemName != "" && id != 0)
             {
                 return View();
             }
@@ -158,27 +158,27 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpGet("/{mainItemName}/{mainItemID}/Sub-Item/{ID}/Delete")]
-        public IActionResult Delete(int mainItemID, string mainItemName, int ID)
+        [HttpGet("/{MainItemName}/{MainItemID}/Sub-Item/{id}/[action]")]
+        public IActionResult Delete(int MainItemID, string MainItemName, int id)
         {
-            if (mainItemID != 0 && mainItemName != "" && ID != 0)
+            if (MainItemID != 0 && MainItemName != "" && id != 0)
             {
-                ViewData["MainItemID"] = mainItemID;
-                ViewData["MainItemName"] = mainItemName;
-                return View(GetSubItem(ID));
+                ViewData["MainItemID"] = MainItemID;
+                ViewData["MainItemName"] = MainItemName;
+                return View(GetSubItem(id));
             }
 
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpPost("/Sub-Item/Delete")]
+        [HttpPost("/Sub-Item/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(SubItemModel model)
         {
             if (ModelState.IsValid)
             {
                 new SubItemCollection().Delete(model.ID);
-                return RedirectToRoute("SubItems", new { mainItemName = model.MainItemDisplay, mainItemID = model.MainItemID });
+                return RedirectToRoute("SubItems", new { MainItemName = model.MainItemDisplay, MainItemID = model.MainItemID });
             }
 
             return RedirectToAction("Index", "MainItem");

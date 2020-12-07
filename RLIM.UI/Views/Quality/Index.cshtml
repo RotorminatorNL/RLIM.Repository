@@ -26,8 +26,8 @@
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.Rank)</td>
                 <td>
-                    <a asp-controller="Quality" asp-action="Update" asp-route-id="@item.ID" class="btn btn-warning">Update</a>
-                    <a asp-controller="Quality" asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                    <a href="Quality/@item.ID/Update" class="btn btn-warning">Update</a>
+                    <a href="Quality/@item.ID/Delete" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

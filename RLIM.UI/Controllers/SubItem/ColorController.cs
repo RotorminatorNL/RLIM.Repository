@@ -36,6 +36,7 @@ namespace RLIM.UI.Controllers
             };
         }
 
+        [Route("/Colors")]
         public IActionResult Index()
         {
             return View(GetColors());
@@ -58,7 +59,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet("/[controller]/{id}/[action]")]
         public IActionResult Update(int id)
         {
             if (id > 0)
@@ -69,7 +70,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpPost("/[controller]/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(ColorModel model)
         {
@@ -81,7 +82,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet("/[controller]/{id}/[action]")]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -92,7 +93,7 @@ namespace RLIM.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpPost("/[controller]/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(ColorModel model)
         {

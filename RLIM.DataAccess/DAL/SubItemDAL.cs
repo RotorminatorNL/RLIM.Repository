@@ -35,7 +35,7 @@ namespace RLIM.DataAccess
 
         public SubItemDTO Get(int id)
         {
-            SubItemDTO subItemDTO = null;
+            SubItemDTO subItemDTO = new SubItemDTO { ID = 0 };
 
             using SqlConnection conn = Db.Connect();
 
@@ -51,19 +51,15 @@ namespace RLIM.DataAccess
                 using SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
+                    var certificateID = reader["CertificateID"];
+                    var colorID = reader["ColorID"];
+
                     subItemDTO = new SubItemDTO
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        MainItemID = Convert.ToInt32(reader["MainItemID"]),
-                        CertificateID = reader["CertificateID"].ToString() != "" ? Convert.ToInt32(reader["CertificateID"]) : 0,
-                        ColorID = reader["ColorID"].ToString() != "" ? Convert.ToInt32(reader["ColorID"]) : 0
-                    };
-                }
-                else
-                {
-                    subItemDTO = new SubItemDTO
-                    {
-                        ID = 0
+                        ID = (int)reader["ID"],
+                        MainItemID = (int)reader["MainItemID"],
+                        CertificateID = (int)certificateID,
+                        ColorID = (int)colorID
                     };
                 }
                 conn.Close();
@@ -75,6 +71,40 @@ namespace RLIM.DataAccess
             }
 
             return subItemDTO;
+        }
+
+        public int GetID(SubItemDTO subItemDTO)
+        {
+            int id = 0;
+
+            using SqlConnection conn = Db.Connect();
+
+            try
+            {
+                string sql = "SELECT ID ";
+                sql += "FROM dbo.SubItem ";
+                sql += "WHERE MainItemID = @mainItemID AND CertificateID = @certificateID AND ColorID = @colorID";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@mainItemID", SqlDbType.Int).Value = subItemDTO.MainItemID;
+                cmd.Parameters.Add("@certificateID", SqlDbType.Int).Value = subItemDTO.CertificateID;
+                cmd.Parameters.Add("@colorID", SqlDbType.Int).Value = subItemDTO.ColorID;
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    id = (int)reader["ID"];
+                }
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
+
+            return id;
         }
 
         public List<SubItemDTO> GetAll()
@@ -93,12 +123,15 @@ namespace RLIM.DataAccess
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
+                    var certificateID = reader["CertificateID"];
+                    var colorID = reader["ColorID"];
+
                     subItemDTOs.Add(new SubItemDTO
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        MainItemID = Convert.ToInt32(reader["MainItemID"]),
-                        CertificateID = reader["CertificateID"].ToString() != "" ? Convert.ToInt32(reader["CertificateID"]) : 0,
-                        ColorID = reader["ColorID"].ToString() != "" ? Convert.ToInt32(reader["ColorID"]) : 0
+                        ID = (int)reader["ID"],
+                        MainItemID = (int)reader["MainItemID"],
+                        CertificateID = (int)certificateID,
+                        ColorID = (int)colorID
                     });
                 }
                 conn.Close();
@@ -130,12 +163,15 @@ namespace RLIM.DataAccess
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
+                    var certificateID = reader["CertificateID"];
+                    var colorID = reader["ColorID"];
+
                     subItemDTOs.Add(new SubItemDTO
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        MainItemID = Convert.ToInt32(reader["MainItemID"]),
-                        CertificateID = reader["CertificateID"].ToString() != "" ? Convert.ToInt32(reader["CertificateID"]) : 0,
-                        ColorID = reader["ColorID"].ToString() != "" ? Convert.ToInt32(reader["ColorID"]) : 0
+                        ID = (int)reader["ID"],
+                        MainItemID = (int)reader["MainItemID"],
+                        CertificateID = (int)certificateID,
+                        ColorID = (int)colorID
                     });
                 }
                 conn.Close();

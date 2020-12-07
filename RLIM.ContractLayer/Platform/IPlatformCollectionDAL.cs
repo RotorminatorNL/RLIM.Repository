@@ -8,6 +8,7 @@ namespace RLIM.ContractLayer
     {
         void Create(PlatformDTO platformDTO);
         PlatformDTO Get(int id);
+        int GetID(PlatformDTO platformDTO);
         List<PlatformDTO> GetAll();
         void Delete(int id);
     }

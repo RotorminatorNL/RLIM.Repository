@@ -32,7 +32,7 @@ namespace RLIM.DataAccess
 
         public PlatformDTO Get(int id)
         {
-            PlatformDTO platformDTO = null;
+            PlatformDTO platformDTO = new PlatformDTO { ID = 0, Name = "No Platform" };
 
             using SqlConnection conn = Db.Connect();
 
@@ -50,16 +50,8 @@ namespace RLIM.DataAccess
                 {
                     platformDTO = new PlatformDTO
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        Name = reader["Name"].ToString()
-                    };
-                }
-                else
-                {
-                    platformDTO = new PlatformDTO
-                    {
-                        ID = 0,
-                        Name = "No Platform"
+                        ID = (int)reader["ID"],
+                        Name = (string)reader["Name"]
                     };
                 }
                 conn.Close();
@@ -71,6 +63,37 @@ namespace RLIM.DataAccess
             }
 
             return platformDTO;
+        }
+
+        public int GetID(PlatformDTO platformDTO)
+        {
+            int id = 0;
+
+            using SqlConnection conn = Db.Connect();
+
+            try
+            {
+                string sql = "SELECT ID ";
+                sql += "FROM dbo.Platform ";
+                sql += "WHERE Name = @name";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = platformDTO.Name;
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    id = (int)reader["ID"];
+                }
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
+
+            return id;
         }
 
         public List<PlatformDTO> GetAll()
@@ -92,8 +115,8 @@ namespace RLIM.DataAccess
                     platformDTOs.Add(
                         new PlatformDTO
                         {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            Name = reader["Name"].ToString()
+                            ID = (int)reader["ID"],
+                            Name = (string)reader["Name"]
                         });
                 }
                 conn.Close();

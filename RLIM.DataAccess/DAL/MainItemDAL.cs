@@ -40,7 +40,7 @@ namespace RLIM.DataAccess
 
         public MainItemDTO Get(int id)
         {
-            MainItemDTO mainItemDTO = null;
+            MainItemDTO mainItemDTO = new MainItemDTO { ID = 0, Name = "No Main-Item" };
 
             using SqlConnection conn = Db.Connect();
 
@@ -58,19 +58,11 @@ namespace RLIM.DataAccess
                 {
                     mainItemDTO = new MainItemDTO
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        Name = reader["Name"].ToString(),
-                        CategoryID = Convert.ToInt32(reader["CategoryID"]),
-                        PlatformID = Convert.ToInt32(reader["PlatformID"]),
-                        QualityID = Convert.ToInt32(reader["QualityID"])
-                    };
-                }
-                else
-                {
-                    mainItemDTO = new MainItemDTO
-                    {
-                        ID = 0,
-                        Name = "No Main-Item"
+                        ID = (int)reader["ID"],
+                        Name = (string)reader["Name"],
+                        CategoryID = (int)reader["CategoryID"],
+                        PlatformID = (int)reader["PlatformID"],
+                        QualityID = (int)reader["QualityID"]
                     };
                 }
                 conn.Close();
@@ -82,6 +74,40 @@ namespace RLIM.DataAccess
             }
 
             return mainItemDTO;
+        }
+
+        public int GetID(MainItemDTO mainItemDTO)
+        {
+            int id = 0;
+
+            using SqlConnection conn = Db.Connect();
+
+            try
+            {
+                string sql = "SELECT ID ";
+                sql += "FROM dbo.MainItem ";
+                sql += "WHERE Name = @name AND CategoryID = @categoryID AND PlatformID = @platformID AND QualityID = @qualityID";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = mainItemDTO.Name;
+                cmd.Parameters.Add("@categoryID", SqlDbType.Int).Value = mainItemDTO.CategoryID;
+                cmd.Parameters.Add("@platformID", SqlDbType.Int).Value = mainItemDTO.PlatformID;
+                cmd.Parameters.Add("@qualityID", SqlDbType.Int).Value = mainItemDTO.QualityID;
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    id = (int)reader["ID"];
+                }
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
+
+            return id;
         }
 
         public List<MainItemDTO> GetAll()
@@ -103,11 +129,11 @@ namespace RLIM.DataAccess
                     mainItemDTOs.Add(
                         new MainItemDTO
                         {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            Name = reader["Name"].ToString(),
-                            CategoryID = Convert.ToInt32(reader["CategoryID"]),
-                            PlatformID = Convert.ToInt32(reader["PlatformID"]),
-                            QualityID = Convert.ToInt32(reader["QualityID"])
+                            ID = (int)reader["ID"],
+                            Name = (string)reader["Name"],
+                            CategoryID = (int)reader["CategoryID"],
+                            PlatformID = (int)reader["PlatformID"],
+                            QualityID = (int)reader["QualityID"]
                         });
                 }
                 conn.Close();

@@ -6,6 +6,7 @@ namespace RLIM.ContractLayer
     {
         void Create(ColorDTO colorDTO);
         ColorDTO Get(int id);
+        int GetID(ColorDTO colorDTO);
         List<ColorDTO> GetAll();
         void Delete(int id);
     }

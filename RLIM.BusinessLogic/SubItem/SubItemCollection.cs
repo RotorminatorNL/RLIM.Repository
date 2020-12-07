@@ -10,6 +10,7 @@ namespace RLIM.BusinessLogic
     {
         public void Create(int mainItemID, int certificateID, int colorID)
         {
+
             SubItemDTO subItemDTO = new SubItemDTO
             {
                 MainItemID = mainItemID,
@@ -17,7 +18,10 @@ namespace RLIM.BusinessLogic
                 ColorID = colorID
             };
 
-            SubItemFactoryDAL.GetCollectionDAL().Create(subItemDTO);
+            if (SubItemFactoryDAL.GetCollectionDAL().GetID(subItemDTO) == 0)
+            {
+                SubItemFactoryDAL.GetCollectionDAL().Create(subItemDTO);
+            }
         }
 
         public SubItem Get(int id)

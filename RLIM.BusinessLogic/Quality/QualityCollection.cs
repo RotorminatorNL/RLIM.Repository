@@ -14,7 +14,10 @@ namespace RLIM.BusinessLogic
                 Rank = rank
             };
 
-            QualityFactoryDAL.GetCollectionDAL().Create(qualityDTO);
+            if (QualityFactoryDAL.GetCollectionDAL().GetID(qualityDTO) == 0)
+            {
+                QualityFactoryDAL.GetCollectionDAL().Create(qualityDTO);
+            }
         }
 
         public Quality Get(int id)

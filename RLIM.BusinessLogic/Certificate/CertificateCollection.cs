@@ -14,7 +14,10 @@ namespace RLIM.BusinessLogic
                 Tier = tier
             };
 
-            CertificateFactoryDAL.GetCollectionDAL().Create(certificateDTO);
+            if (CertificateFactoryDAL.GetCollectionDAL().GetID(certificateDTO) == 0)
+            {
+                CertificateFactoryDAL.GetCollectionDAL().Create(certificateDTO);
+            }
         }
 
         public Certificate Get(int id)

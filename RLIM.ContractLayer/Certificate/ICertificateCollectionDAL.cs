@@ -6,6 +6,7 @@ namespace RLIM.ContractLayer
     {
         void Create(CertificateDTO certificateDTO);
         CertificateDTO Get(int id);
+        int GetID(CertificateDTO certificateDTO);
         List<CertificateDTO> GetAll();
         void Delete(int id);
     }

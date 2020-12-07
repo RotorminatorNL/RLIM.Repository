@@ -13,7 +13,10 @@ namespace RLIM.BusinessLogic
                 Name = name
             };
 
-            CategoryFactoryDAL.GetCollectionDAL().Create(categoryDTO);
+            if (CategoryFactoryDAL.GetCollectionDAL().GetID(categoryDTO) == 0)
+            {
+                CategoryFactoryDAL.GetCollectionDAL().Create(categoryDTO);
+            }
         }
 
         public Category Get(int id)

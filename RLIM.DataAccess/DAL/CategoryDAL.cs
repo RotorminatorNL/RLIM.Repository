@@ -32,7 +32,7 @@ namespace RLIM.DataAccess
 
         public CategoryDTO Get(int id)
         {
-            CategoryDTO categoryDTO = null;
+            CategoryDTO categoryDTO = new CategoryDTO { ID = 0, Name = "No Category" };
 
             using SqlConnection conn = Db.Connect();
 
@@ -50,16 +50,8 @@ namespace RLIM.DataAccess
                 {
                     categoryDTO = new CategoryDTO
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        Name = reader["Name"].ToString()
-                    };
-                }
-                else
-                {
-                    categoryDTO = new CategoryDTO
-                    {
-                        ID = 0,
-                        Name = "No Category"
+                        ID = (int)reader["ID"],
+                        Name = (string)reader["Name"]
                     };
                 }
                 conn.Close();
@@ -71,6 +63,37 @@ namespace RLIM.DataAccess
             }
 
             return categoryDTO;
+        }
+
+        public int GetID(CategoryDTO categoryDTO)
+        {
+            int id = 0;
+
+            using SqlConnection conn = Db.Connect();
+
+            try
+            {
+                string sql = "SELECT ID ";
+                sql += "FROM dbo.Category ";
+                sql += "WHERE Name = @name";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = categoryDTO.Name;
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    id = (int)reader["ID"];
+                }
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
+
+            return id;
         }
 
         public List<CategoryDTO> GetAll()
@@ -91,8 +114,8 @@ namespace RLIM.DataAccess
                     categoryDTOs.Add(
                         new CategoryDTO
                         {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            Name = reader["Name"].ToString()
+                            ID = (int)reader["ID"],
+                            Name = (string)reader["Name"]
                         });
                 }
                 conn.Close();

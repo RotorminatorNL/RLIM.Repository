@@ -34,7 +34,7 @@ namespace RLIM.DataAccess
 
         public ColorDTO Get(int id)
         {
-            ColorDTO colorDTO = null;
+            ColorDTO colorDTO = new ColorDTO { ID = 0, Name = "Default" };
 
             using SqlConnection conn = Db.Connect();
 
@@ -51,17 +51,9 @@ namespace RLIM.DataAccess
                 {
                     colorDTO = new ColorDTO 
                     {
-                        ID = Convert.ToInt32(reader["Id"]),
-                        Name = reader["Name"].ToString(),
-                        Hex = reader["Hex"].ToString()
-                    };
-                }
-                else
-                {
-                    colorDTO = new ColorDTO
-                    {
-                        ID = 0,
-                        Name = "Default"
+                        ID = (int)reader["Id"],
+                        Name = (string)reader["Name"],
+                        Hex = (string)reader["Hex"]
                     };
                 }
                 conn.Close();
@@ -73,6 +65,38 @@ namespace RLIM.DataAccess
             }
 
             return colorDTO;
+        }
+
+        public int GetID(ColorDTO colorDTO)
+        {
+            int id = 0;
+
+            using SqlConnection conn = Db.Connect();
+
+            try
+            {
+                string sql = "SELECT ID ";
+                sql += "FROM dbo.Color ";
+                sql += "WHERE Name = @name AND Hex = @hex";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = colorDTO.Name;
+                cmd.Parameters.Add("@hex", SqlDbType.NVarChar).Value = colorDTO.Hex;
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    id = (int)reader["Id"];
+                }
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
+
+            return id;
         }
 
         public List<ColorDTO> GetAll()
@@ -92,11 +116,11 @@ namespace RLIM.DataAccess
                 while (reader.Read())
                 {
                     colorDTOs.Add(
-                        new ColorDTO 
+                        new ColorDTO
                         {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            Name = reader["Name"].ToString(),
-                            Hex = reader["Hex"].ToString()
+                            ID = (int)reader["Id"],
+                            Name = (string)reader["Name"],
+                            Hex = (string)reader["Hex"]
                         });
                 }
                 conn.Close();

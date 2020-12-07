@@ -33,7 +33,7 @@ namespace RLIM.DataAccess
 
         public QualityDTO Get(int id)
         {
-            QualityDTO qualityDTO = null;
+            QualityDTO qualityDTO = new QualityDTO { ID = 0, Name = "No Quality" };
 
             using SqlConnection conn = Db.Connect();
 
@@ -51,17 +51,9 @@ namespace RLIM.DataAccess
                 {
                     qualityDTO = new QualityDTO
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        Name = reader["Name"].ToString(),
-                        Rank = Convert.ToInt32(reader["Rank"])
-                    };
-                }
-                else
-                {
-                    qualityDTO = new QualityDTO
-                    {
-                        ID = 0,
-                        Name = "No Quality"
+                        ID = (int)reader["ID"],
+                        Name = (string)reader["Name"],
+                        Rank = (int)reader["Rank"]
                     };
                 }
                 conn.Close();
@@ -73,6 +65,38 @@ namespace RLIM.DataAccess
             }
 
             return qualityDTO;
+        }
+
+        public int GetID(QualityDTO qualityDTO)
+        {
+            int id = 0;
+
+            using SqlConnection conn = Db.Connect();
+
+            try
+            {
+                string sql = "SELECT ID ";
+                sql += "FROM dbo.Quality ";
+                sql += "WHERE Name = @name AND Rank = @rank";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = qualityDTO.Name;
+                cmd.Parameters.Add("@rank", SqlDbType.Int).Value = qualityDTO.Rank;
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    id = (int)reader["ID"];
+                }
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
+
+            return id;
         }
 
         public List<QualityDTO> GetAll()
@@ -94,9 +118,9 @@ namespace RLIM.DataAccess
                     qualityDTOs.Add(
                         new QualityDTO
                         {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            Name = reader["Name"].ToString(),
-                            Rank = Convert.ToInt32(reader["Rank"])
+                            ID = (int)reader["ID"],
+                            Name = (string)reader["Name"],
+                            Rank = (int)reader["Rank"]
                         });
                 }
                 conn.Close();

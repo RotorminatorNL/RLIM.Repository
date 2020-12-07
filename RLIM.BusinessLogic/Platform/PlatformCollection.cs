@@ -13,7 +13,10 @@ namespace RLIM.BusinessLogic
                 Name = name
             };
 
-            PlatformFactoryDAL.GetCollectionDAL().Create(platformDTO);
+            if (PlatformFactoryDAL.GetCollectionDAL().GetID(platformDTO) == 0)
+            {
+                PlatformFactoryDAL.GetCollectionDAL().Create(platformDTO);
+            }
         }
 
         public Platform Get(int id)

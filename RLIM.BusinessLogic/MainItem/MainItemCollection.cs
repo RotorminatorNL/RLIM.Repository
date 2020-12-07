@@ -16,14 +16,14 @@ namespace RLIM.BusinessLogic
                 QualityID = qualityID
             };
 
-            int id = MainItemFactoryDAL.GetCollectionDAL().Create(mainItemDTO);
-
-            SubItemDTO subItemDTO = new SubItemDTO
+            if (MainItemFactoryDAL.GetCollectionDAL().GetID(mainItemDTO) == 0)
             {
-                MainItemID = id
-            };
+                int id = MainItemFactoryDAL.GetCollectionDAL().Create(mainItemDTO);
 
-            SubItemFactoryDAL.GetCollectionDAL().Create(subItemDTO);
+                SubItemDTO subItemDTO = new SubItemDTO { MainItemID = id };
+
+                SubItemFactoryDAL.GetCollectionDAL().Create(subItemDTO);
+            }
         }
 
         public MainItem Get(int id)

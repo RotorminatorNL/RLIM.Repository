@@ -8,6 +8,7 @@ namespace RLIM.ContractLayer
     {
         void Create(CategoryDTO categoryDTO);
         CategoryDTO Get(int id);
+        int GetID(CategoryDTO categoryDTO);
         List<CategoryDTO> GetAll();
         void Delete(int id);
     }

@@ -33,7 +33,7 @@ namespace RLIM.DataAccess
 
         public CertificateDTO Get(int id)
         {
-            CertificateDTO certificateDTO = null;
+            CertificateDTO certificateDTO = new CertificateDTO { ID = 0, Name = "No Certificate" };
 
             using SqlConnection conn = Db.Connect();
 
@@ -51,17 +51,9 @@ namespace RLIM.DataAccess
                 {
                     certificateDTO = new CertificateDTO
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        Name = reader["Name"].ToString(),
-                        Tier = Convert.ToInt32(reader["Tier"])
-                    };
-                }
-                else
-                {
-                    certificateDTO = new CertificateDTO
-                    {
-                        ID = 0,
-                        Name = "No Certificate"
+                        ID = (int)reader["ID"],
+                        Name = (string)reader["Name"],
+                        Tier = (int)reader["Tier"]
                     };
                 }
                 conn.Close();
@@ -73,6 +65,38 @@ namespace RLIM.DataAccess
             }
 
             return certificateDTO;
+        }
+
+        public int GetID(CertificateDTO certificateDTO)
+        {
+            int id = 0;
+
+            using SqlConnection conn = Db.Connect();
+
+            try
+            {
+                string sql = "SELECT ID ";
+                sql += "FROM dbo.Certificate ";
+                sql += "WHERE Name = @name AND Tier = @tier";
+                using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = certificateDTO.Name;
+                cmd.Parameters.Add("@tier", SqlDbType.Int).Value = certificateDTO.Tier;
+
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    id = (int)reader["ID"];
+                }
+                conn.Close();
+            }
+            catch (SqlException exception)
+            {
+                conn.Close();
+                Console.WriteLine(exception);
+            }
+
+            return id;
         }
 
         public List<CertificateDTO> GetAll()
@@ -94,9 +118,9 @@ namespace RLIM.DataAccess
                     certificateDTOs.Add(
                         new CertificateDTO 
                         { 
-                            ID = Convert.ToInt32(reader["ID"]), 
-                            Name = reader["Name"].ToString(), 
-                            Tier = Convert.ToInt32(reader["Tier"]) 
+                            ID = (int)reader["ID"], 
+                            Name = (string)reader["Name"],
+                            Tier = (int)reader["Tier"]
                         });
                 }
                 conn.Close();

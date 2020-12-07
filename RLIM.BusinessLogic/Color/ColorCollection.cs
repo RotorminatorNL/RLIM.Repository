@@ -14,7 +14,10 @@ namespace RLIM.BusinessLogic
                 Hex = hex
             };
 
-            ColorFactoryDAL.GetCollectionDAL().Create(certificateDTO);
+            if (ColorFactoryDAL.GetCollectionDAL().GetID(certificateDTO) == 0)
+            {
+                ColorFactoryDAL.GetCollectionDAL().Create(certificateDTO);
+            }
         }
 
         public Color Get(int id)

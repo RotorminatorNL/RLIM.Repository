@@ -8,41 +8,17 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="MainItem" asp-action="Index">RLIM.UI</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MainItem" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Platform" asp-action="Index">Platform</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Quality" asp-action="Index">Quality</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Certificate" asp-action="Index">Certificate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Color" asp-action="Index">Color</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container row">
+        <div class="side-menu">
+            <a class="nav-link app-name" asp-controller="MainItem" asp-action="Index">RLIM</a>
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "MainItem" ? "active" : "")" asp-controller="MainItem" asp-action="Index">Main-Items</a>
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Category" ? "active" : "")" asp-controller="Category" asp-action="Index">Categories</a>
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Platform" ? "active" : "")" asp-controller="Platform" asp-action="Index">Platforms</a>
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Quality" ? "active" : "")" asp-controller="Quality" asp-action="Index">Qualities</a>
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Certificate" ? "active" : "")" asp-controller="Certificate" asp-action="Index">Certificates</a>
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Color" ? "active" : "")" asp-controller="Color" asp-action="Index">Colors</a>
+        </div>
+        <main role="main" class="pb-3 content">
             @RenderBody()
         </main>
     </div>

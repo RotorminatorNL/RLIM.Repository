@@ -57,7 +57,7 @@ namespace RLIM.UserInterface
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=MainItem}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                     name: "SubItems",

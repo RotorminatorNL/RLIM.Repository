@@ -10,22 +10,6 @@ namespace RLIM.UserInterface.Controllers
 {
     public class PlatformController : Controller
     {
-        private List<PlatformModel> GetPlatforms()
-        {
-            List<PlatformModel> platforms = new List<PlatformModel>();
-
-            foreach (Platform platform in new PlatformCollection().GetAll())
-            {
-                platforms.Add(new PlatformModel
-                {
-                    ID = platform.ID,
-                    Name = platform.Name
-                });
-            }
-
-            return platforms;
-        }
-
         private PlatformModel GetPlatform(int id)
         {
             Platform platform = new PlatformCollection().Get(id);
@@ -35,12 +19,6 @@ namespace RLIM.UserInterface.Controllers
                 ID = platform.ID,
                 Name = platform.Name
             };
-        }
-
-        [Route("/Platforms")]
-        public IActionResult Index()
-        {
-            return View(GetPlatforms());
         }
 
         public IActionResult Create()
@@ -57,7 +35,7 @@ namespace RLIM.UserInterface.Controllers
                 new PlatformCollection().Create(model.Name);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -68,7 +46,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetPlatform(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -80,7 +58,7 @@ namespace RLIM.UserInterface.Controllers
                 new PlatformCollection().Get(model.ID).Update(model.Name);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -91,7 +69,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetPlatform(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -103,7 +81,7 @@ namespace RLIM.UserInterface.Controllers
                 new PlatformCollection().Delete(model.ID);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
     }
 }

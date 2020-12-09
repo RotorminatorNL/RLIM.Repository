@@ -165,12 +165,14 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
         }
 

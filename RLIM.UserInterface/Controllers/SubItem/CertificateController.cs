@@ -7,23 +7,6 @@ namespace RLIM.UserInterface.Controllers
 {
     public class CertificateController : Controller
     {
-        private List<CertificateModel> GetCertificates()
-        {
-            List<CertificateModel> certificates = new List<CertificateModel>();
-
-            foreach (Certificate certificate in new CertificateCollection().GetAll())
-            {
-                certificates.Add(new CertificateModel
-                {
-                    ID = certificate.ID,
-                    Name = certificate.Name,
-                    Tier = certificate.Tier
-                });
-            }
-
-            return certificates;
-        }
-
         private CertificateModel GetCertificate(int id)
         {
             Certificate certificate = new CertificateCollection().Get(id);
@@ -34,12 +17,6 @@ namespace RLIM.UserInterface.Controllers
                 Name = certificate.Name,
                 Tier = certificate.Tier
             };
-        }
-
-        [Route("/Certificates")]
-        public IActionResult Index()
-        {
-            return View(GetCertificates());
         }
 
         public IActionResult Create()
@@ -56,7 +33,7 @@ namespace RLIM.UserInterface.Controllers
                 new CertificateCollection().Create(model.Name, model.Tier);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -67,7 +44,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetCertificate(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -79,7 +56,7 @@ namespace RLIM.UserInterface.Controllers
                 new CertificateCollection().Get(model.ID).Update(model.Name, model.Tier);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -90,7 +67,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetCertificate(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -102,7 +79,7 @@ namespace RLIM.UserInterface.Controllers
                 new CertificateCollection().Delete(model.ID);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
     }
 }

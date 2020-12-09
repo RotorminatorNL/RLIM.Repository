@@ -102,6 +102,13 @@ namespace RLIM.UserInterface.Controllers
             return subItemModels;
         }
 
+        public IActionResult Attributes()
+        {
+            ViewBag.Certificates = GetCertificates();
+            ViewBag.Colors = GetColors();
+            return View();
+        }
+
         [HttpGet("/{MainItemName}/{MainItemID}/Sub-Items")]
         public IActionResult Index(int MainItemID)
         {

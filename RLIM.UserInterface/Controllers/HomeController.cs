@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RLIM.UserInterface.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RLIM.UserInterface.Controllers
 {
@@ -20,6 +17,39 @@ namespace RLIM.UserInterface.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult UserLogIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UserLogIn(LogIn model)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "MainItem");
+            }
+
+            return View();
+        }
+
+        public IActionResult AdminLogIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AdminLogIn(LogIn model)
+        {
+            if (ModelState.IsValid)
+            {
+                HttpContext.Response.Cookies.Append("test", model.Username);
+                return RedirectToAction("Index", "MainItem");
+            }
+
             return View();
         }
 

@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Sub-Item Attributes";
+}
+
+<div class="row justify-content-around">
+    <div>
+        <h1>Certificates</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name (tier)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td><a asp-controller="Certificate" asp-action="Create" class="btn btn-primary">New Certificate</a></td>
+                </tr>
+                @foreach (CertificateModel item in ViewBag.Certificates)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Display)</td>
+                        <td>
+                            <a href="/Certificate/@item.ID/Update" class="btn btn-warning">Update</a>
+                            <a href="/Certificate/@item.ID/Delete" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h1>Colors</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name (hex)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td><a asp-controller="Color" asp-action="Create" class="btn btn-primary">New Color</a></td>
+                </tr>
+                @foreach (ColorModel item in ViewBag.Colors)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Display)</td>
+                        <td>
+                            <a href="/Color/@item.ID/Update" class="btn btn-warning">Update</a>
+                            <a href="/Color/@item.ID/Delete" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

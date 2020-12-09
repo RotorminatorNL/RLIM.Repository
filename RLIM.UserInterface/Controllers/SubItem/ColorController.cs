@@ -7,23 +7,6 @@ namespace RLIM.UserInterface.Controllers
 {
     public class ColorController : Controller
     {
-        private List<ColorModel> GetColors()
-        {
-            List<ColorModel> colors = new List<ColorModel>();
-
-            foreach (Color color in new ColorCollection().GetAll())
-            {
-                colors.Add(new ColorModel
-                {
-                    ID = color.ID,
-                    Name = color.Name,
-                    Hex = color.Hex
-                });
-            }
-
-            return colors;
-        }
-
         private ColorModel GetColor(int id)
         {
             Color color = new ColorCollection().Get(id);
@@ -34,12 +17,6 @@ namespace RLIM.UserInterface.Controllers
                 Name = color.Name,
                 Hex = color.Hex
             };
-        }
-
-        [Route("/Colors")]
-        public IActionResult Index()
-        {
-            return View(GetColors());
         }
 
         public IActionResult Create()
@@ -56,7 +33,7 @@ namespace RLIM.UserInterface.Controllers
                 new ColorCollection().Create(model.Name, model.Hex);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -67,7 +44,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetColor(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -79,7 +56,7 @@ namespace RLIM.UserInterface.Controllers
                 new ColorCollection().Get(model.ID).Update(model.Name, model.Hex);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -90,7 +67,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetColor(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -102,7 +79,7 @@ namespace RLIM.UserInterface.Controllers
                 new ColorCollection().Delete(model.ID);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "SubItem");
         }
     }
 }

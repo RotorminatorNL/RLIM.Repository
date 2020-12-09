@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLIM.FactoryDAL", "RLIM.Fac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLIM.ContractLayer", "RLIM.ContractLayer\RLIM.ContractLayer.csproj", "{B954F457-8E4F-456E-967A-2F6D3DDDEF68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RLIM.UserInterface", "RLIM.UserInterface\RLIM.UserInterface.csproj", "{653AF33A-1B94-4969-AD87-50DBAA0B4DFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLIM.UserInterface", "RLIM.UserInterface\RLIM.UserInterface.csproj", "{653AF33A-1B94-4969-AD87-50DBAA0B4DFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

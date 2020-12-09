@@ -130,6 +130,14 @@ namespace RLIM.UserInterface.Controllers
             return View(GetMainItems());
         }
 
+        public IActionResult Attributes()
+        {
+            ViewBag.Categories = GetCategories();
+            ViewBag.Platforms = GetPlatforms();
+            ViewBag.Qualities = GetQualities();
+            return View();
+        }
+
         [Route("/Main-Item/[action]")]
         public IActionResult Create()
         {

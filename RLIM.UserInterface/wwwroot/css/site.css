@@ -4,6 +4,11 @@
     min-height: 100%;
 }
 
+.row {
+    margin: 0;
+    width: 100%;
+}
+
 body {
     font-size: 20px;
     margin-bottom: 60px;
@@ -26,7 +31,7 @@ h1 {
     height: 100vh;
     padding: 10px;
     overflow-x: auto;
-    width: 175px;
+    width: 200px;
 }
 
     .side-menu > a {
@@ -60,8 +65,16 @@ h1 {
     }
 
 .content {
-    margin-left: 175px;
+    margin-left: 200px;
+    flex-direction: column;
     width: 100%;
+}
+
+.content .choose-role {
+    flex-direction: column;
+    height: 200px;
+    width: 100%;
+    max-width: 600px;
 }
 
 a {
@@ -119,12 +132,11 @@ form.subitem-form .inputfields div > * {
 .footer {
     position: absolute;
     bottom: 0;
-
     background-color: white;
-    margin-left: 175px;
+    margin-left: 200px;
     line-height: 60px;
     text-align: center;
-    width: calc(100% - 175px);
+    width: calc(100% - 200px);
     white-space: nowrap;
 }
 

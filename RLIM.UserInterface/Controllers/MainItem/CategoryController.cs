@@ -8,22 +8,6 @@ namespace RLIM.UserInterface.Controllers
 {
     public class CategoryController : Controller
     {
-        private List<CategoryModel> GetCategorys()
-        {
-            List<CategoryModel> categories = new List<CategoryModel>();
-
-            foreach (Category category in new CategoryCollection().GetAll())
-            {
-                categories.Add(new CategoryModel
-                {
-                    ID = category.ID,
-                    Name = category.Name
-                });
-            }
-
-            return categories;
-        }
-
         private CategoryModel GetCategory(int id)
         {
             Category category = new CategoryCollection().Get(id);
@@ -33,12 +17,6 @@ namespace RLIM.UserInterface.Controllers
                 ID = category.ID,
                 Name = category.Name
             };
-        }
-
-        [Route("/Categories")]
-        public IActionResult Index()
-        {
-            return View(GetCategorys());
         }
 
         public IActionResult Create()
@@ -55,7 +33,7 @@ namespace RLIM.UserInterface.Controllers
                 new CategoryCollection().Create(model.Name);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -66,7 +44,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetCategory(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -78,7 +56,7 @@ namespace RLIM.UserInterface.Controllers
                 new CategoryCollection().Get(model.ID).Update(model.Name);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -89,7 +67,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetCategory(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -101,7 +79,7 @@ namespace RLIM.UserInterface.Controllers
                 new CategoryCollection().Delete(model.ID);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
     }
 }

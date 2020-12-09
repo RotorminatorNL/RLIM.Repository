@@ -7,23 +7,6 @@ namespace RLIM.UserInterface.Controllers
 {
     public class QualityController : Controller
     {
-        private List<QualityModel> GetQualitys()
-        {
-            List<QualityModel> qualities = new List<QualityModel>();
-
-            foreach (Quality quality in new QualityCollection().GetAll())
-            {
-                qualities.Add(new QualityModel
-                {
-                    ID = quality.ID,
-                    Name = quality.Name,
-                    Rank = quality.Rank
-                });
-            }
-
-            return qualities;
-        }
-
         private QualityModel GetQuality(int id)
         {
             Quality quality = new QualityCollection().Get(id);
@@ -34,12 +17,6 @@ namespace RLIM.UserInterface.Controllers
                 Name = quality.Name,
                 Rank = quality.Rank
             };
-        }
-
-        [Route("/Qualities")]
-        public IActionResult Index()
-        {
-            return View(GetQualitys());
         }
 
         public IActionResult Create()
@@ -56,7 +33,7 @@ namespace RLIM.UserInterface.Controllers
                 new QualityCollection().Create(model.Name, model.Rank);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -67,7 +44,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetQuality(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -79,7 +56,7 @@ namespace RLIM.UserInterface.Controllers
                 new QualityCollection().Get(model.ID).Update(model.Name, model.Rank);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpGet("/[controller]/{id}/[action]")]
@@ -90,7 +67,7 @@ namespace RLIM.UserInterface.Controllers
                 return View(GetQuality(id));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
 
         [HttpPost("/[controller]/[action]")]
@@ -102,7 +79,7 @@ namespace RLIM.UserInterface.Controllers
                 new QualityCollection().Delete(model.ID);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Attributes", "MainItem");
         }
     }
 }

@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Main-Item Attributes";
+}
+
+
+<div class="row justify-content-around">
+    <div>
+        <h1>Categories</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td><a asp-controller="Category" asp-action="Create" class="btn btn-primary">New Category</a></td>
+                </tr>
+                @foreach (CategoryModel item in ViewBag.Categories)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            <a href="/Category/@item.ID/Update" class="btn btn-warning">Update</a>
+                            <a href="/Category/@item.ID/Delete" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h1>Platforms</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td><a asp-controller="Platform" asp-action="Create" class="btn btn-primary">New Platform</a></td>
+                </tr>
+                @foreach (PlatformModel item in ViewBag.Platforms)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            <a href="/Platform/@item.ID/Update" class="btn btn-warning">Update</a>
+                            <a href="/Platform/@item.ID/Delete" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h1>Qualities</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name (rank)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td><a asp-controller="Quality" asp-action="Create" class="btn btn-primary">New Quality</a></td>
+                </tr>
+                @foreach (QualityModel item in ViewBag.Qualities)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Display)</td>
+                        <td>
+                            <a href="/Quality/@item.ID/Update" class="btn btn-warning">Update</a>
+                            <a href="/Quality/@item.ID/Delete" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

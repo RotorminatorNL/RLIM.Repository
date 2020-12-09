@@ -10,15 +10,34 @@
 <body>
     <div class="container row">
         <div class="side-menu">
-            <a class="nav-link app-name" asp-controller="MainItem" asp-action="Index">RLIM</a>
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "MainItem" ? "active" : "")" asp-controller="MainItem" asp-action="Index">Main-Items</a>
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Category" ? "active" : "")" asp-controller="Category" asp-action="Index">Categories</a>
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Platform" ? "active" : "")" asp-controller="Platform" asp-action="Index">Platforms</a>
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Quality" ? "active" : "")" asp-controller="Quality" asp-action="Index">Qualities</a>
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Certificate" ? "active" : "")" asp-controller="Certificate" asp-action="Index">Certificates</a>
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Color" ? "active" : "")" asp-controller="Color" asp-action="Index">Colors</a>
+            <a class="nav-link app-name" asp-controller="Home" asp-action="Index">RLIM</a>
+
+            @{ 
+                string controller = ViewContext.RouteData.Values["Controller"].ToString();
+                string action = ViewContext.RouteData.Values["Action"].ToString();
+
+                bool mainItemSelected = controller == "SubItem" && action != "Attributes" ||
+                                        controller == "MainItem" && action != "Attributes";
+
+                bool mainAttributesSelected = controller == "Category" ||
+                                                controller == "Platform" ||
+                                                controller == "Quality" ||
+                                                controller == "MainItem" && action == "Attributes";
+
+                bool subAttributesSelected = controller == "Certificate" ||
+                                                controller == "Color" ||
+                                                controller == "SubItem" && action == "Attributes";
+            }
+
+            <a class="nav-link @(mainItemSelected ? "active" : "")"
+                asp-controller="MainItem" asp-action="Index">Main-Items</a>
+            <a class="nav-link @(mainAttributesSelected ? "active" : "")"
+                asp-controller="MainItem" asp-action="Attributes">Main-Attributes</a>
+            <a class="nav-link @(subAttributesSelected ? "active" : "")"
+                asp-controller="SubItem" asp-action="Attributes">Sub-Attributes</a>
+            
         </div>
-        <main role="main" class="pb-3 content">
+        <main role="main" class="pb-3 content row align-content-center">
             @RenderBody()
         </main>
     </div>

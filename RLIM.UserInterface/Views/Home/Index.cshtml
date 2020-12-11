@@ -2,9 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row justify-content-between choose-role">
-    <h1>How do you want to LogIn?</h1>
-    <div class="row justify-content-around">
+<div class="row align-content-center choose-role">
+    <h1>Welcome to Rocket League Item Manager!</h1>
+    <p>We assume you play Rocket League. We also assume you know that Rocket League has alot of items.</p>
+    <p>If the two assumptions above are correct, then we have just one question:</p>
+    <p>Do you know which items you do and which items you don't have?</p>
+
+    <hr />
+    <p>If the awnser is simply no, then you are at the right place!</p> 
+    <h4>Rocket League Item Manager (RLIM) is created for <u>you</u>!</h4>
+    <p>Here you can see all the items Rocket League has to offer and you can add every item you have to your account.</p>
+
+    <hr />
+    <h2>How do you want to log in?</h2>
+    <div class="row justify-content-center login-btn-container">
         <a asp-controller="Home" asp-action="UserLogIn" class="btn btn-primary">as User</a>
         <a asp-controller="Home" asp-action="AdminLogIn" class="btn btn-outline-primary">as Admin</a>
     </div>

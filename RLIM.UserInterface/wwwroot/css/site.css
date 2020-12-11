@@ -7,6 +7,7 @@
 .row {
     margin: 0;
     width: 100%;
+    max-width: 100%;
 }
 
 body {
@@ -19,10 +20,9 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    max-width: 100%;
 }
 
-h1 {
+h1,h2 {
     text-align: center;
 }
 
@@ -80,12 +80,20 @@ h1 {
     flex-direction: column;
     width: 100%;
 }
+    .content form {
+        width: 100%;
+        max-width: 400px;
+    }
 
-.content .choose-role {
-    flex-direction: column;
-    height: 200px;
-    width: 100%;
-    max-width: 600px;
+    .content .choose-role {
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+    }
+
+.login-btn-container a{
+    margin: 0 20px;
+    margin-top: 20px;
 }
 
 a {

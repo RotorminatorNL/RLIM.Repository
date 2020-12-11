@@ -12,6 +12,7 @@
 body {
     font-size: 20px;
     margin-bottom: 60px;
+    line-height: normal;
 }
 
 .container {
@@ -25,7 +26,8 @@ h1 {
     text-align: center;
 }
 
-.side-menu {
+
+.side-menu { 
     position: fixed;
     background-color: rgb(0,11,40);
     height: 100vh;
@@ -34,23 +36,22 @@ h1 {
     width: 200px;
 }
 
-    .side-menu > a {
+    .side-menu a {
         border-bottom: solid 2px rgb(0,11,40);
         color: white;
         font-size: 20px;
-        font-weight:400;
-        margin: 5px 0;
-        padding: 10px;
+        font-weight: 400;
+        margin: 10px 0;
         text-align: center;
         transition: all 100ms;
     }
 
-        .side-menu > a:hover {
+        .side-menu a:hover {
             border-bottom-color: rgb(13,178,255);
             font-weight: 500;
         }
 
-        .side-menu > a:first-child:hover {
+        .side-menu a:first-child:hover {
             border-bottom-color: rgb(0,11,40);
             font-weight: 400;
         }
@@ -62,7 +63,17 @@ h1 {
 
     .side-menu .app-name {
         font-size: 26px;
+        margin: auto;
+        width: fit-content;
     }
+
+.signed-as-container {
+    position: absolute;
+    bottom: 10px;
+    color: white;
+    text-align: center;
+    width: calc(100% - 20px);
+}
 
 .content {
     margin-left: 200px;

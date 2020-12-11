@@ -11,6 +11,15 @@
     <div class="container row">
         <div class="side-menu">
             <a class="nav-link app-name" asp-controller="Home" asp-action="Index">RLIM</a>
+
+            @{
+                string action = ViewContext.RouteData.Values["Action"].ToString();
+            }
+
+            <div class="signed-as-container">
+                <span>Logged in as User</span>
+                <a class="nav-link" asp-controller="Home" asp-action="Index">Log out</a>
+            </div>
         </div>
         <main role="main" class="pb-3 content row align-content-center">
             @RenderBody()

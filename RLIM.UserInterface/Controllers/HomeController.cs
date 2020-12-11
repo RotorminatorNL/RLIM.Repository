@@ -30,7 +30,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "MainItem");
+                return RedirectToAction("Index", "User");
             }
 
             return View();

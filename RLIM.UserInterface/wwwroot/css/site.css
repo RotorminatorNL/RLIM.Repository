@@ -20,6 +20,7 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
+    max-width: 100%;
 }
 
 h1,h2 {
@@ -27,8 +28,11 @@ h1,h2 {
 }
 
 
-.side-menu { 
+.side-menu {
     position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: rgb(0,11,40);
     height: 100vh;
     padding: 10px;
@@ -44,6 +48,7 @@ h1,h2 {
         margin: 10px 0;
         text-align: center;
         transition: all 100ms;
+        width: fit-content;
     }
 
         .side-menu a:hover {
@@ -63,17 +68,24 @@ h1,h2 {
 
     .side-menu .app-name {
         font-size: 26px;
-        margin: auto;
+        margin: 0 auto;
         width: fit-content;
     }
 
 .signed-as-container {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     bottom: 10px;
     color: white;
     text-align: center;
     width: calc(100% - 20px);
 }
+
+    .signed-as-container a:hover {
+        border-bottom-color: rgb(245,130,32);
+    }
 
 .content {
     margin-left: 200px;
@@ -158,6 +170,61 @@ form.subitem-form .inputfields div > * {
     width: calc(100% - 200px);
     white-space: nowrap;
 }
+
+.message-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.3);
+    height: 100%;
+    width: 100%;
+    z-index: 9999;
+}
+
+.message-content {
+    position: relative;
+    background-color: rgba(0,11,40,.9);
+    border-radius: 10px;
+    color: white;
+    margin: auto;
+    margin-top: 10vh;
+    padding-bottom: 60px;
+    text-align: center;
+    height: fit-content;
+    min-height: 200px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.message-title {
+    padding: 10px 0;
+    border-bottom: solid 2px rgba(13,178,255,.4);
+}
+
+.message-text {
+    padding: 0 10px;
+}
+
+.message-button-container {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+.message-button {
+    border-bottom: solid 2px rgb(0,11,40);
+    cursor: pointer;
+    font-weight: 400;
+    margin: auto;
+    padding: 10px;
+    transition: all 100ms;
+    width: 100px;
+}
+
+    .message-button:hover {
+        border-bottom-color: rgb(245,130,32);
+        font-weight: 500;
+    }
 
 @media (min-width: 768px) {
     html {

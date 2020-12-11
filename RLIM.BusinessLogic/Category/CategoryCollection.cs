@@ -6,8 +6,12 @@ namespace RLIM.BusinessLogic
 {
     public class CategoryCollection
     {
-        public void Create(string name)
+        public MessageToUI Create(string name)
         {
+            string outputStatus = "Success";
+            string outputTitle = "Added Category!";
+            string outputText = $"Category '{name}' has been successfully added to the system.";
+
             CategoryDTO categoryDTO = new CategoryDTO
             {
                 Name = name
@@ -15,8 +19,21 @@ namespace RLIM.BusinessLogic
 
             if (CategoryFactoryDAL.GetCollectionDAL().GetID(categoryDTO) == 0)
             {
-                CategoryFactoryDAL.GetCollectionDAL().Create(categoryDTO);
+                if (!CategoryFactoryDAL.GetCollectionDAL().Create(categoryDTO))
+                {
+                    outputStatus = "Error";
+                    outputTitle = "Sorry!";
+                    outputText = $"Category '{name}' has not been added to the system.";
+                }
             }
+            else
+            {
+                outputStatus = "Error";
+                outputTitle = "Whoops!";
+                outputText = $"Category '{name}' already exist in our system.";
+            }
+
+            return new MessageToUI(outputStatus, outputTitle, outputText);
         }
 
         public Category Get(int id)

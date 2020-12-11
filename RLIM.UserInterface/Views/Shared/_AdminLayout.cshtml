@@ -46,6 +46,25 @@
         </main>
     </div>
 
+    @if (TempData["MessageTitle"] != null && TempData["MessageTitle"] != null)
+    {
+        <div id="message" class="message-container">
+            <div class="message-content">
+                <h2 class="message-title">@TempData["MessageTitle"]</h2>
+                <div class="message-text">@TempData["MessageText"]</div>
+                <div class="message-button-container">
+                    <div class="message-button" onclick="CloseMessage()">Okay!</div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function CloseMessage() {
+                document.getElementById("message").style.display = "none";
+            }
+        </script>
+    }
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - Rocket League Item Manager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

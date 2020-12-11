@@ -30,7 +30,14 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                new CategoryCollection().Create(model.Name);
+                MessageToUI msg = new CategoryCollection().Create(model.Name);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Create", "Category");
+                }
             }
 
             return RedirectToAction("Attributes", "MainItem");

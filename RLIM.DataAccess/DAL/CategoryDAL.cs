@@ -8,9 +8,11 @@ namespace RLIM.DataAccess
 {
     public class CategoryDAL : ICategoryCollectionDAL, ICategoryDAL
     {
-        public void Create(CategoryDTO categoryDTO)
+        public bool Create(CategoryDTO categoryDTO)
         {
             using SqlConnection conn = Db.Connect();
+
+            bool output = true;
 
             try
             {
@@ -21,13 +23,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
+                output = false;
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return output;
         }
 
         public CategoryDTO Get(int id)

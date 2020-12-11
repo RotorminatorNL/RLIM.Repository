@@ -6,7 +6,7 @@ namespace RLIM.ContractLayer
 {
     public interface ICategoryCollectionDAL
     {
-        void Create(CategoryDTO categoryDTO);
+        bool Create(CategoryDTO categoryDTO);
         CategoryDTO Get(int id);
         int GetID(CategoryDTO categoryDTO);
         List<CategoryDTO> GetAll();

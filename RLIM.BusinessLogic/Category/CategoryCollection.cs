@@ -30,7 +30,7 @@ namespace RLIM.BusinessLogic
             {
                 outputStatus = "Error";
                 outputTitle = "Whoops!";
-                outputText = $"Category '{name}' already exist in our system.";
+                outputText = $"Category '{name}' already exist in the system.";
             }
 
             return new MessageToUI(outputStatus, outputTitle, outputText);
@@ -63,7 +63,7 @@ namespace RLIM.BusinessLogic
             {
                 outputStatus = "Error";
                 outputTitle = "Sorry!";
-                outputText = $"Category '{name}' has not been successfully removed from the system.";
+                outputText = $"Category '{name}' has not been removed from the system.";
             }
 
             return new MessageToUI(outputStatus, outputTitle, outputText);

@@ -65,6 +65,8 @@ namespace RLIM.UserInterface.Controllers
                 MessageToUI msg = new CategoryCollection().Get(model.ID).Update(model.PreviousName, model.Name);
                 TempData["MessageTitle"] = msg.Title;
                 TempData["MessageText"] = msg.Text;
+                TempData["MessagePreviousData"] = msg.PreviousData;
+                TempData["MessageNewData"] = msg.NewData;
 
                 if (msg.Status == "Error")
                 {

@@ -10,9 +10,9 @@ namespace RLIM.DataAccess
     {
         public bool Create(CategoryDTO categoryDTO)
         {
-            using SqlConnection conn = Db.Connect();
-
             bool output = true;
+
+            using SqlConnection conn = Db.Connect();
 
             try
             {
@@ -144,9 +144,9 @@ namespace RLIM.DataAccess
 
         public bool Update(CategoryDTO categoryDTO)
         {
-            using SqlConnection conn = Db.Connect();
-
             bool output = true;
+
+            using SqlConnection conn = Db.Connect();
 
             try
             {
@@ -175,9 +175,9 @@ namespace RLIM.DataAccess
 
         public bool Delete(int id)
         {
-            using SqlConnection conn = Db.Connect();
-
             bool output = true;
+
+            using SqlConnection conn = Db.Connect();
 
             try
             {

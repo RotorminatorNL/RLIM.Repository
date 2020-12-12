@@ -15,7 +15,9 @@ namespace RLIM.UserInterface.Controllers
             {
                 ID = certificate.ID,
                 Name = certificate.Name,
-                Tier = certificate.Tier
+                PreviousName = certificate.Name,
+                Tier = certificate.Tier,
+                PreviousTier = certificate.Tier
             };
         }
 
@@ -30,7 +32,16 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                new CertificateCollection().Create(model.Name, model.Tier);
+                MessageToUI msg = new CertificateCollection().Create(model.Name, model.Tier);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    TempData["CertificateName"] = model.Name;
+                    TempData["CertificateTier"] = model.Tier;
+                    return RedirectToAction("Create", "Certificate");
+                }
             }
 
             return RedirectToAction("Attributes", "SubItem");
@@ -47,13 +58,22 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id?}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(CertificateModel model)
         {
             if (ModelState.IsValid)
             {
-                new CertificateCollection().Get(model.ID).Update(model.Name, model.Tier);
+                MessageToUI msg = new CertificateCollection().Get(model.ID).Update(model.PreviousName, model.Name, model.PreviousTier, model.Tier);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+                TempData["MessagePreviousData"] = msg.PreviousData;
+                TempData["MessageNewData"] = msg.NewData;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Update", "Certificate", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Attributes", "SubItem");
@@ -70,13 +90,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id?}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(CertificateModel model)
         {
             if (ModelState.IsValid)
             {
-                new CertificateCollection().Delete(model.ID);
+                MessageToUI msg = new CertificateCollection().Delete(model.ID, model.Name, model.Tier);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Delete", "Certificate", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Attributes", "SubItem");

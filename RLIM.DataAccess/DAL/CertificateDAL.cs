@@ -8,8 +8,10 @@ namespace RLIM.DataAccess
 {
     public class CertificateDAL : ICertificateCollectionDAL, ICertificateDAL
     {
-        public void Create(CertificateDTO certificateDTO)
+        public bool Create(CertificateDTO certificateDTO)
         {
+            bool output = true;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -22,13 +24,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
+                output = false;
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return output;
         }
 
         public CertificateDTO Get(int id)
@@ -88,12 +95,14 @@ namespace RLIM.DataAccess
                 {
                     id = (int)reader["ID"];
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return id;
@@ -123,19 +132,23 @@ namespace RLIM.DataAccess
                             Tier = (int)reader["Tier"]
                         });
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return certificateDTOs;
         }
 
-        public void Update(CertificateDTO certificateDTO)
+        public bool Update(CertificateDTO certificateDTO)
         {
+            bool output = true;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -150,17 +163,24 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
+                output = false;
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return output;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            bool output = true;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -172,13 +192,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
+                output = false;
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return output;
         }
     }
 }

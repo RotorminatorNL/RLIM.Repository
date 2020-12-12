@@ -4,10 +4,10 @@ namespace RLIM.ContractLayer
 {
     public interface ICertificateCollectionDAL
     {
-        void Create(CertificateDTO certificateDTO);
+        bool Create(CertificateDTO certificateDTO);
         CertificateDTO Get(int id);
         int GetID(CertificateDTO certificateDTO);
         List<CertificateDTO> GetAll();
-        void Delete(int id);
+        bool Delete(int id);
     }
 }

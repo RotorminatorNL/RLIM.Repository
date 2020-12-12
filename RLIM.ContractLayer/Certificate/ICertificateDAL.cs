@@ -2,6 +2,6 @@
 {
     public interface ICertificateDAL
     {
-        void Update(CertificateDTO certificateDTO);
+        bool Update(CertificateDTO certificateDTO);
     }
 }

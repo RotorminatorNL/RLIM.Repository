@@ -20,13 +20,29 @@ namespace RLIM.BusinessLogic
 
             string outputStatus = "Success";
             string outputTitle = "Updated Category!";
-            string outputText = $"Category name has been successfully changed from '{previousName}' to '{Name}' in the system.";
-            
-            if (!CategoryFactoryDAL.GetDAL().Update(new CategoryDTO { ID = ID, Name = Name }))
+            string outputText = $"The name of the choosen Category has been successfully changed in the system.";
+
+            if (CategoryFactoryDAL.GetCollectionDAL().GetID(new CategoryDTO { Name = name }) != ID)
+            {
+                if (!CategoryFactoryDAL.GetDAL().Update(new CategoryDTO { ID = ID, Name = Name }))
+                {
+                    outputStatus = "Error";
+                    outputTitle = "Sorry!";
+                    outputText = $"The name of the choosen Category has not been changed in the system.";
+                }
+                else
+                {
+                    string outputPreviousData = $"Previous: '{previousName}'";
+                    string outputNewData = $"Now: '{Name}'";
+
+                    return new MessageToUI(outputStatus, outputTitle, outputText, outputPreviousData, outputNewData);
+                }
+            }
+            else
             {
                 outputStatus = "Error";
-                outputTitle = "Sorry!";
-                outputText = $"Category name has not been successfully changed from '{previousName}' to '{Name}' in the system.";
+                outputTitle = "Whoops!";
+                outputText = $"Category '{name}' already exist in the system.";
             }
 
             return new MessageToUI(outputStatus, outputTitle, outputText);

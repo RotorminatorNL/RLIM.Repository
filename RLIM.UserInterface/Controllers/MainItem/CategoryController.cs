@@ -15,7 +15,8 @@ namespace RLIM.UserInterface.Controllers
             return new CategoryModel
             {
                 ID = category.ID,
-                Name = category.Name
+                Name = category.Name,
+                PreviousName = category.PreviousName
             };
         }
 
@@ -36,6 +37,8 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
+                    Category category = (Category)msg.Data;
+                    TempData["CategoryName"] = category.Name;
                     return RedirectToAction("Create", "Category");
                 }
             }
@@ -54,13 +57,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id?}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(CategoryModel model)
         {
             if (ModelState.IsValid)
             {
-                new CategoryCollection().Get(model.ID).Update(model.Name);
+                MessageToUI msg = new CategoryCollection().Get(model.ID).Update(model.PreviousName, model.Name);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Update", "Category", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -77,13 +87,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id?}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(CategoryModel model)
         {
             if (ModelState.IsValid)
             {
-                new CategoryCollection().Delete(model.ID);
+                MessageToUI msg = new CategoryCollection().Delete(model.ID, model.Name);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Delete", "Category", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Attributes", "MainItem");

@@ -6,6 +6,6 @@ namespace RLIM.ContractLayer
 {
     public interface ICategoryDAL
     {
-        void Update(CategoryDTO categoryDTO);
+        bool Update(CategoryDTO categoryDTO);
     }
 }

@@ -61,12 +61,14 @@ namespace RLIM.DataAccess
                         Name = (string)reader["Name"]
                     };
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return categoryDTO;
@@ -92,12 +94,14 @@ namespace RLIM.DataAccess
                 {
                     id = (int)reader["ID"];
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return id;
@@ -125,20 +129,24 @@ namespace RLIM.DataAccess
                             Name = (string)reader["Name"]
                         });
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return categoryDTOs;
         }
 
-        public void Update(CategoryDTO categoryDTO)
+        public bool Update(CategoryDTO categoryDTO)
         {
             using SqlConnection conn = Db.Connect();
+
+            bool output = true;
 
             try
             {
@@ -151,18 +159,25 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
+                output = false;
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return output;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             using SqlConnection conn = Db.Connect();
+
+            bool output = true;
 
             try
             {
@@ -173,13 +188,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
+                output = false;
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return output;
         }
     }
 }

@@ -8,5 +8,7 @@ namespace RLIM.UserInterface.Models
 
         [Required(ErrorMessage = "You need to give it a Name.")]
         public string Name { get; set; }
+
+        public string PreviousName { get; set; }
     }
 }

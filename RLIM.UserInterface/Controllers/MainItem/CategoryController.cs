@@ -37,8 +37,7 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    Category category = (Category)msg.Data;
-                    TempData["CategoryName"] = category.Name;
+                    TempData["CategoryName"] = model.Name;
                     return RedirectToAction("Create", "Category");
                 }
             }

@@ -11,7 +11,6 @@ namespace RLIM.BusinessLogic
             string outputStatus = "Success";
             string outputTitle = "Added Category!";
             string outputText = $"Category '{name}' has been successfully added to the system.";
-            object outputData = null;
 
             CategoryDTO categoryDTO = new CategoryDTO
             {
@@ -25,7 +24,6 @@ namespace RLIM.BusinessLogic
                     outputStatus = "Error";
                     outputTitle = "Sorry!";
                     outputText = $"Category '{name}' has not been added to the system.";
-                    outputData = new Category(categoryDTO);
                 }
             }
             else
@@ -33,10 +31,9 @@ namespace RLIM.BusinessLogic
                 outputStatus = "Error";
                 outputTitle = "Whoops!";
                 outputText = $"Category '{name}' already exist in our system.";
-                outputData = new Category(categoryDTO);
             }
 
-            return new MessageToUI(outputStatus, outputTitle, outputText, outputData);
+            return new MessageToUI(outputStatus, outputTitle, outputText);
         }
 
         public Category Get(int id)

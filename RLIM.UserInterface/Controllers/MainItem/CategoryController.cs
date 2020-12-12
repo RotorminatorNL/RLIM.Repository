@@ -16,7 +16,7 @@ namespace RLIM.UserInterface.Controllers
             {
                 ID = category.ID,
                 Name = category.Name,
-                PreviousName = category.PreviousName
+                PreviousName = category.Name
             };
         }
 

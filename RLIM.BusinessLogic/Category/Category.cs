@@ -7,29 +7,26 @@ namespace RLIM.BusinessLogic
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
-        public string PreviousName { get; private set; }
 
         public Category(CategoryDTO categoryDTO)
         {
             ID = categoryDTO.ID;
             Name = categoryDTO.Name;
-            PreviousName = categoryDTO.Name;
         }
 
         public MessageToUI Update(string previousName, string name)
         {
             Name = name;
-            PreviousName = previousName;
 
             string outputStatus = "Success";
             string outputTitle = "Updated Category!";
-            string outputText = $"Category name has been successfully changed from '{PreviousName}' to '{Name}' in the system.";
-
+            string outputText = $"Category name has been successfully changed from '{previousName}' to '{Name}' in the system.";
+            
             if (!CategoryFactoryDAL.GetDAL().Update(new CategoryDTO { ID = ID, Name = Name }))
             {
                 outputStatus = "Error";
                 outputTitle = "Sorry!";
-                outputText = $"Category name has not been successfully changed from '{PreviousName}' to '{Name}' in the system.";
+                outputText = $"Category name has not been successfully changed from '{previousName}' to '{Name}' in the system.";
             }
 
             return new MessageToUI(outputStatus, outputTitle, outputText);

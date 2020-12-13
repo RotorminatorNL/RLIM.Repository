@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
 
@@ -6,12 +7,8 @@ namespace RLIM.BusinessLogic
 {
     public class CertificateCollection
     {
-        public MessageToUI Create(string name, int tier)
+        public IAdmin Create(string name, int tier)
         {
-            string outputStatus = "Success";
-            string outputTitle = "Added Certificate!";
-            string outputText = $"Certificate '{name} ({tier})' has been successfully added to the system.";
-
             CertificateDTO certificateDTO = new CertificateDTO
             {
                 Name = name,
@@ -22,19 +19,15 @@ namespace RLIM.BusinessLogic
             {
                 if (!CertificateFactoryDAL.GetCollectionDAL().Create(certificateDTO))
                 {
-                    outputStatus = "Error";
-                    outputTitle = "Sorry!";
-                    outputText = $"Certificate '{name} ({tier})' has not been added to the system.";
+                    return new Error("Certificate", "Added");
                 }
             }
             else
             {
-                outputStatus = "Error";
-                outputTitle = "Whoops!";
-                outputText = $"Certificate '{name} ({tier})' already exist in the system.";
+                return new AlreadyExisting("Certificate");
             }
 
-            return new MessageToUI(outputStatus, outputTitle, outputText);
+            return new Success("Certificate", "Added");
         }
 
         public Certificate Get(int id)
@@ -54,20 +47,14 @@ namespace RLIM.BusinessLogic
             return certificates;
         }
 
-        public MessageToUI Delete(int id, string name, int tier)
+        public IAdmin Delete(int id)
         {
-            string outputStatus = "Success";
-            string outputTitle = "Removed Certificate!";
-            string outputText = $"Certificate '{name} ({tier})' has been successfully removed from the system.";
-
             if (!CertificateFactoryDAL.GetCollectionDAL().Delete(id))
             {
-                outputStatus = "Error";
-                outputTitle = "Sorry!";
-                outputText = $"Certificate '{name} ({tier})' has not been removed from the system.";
+                return new Error("Certificate", "Removed");
             }
 
-            return new MessageToUI(outputStatus, outputTitle, outputText);
+            return new Success("Certificate", "Removed");
         }
     }
 }

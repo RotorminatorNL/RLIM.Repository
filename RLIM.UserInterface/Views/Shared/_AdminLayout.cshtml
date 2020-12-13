@@ -51,13 +51,7 @@
         <div id="message" class="message-container">
             <div class="message-content">
                 <h2 class="message-title">@TempData["MessageTitle"]</h2>
-                <div class="message-text">
-                    <p>@TempData["MessageText"]</p>
-
-                    @if (@TempData["MessagePreviousData"] != null && @TempData["MessageNewData"] != null)
-                    {<p>@TempData["MessagePreviousData"]</p> <p>@TempData["MessageNewData"]</p>}
-
-                </div>
+                <div class="message-text">@TempData["MessageText"]</div>
                 <div class="message-button-container">
                     <div class="message-button" onclick="CloseMessage()">Okay!</div>
                 </div>

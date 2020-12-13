@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
+using RLIM.BusinessLogic.MessageToUI;
 using RLIM.UserInterface.Models;
 using System.Collections.Generic;
 
@@ -31,7 +32,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                MessageToUI msg = new CategoryCollection().Create(model.Name);
+                IAdmin msg = new CategoryCollection().Create(model.Name);
                 TempData["MessageTitle"] = msg.Title;
                 TempData["MessageText"] = msg.Text;
 
@@ -62,11 +63,9 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                MessageToUI msg = new CategoryCollection().Get(model.ID).Update(model.PreviousName, model.Name);
+                IAdmin msg = new CategoryCollection().Get(model.ID).Update(model.Name);
                 TempData["MessageTitle"] = msg.Title;
                 TempData["MessageText"] = msg.Text;
-                TempData["MessagePreviousData"] = msg.PreviousData;
-                TempData["MessageNewData"] = msg.NewData;
 
                 if (msg.Status == "Error")
                 {
@@ -94,7 +93,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                MessageToUI msg = new CategoryCollection().Delete(model.ID, model.Name);
+                IAdmin msg = new CategoryCollection().Delete(model.ID);
                 TempData["MessageTitle"] = msg.Title;
                 TempData["MessageText"] = msg.Text;
 

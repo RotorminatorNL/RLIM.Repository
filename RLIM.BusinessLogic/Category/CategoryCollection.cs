@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
 
@@ -6,12 +7,8 @@ namespace RLIM.BusinessLogic
 {
     public class CategoryCollection
     {
-        public MessageToUI Create(string name)
+        public IAdmin Create(string name)
         {
-            string outputStatus = "Success";
-            string outputTitle = "Added Category!";
-            string outputText = $"Category '{name}' has been successfully added to the system.";
-
             CategoryDTO categoryDTO = new CategoryDTO
             {
                 Name = name
@@ -21,19 +18,15 @@ namespace RLIM.BusinessLogic
             {
                 if (!CategoryFactoryDAL.GetCollectionDAL().Create(categoryDTO))
                 {
-                    outputStatus = "Error";
-                    outputTitle = "Sorry!";
-                    outputText = $"Category '{name}' has not been added to the system.";
+                    return new Error("Category", "Added");
                 }
             }
             else
             {
-                outputStatus = "Error";
-                outputTitle = "Whoops!";
-                outputText = $"Category '{name}' already exist in the system.";
+                return new AlreadyExisting("Category");
             }
 
-            return new MessageToUI(outputStatus, outputTitle, outputText);
+            return new Success("Category", "Added");
         }
 
         public Category Get(int id)
@@ -53,20 +46,14 @@ namespace RLIM.BusinessLogic
             return categories;
         }
 
-        public MessageToUI Delete(int id, string name)
+        public IAdmin Delete(int id)
         {
-            string outputStatus = "Success";
-            string outputTitle = "Removed Category!";
-            string outputText = $"Category '{name}' has been successfully removed from the system.";
-
             if (!CategoryFactoryDAL.GetCollectionDAL().Delete(id))
             {
-                outputStatus = "Error";
-                outputTitle = "Sorry!";
-                outputText = $"Category '{name}' has not been removed from the system.";
+                return new Error("Category", "Removed");
             }
 
-            return new MessageToUI(outputStatus, outputTitle, outputText);
+            return new Success("Category", "Removed");
         }
     }
 

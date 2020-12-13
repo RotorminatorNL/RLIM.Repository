@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
+using RLIM.BusinessLogic.MessageToUI;
 using RLIM.UserInterface.Models;
 using System.Collections.Generic;
 
@@ -32,7 +33,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                MessageToUI msg = new CertificateCollection().Create(model.Name, model.Tier);
+                IAdmin msg = new CertificateCollection().Create(model.Name, model.Tier);
                 TempData["MessageTitle"] = msg.Title;
                 TempData["MessageText"] = msg.Text;
 
@@ -64,11 +65,9 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                MessageToUI msg = new CertificateCollection().Get(model.ID).Update(model.PreviousName, model.Name, model.PreviousTier, model.Tier);
+                IAdmin msg = new CertificateCollection().Get(model.ID).Update(model.Name, model.Tier);
                 TempData["MessageTitle"] = msg.Title;
                 TempData["MessageText"] = msg.Text;
-                TempData["MessagePreviousData"] = msg.PreviousData;
-                TempData["MessageNewData"] = msg.NewData;
 
                 if (msg.Status == "Error")
                 {
@@ -96,7 +95,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                MessageToUI msg = new CertificateCollection().Delete(model.ID, model.Name, model.Tier);
+                IAdmin msg = new CertificateCollection().Delete(model.ID);
                 TempData["MessageTitle"] = msg.Title;
                 TempData["MessageText"] = msg.Text;
 

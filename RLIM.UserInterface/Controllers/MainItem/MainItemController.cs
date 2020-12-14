@@ -171,18 +171,18 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index");
         }
         
-        [HttpGet("/Main-Item/{id}/[action]")]
-        public IActionResult Delete(int id)
+        [HttpGet("/Main-Item/{ID}/[action]")]
+        public IActionResult Delete(int ID)
         {
-            if (id > 0)
+            if (ID > 0)
             {
-                return View(GetMainItem(id));
+                return View(GetMainItem(ID));
             }
 
             return RedirectToAction("Index");
         }
 
-        [HttpPost("/Main-Item/{id}/[action]")]
+        [HttpPost("/Main-Item/{ID}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(MainItemModel model)
         {
@@ -194,7 +194,7 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    return RedirectToAction("Delete", "MainItem", new { id = model.ID });
+                    return RedirectToAction("Delete", "MainItem", new { model.ID });
                 }
             }
 

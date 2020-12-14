@@ -41,6 +41,7 @@ namespace RLIM.UserInterface.Controllers
                 {
                     TempData["CertificateName"] = model.Name;
                     TempData["CertificateTier"] = model.Tier;
+
                     return RedirectToAction("Create", "Certificate");
                 }
             }
@@ -48,18 +49,18 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpGet("/[controller]/{id}/[action]")]
-        public IActionResult Update(int id)
+        [HttpGet("/[controller]/{ID}/[action]")]
+        public IActionResult Update(int ID)
         {
-            if (id > 0)
+            if (ID > 0)
             {
-                return View(GetCertificate(id));
+                return View(GetCertificate(ID));
             }
 
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("/[controller]/{id}/[action]")]
+        [HttpPost("/[controller]/{ID}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(CertificateModel model)
         {
@@ -71,19 +72,19 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    return RedirectToAction("Update", "Certificate", new { id = model.ID });
+                    return RedirectToAction("Update", "Certificate", new { model.ID });
                 }
             }
 
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpGet("/[controller]/{id}/[action]")]
-        public IActionResult Delete(int id)
+        [HttpGet("/[controller]/{ID}/[action]")]
+        public IActionResult Delete(int ID)
         {
-            if (id > 0)
+            if (ID > 0)
             {
-                return View(GetCertificate(id));
+                return View(GetCertificate(ID));
             }
 
             return RedirectToAction("Attributes", "SubItem");
@@ -101,7 +102,7 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    return RedirectToAction("Delete", "Certificate", new { id = model.ID });
+                    return RedirectToAction("Delete", "Certificate", new { model.ID });
                 }
             }
 

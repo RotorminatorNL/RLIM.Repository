@@ -46,18 +46,18 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpGet("/[controller]/{id}/[action]")]
-        public IActionResult Update(int id)
+        [HttpGet("/[controller]/{ID}/[action]")]
+        public IActionResult Update(int ID)
         {
-            if (id > 0)
+            if (ID > 0)
             {
-                return View(GetColor(id));
+                return View(GetColor(ID));
             }
 
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("/[controller]/{id}/[action]")]
+        [HttpPost("/[controller]/{ID}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(ColorModel model)
         {
@@ -69,25 +69,25 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    return RedirectToAction("Update", "Color");
+                    return RedirectToAction("Update", "Color", new { model.ID });
                 }
             }
 
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpGet("/[controller]/{id}/[action]")]
-        public IActionResult Delete(int id)
+        [HttpGet("/[controller]/{ID}/[action]")]
+        public IActionResult Delete(int ID)
         {
-            if (id > 0)
+            if (ID > 0)
             {
-                return View(GetColor(id));
+                return View(GetColor(ID));
             }
 
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("/[controller]/{id}/[action]")]
+        [HttpPost("/[controller]/{ID}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(ColorModel model)
         {
@@ -99,7 +99,7 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    return RedirectToAction("Delete", "Color", new { id = model.ID });
+                    return RedirectToAction("Delete", "Color", new { model.ID });
                 }
             }
 

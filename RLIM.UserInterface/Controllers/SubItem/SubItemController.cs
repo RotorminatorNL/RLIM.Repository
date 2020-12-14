@@ -107,6 +107,7 @@ namespace RLIM.UserInterface.Controllers
         {
             ViewBag.Certificates = GetCertificates();
             ViewBag.Colors = GetColors();
+
             return View();
         }
 
@@ -117,7 +118,7 @@ namespace RLIM.UserInterface.Controllers
             {
                 return View(GetSubItems(MainItemID));
             }
-
+            
             return RedirectToAction("Index", "MainItem");
         }
 
@@ -128,6 +129,7 @@ namespace RLIM.UserInterface.Controllers
             {
                 ViewData["Certificates"] = GetCertificates();
                 ViewData["Colors"] = GetColors();
+
                 ViewData["MainItemID"] = MainItemID;
                 ViewData["MainItemName"] = MainItemName;
 
@@ -137,11 +139,11 @@ namespace RLIM.UserInterface.Controllers
                     MainItemDisplay = MainItemName
                 });
             }
-
+            
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpPost("/Sub-Item/[action]")]
+        [HttpPost("/{MainItemName}/{MainItemID}/Sub-Item/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(SubItemModel model)
         {
@@ -153,40 +155,41 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    return RedirectToAction("Create", "SubItem");
+                    return RedirectToAction("Create", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID });
                 }
-
-                return RedirectToRoute("SubItems", new { MainItemName = model.MainItemDisplay, model.MainItemID });
+                    
+                return RedirectToAction("Index", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID });
             }
-
+                
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpGet("/{MainItemName}/{MainItemID}/Sub-Item/{id}/[action]")]
-        public IActionResult Update(int MainItemID, string MainItemName, int id)
+        [HttpGet("/{MainItemName}/{MainItemID}/Sub-Item/{ID}/[action]")]
+        public IActionResult Update(int MainItemID, string MainItemName, int ID)
         {
-            if (MainItemID != 0 && MainItemName != "" && id != 0)
+            if (MainItemID != 0 && MainItemName != "" && ID != 0)
             {
                 return View();
             }
-
+                
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpGet("/{MainItemName}/{MainItemID}/Sub-Item/{id}/[action]")]
-        public IActionResult Delete(int MainItemID, string MainItemName, int id)
+        [HttpGet("/{MainItemName}/{MainItemID}/Sub-Item/{ID}/[action]")]
+        public IActionResult Delete(int MainItemID, string MainItemName, int ID)
         {
-            if (MainItemID != 0 && MainItemName != "" && id != 0)
+            if (MainItemID != 0 && MainItemName != "" && ID != 0)
             {
                 ViewData["MainItemID"] = MainItemID;
                 ViewData["MainItemName"] = MainItemName;
-                return View(GetSubItem(id));
+
+                return View(GetSubItem(ID));
             }
 
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpPost("/{MainItemName}/{MainItemID}/Sub-Item/{id}/[action]")]
+        [HttpPost("/{MainItemName}/{MainItemID}/Sub-Item/{ID}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(SubItemModel model)
         {
@@ -198,12 +201,12 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    return RedirectToAction("Delete", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID, id = model.ID });
+                    return RedirectToAction("Delete", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID, model.ID });
                 }
-
-                return RedirectToRoute("SubItems", new { MainItemName = model.MainItemDisplay, model.MainItemID });
+                    
+                return RedirectToAction("Index", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID });
             }
-
+            
             return RedirectToAction("Index", "MainItem");
         }
     }

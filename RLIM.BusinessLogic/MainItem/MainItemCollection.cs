@@ -59,7 +59,7 @@ namespace RLIM.BusinessLogic
 
         public IAdmin Delete(int id)
         {
-            if(!SubItemFactoryDAL.GetCollectionDAL().DeleteAllWithMainItemID(id) && !MainItemFactoryDAL.GetCollectionDAL().Delete(id))
+            if(!SubItemFactoryDAL.GetCollectionDAL().DeleteAllWithMainItemID(id) || !MainItemFactoryDAL.GetCollectionDAL().Delete(id))
             {
                 return new Error("Main-Item", "Delete");
             }

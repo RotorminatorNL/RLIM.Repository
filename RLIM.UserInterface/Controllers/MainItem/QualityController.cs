@@ -46,18 +46,18 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("/[controller]/{id}/[action]")]
-        public IActionResult Update(int id)
+        [HttpGet("/[controller]/{ID}/[action]")]
+        public IActionResult Update(int ID)
         {
-            if (id > 0)
+            if (ID > 0)
             {
-                return View(GetQuality(id));
+                return View(GetQuality(ID));
             }
 
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/{id}/[action]")]
+        [HttpPost("/[controller]/{ID}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(QualityModel model)
         {
@@ -69,25 +69,25 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    return RedirectToAction("Update", "Quality", new { id = model.ID });
+                    return RedirectToAction("Update", "Quality", new { model.ID });
                 }
             }
 
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("/[controller]/{id}/[action]")]
-        public IActionResult Delete(int id)
+        [HttpGet("/[controller]/{ID}/[action]")]
+        public IActionResult Delete(int ID)
         {
-            if (id > 0)
+            if (ID > 0)
             {
-                return View(GetQuality(id));
+                return View(GetQuality(ID));
             }
 
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/{id}/[action]")]
+        [HttpPost("/[controller]/{ID}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(QualityModel model)
         {
@@ -99,7 +99,7 @@ namespace RLIM.UserInterface.Controllers
 
                 if (msg.Status == "Error")
                 {
-                    return RedirectToAction("Delete", "Quality", new { id = model.ID });
+                    return RedirectToAction("Delete", "Quality", new { model.ID });
                 }
             }
 

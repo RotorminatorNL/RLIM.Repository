@@ -58,10 +58,6 @@ namespace RLIM.UserInterface
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapControllerRoute(
-                    name: "SubItems",
-                    pattern: "{MainItemName=Unknown}/{MainItemID=0}/Sub-Items");
             });
         }
     }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
 using RLIM.BusinessLogic.MessageToUI;
 using RLIM.UserInterface.Models;
@@ -126,6 +125,27 @@ namespace RLIM.UserInterface.Controllers
             return mainItems;
         }
 
+        private IActionResult MessageHandler(IAdmin msg, MainItemModel model, string action)
+        {
+            TempData["MessageTitle"] = msg.Title;
+            TempData["MessageText"] = msg.Text;
+
+            if (msg.Status == "Error")
+            {
+                if (action == "Create")
+                {
+                    TempData["MainItemName"] = model.Name;
+                    return RedirectToAction("Create", "MainItem");
+                }
+                else
+                {
+                    return RedirectToAction(action, "MainItem", new { model.ID });
+                }
+            }
+
+            return RedirectToAction("Index", "MainItem");
+        }
+
         public IActionResult Index()
         {
             return View(GetMainItems());
@@ -155,17 +175,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new MainItemCollection().Create(model.Name, model.CategoryID, model.PlatformID, model.QualityID);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    TempData["MainItemName"] = model.Name;
-                    //TempData["CategoryID"] = model.CategoryID;
-                    //TempData["PlatformID"] = model.PlatformID;
-                    //TempData["QualityID"] = model.QualityID;
-                    return RedirectToAction("Create", "MainItem");
-                }
+                return MessageHandler(msg, model, "Create");
             }
 
             return RedirectToAction("Index");
@@ -189,13 +199,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new MainItemCollection().Delete(model.ID);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Delete", "MainItem", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Create"); 
             }
 
             return RedirectToAction("Index");

@@ -22,6 +22,28 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
+        private IActionResult MessageHandler(IAdmin msg, CertificateModel model, string action)
+        {
+            TempData["MessageTitle"] = msg.Title;
+            TempData["MessageText"] = msg.Text;
+
+            if (msg.Status == "Error")
+            {
+                if (action == "Create")
+                {
+                    TempData["CertificateName"] = model.Name;
+                    TempData["CertificateTier"] = model.Tier;
+                    return RedirectToAction("Create", "Certificate");
+                }
+                else
+                {
+                    return RedirectToAction(action, "Certificate", new { model.ID });
+                }
+            }
+
+            return RedirectToAction("Attributes", "MainItem");
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -34,16 +56,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new CertificateCollection().Create(model.Name, model.Tier);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    TempData["CertificateName"] = model.Name;
-                    TempData["CertificateTier"] = model.Tier;
-
-                    return RedirectToAction("Create", "Certificate");
-                }
+                return MessageHandler(msg, model, "Create");
             }
 
             return RedirectToAction("Attributes", "SubItem");
@@ -67,13 +80,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new CertificateCollection().Get(model.ID).Update(model.Name, model.Tier);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Update", "Certificate", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Update");
             }
 
             return RedirectToAction("Attributes", "SubItem");
@@ -97,13 +104,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new CertificateCollection().Delete(model.ID);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Delete", "Certificate", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Delete");
             }
 
             return RedirectToAction("Attributes", "SubItem");

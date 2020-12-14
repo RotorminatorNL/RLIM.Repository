@@ -21,6 +21,27 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
+        private IActionResult MessageHandler(IAdmin msg, CategoryModel model, string action)
+        {
+            TempData["MessageTitle"] = msg.Title;
+            TempData["MessageText"] = msg.Text;
+
+            if (msg.Status == "Error")
+            {
+                if (action == "Create")
+                {
+                    TempData["CategoryName"] = model.Name;
+                    return RedirectToAction("Create", "Category");
+                }
+                else
+                {
+                    return RedirectToAction(action, "Category", new { model.ID });
+                }
+            }
+                
+            return RedirectToAction("Attributes", "MainItem");
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -33,14 +54,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new CategoryCollection().Create(model.Name);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    TempData["CategoryName"] = model.Name;
-                    return RedirectToAction("Create", "Category");
-                }
+                return MessageHandler(msg, model, "Create");
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -64,13 +78,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new CategoryCollection().Get(model.ID).Update(model.Name);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Update", "Category", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Update");
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -94,13 +102,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new CategoryCollection().Delete(model.ID);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Delete", "Category", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Delete");
             }
 
             return RedirectToAction("Attributes", "MainItem");

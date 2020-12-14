@@ -103,6 +103,26 @@ namespace RLIM.UserInterface.Controllers
             return subItemModels;
         }
 
+        private IActionResult MessageHandler(IAdmin msg, SubItemModel model, string action)
+        {
+            TempData["MessageTitle"] = msg.Title;
+            TempData["MessageText"] = msg.Text;
+
+            if (msg.Status == "Error")
+            {
+                if (action == "Create")
+                {
+                    return RedirectToAction("Create", "SubItem");
+                }
+                else
+                {
+                    return RedirectToAction(action, "SubItem", new { model.ID });
+                }
+            }
+
+            return RedirectToAction("Index", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID });
+        }
+
         public IActionResult Attributes()
         {
             ViewBag.Certificates = GetCertificates();
@@ -150,15 +170,7 @@ namespace RLIM.UserInterface.Controllers
             if (model.ID == 0 && model.MainItemID > 0 && model.CertificateID >= 0 && model.ColorID >= 0)
             {
                 IAdmin msg = new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Create", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID });
-                }
-                    
-                return RedirectToAction("Index", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID });
+                return MessageHandler(msg, model, "Create");
             }
                 
             return RedirectToAction("Index", "MainItem");
@@ -196,15 +208,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new SubItemCollection().Delete(model.ID);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Delete", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID, model.ID });
-                }
-                    
-                return RedirectToAction("Index", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID });
+                return MessageHandler(msg, model, "Delete");
             }
             
             return RedirectToAction("Index", "MainItem");

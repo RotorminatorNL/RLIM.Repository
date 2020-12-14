@@ -22,6 +22,27 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
+        private IActionResult MessageHandler(IAdmin msg, PlatformModel model, string action)
+        {
+            TempData["MessageTitle"] = msg.Title;
+            TempData["MessageText"] = msg.Text;
+
+            if (msg.Status == "Error")
+            {
+                if (action == "Create")
+                {
+                    TempData["PlatformName"] = model.Name;
+                    return RedirectToAction("Create", "Platform");
+                }
+                else
+                {
+                    return RedirectToAction(action, "Platform", new { model.ID });
+                }
+            }
+
+            return RedirectToAction("Attributes", "MainItem");
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -34,14 +55,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new PlatformCollection().Create(model.Name);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    TempData["PlatformName"] = model.Name;
-                    return RedirectToAction("Create", "Platform");
-                }
+                return MessageHandler(msg, model, "Create");
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -65,13 +79,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new PlatformCollection().Get(model.ID).Update(model.Name);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Update", "Platform", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Update");
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -95,13 +103,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new PlatformCollection().Delete(model.ID);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Delete", "Platform", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Delete");
             }
 
             return RedirectToAction("Attributes", "MainItem");

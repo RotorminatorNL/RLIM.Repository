@@ -20,6 +20,28 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
+        private IActionResult MessageHandler(IAdmin msg, QualityModel model, string action)
+        {
+            TempData["MessageTitle"] = msg.Title;
+            TempData["MessageText"] = msg.Text;
+
+            if (msg.Status == "Error")
+            {
+                if (action == "Create")
+                {
+                    TempData["QualityName"] = model.Name;
+                    TempData["QualityRank"] = model.Rank;
+                    return RedirectToAction("Create", "Quality");
+                }
+                else
+                {
+                    return RedirectToAction(action, "Quality", new { model.ID });
+                }
+            }
+
+            return RedirectToAction("Attributes", "MainItem");
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -32,15 +54,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new QualityCollection().Create(model.Name, model.Rank);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    TempData["QualityName"] = model.Name;
-                    TempData["QualityRank"] = model.Rank;
-                    return RedirectToAction("Create", "Quality");
-                }
+                return MessageHandler(msg, model, "Create");
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -64,13 +78,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new QualityCollection().Get(model.ID).Update(model.Name, model.Rank);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Update", "Quality", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Update");
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -94,13 +102,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new QualityCollection().Delete(model.ID);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Delete", "Quality", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Delete");
             }
 
             return RedirectToAction("Attributes", "MainItem");

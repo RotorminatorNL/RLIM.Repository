@@ -20,6 +20,28 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
+        private IActionResult MessageHandler(IAdmin msg, ColorModel model, string action)
+        {
+            TempData["MessageTitle"] = msg.Title;
+            TempData["MessageText"] = msg.Text;
+
+            if (msg.Status == "Error")
+            {
+                if (action == "Create")
+                {
+                    TempData["ColorName"] = model.Name;
+                    TempData["ColorHex"] = model.Hex;
+                    return RedirectToAction("Create", "Color");
+                }
+                else
+                {
+                    return RedirectToAction(action, "Color", new { model.ID });
+                }
+            }
+
+            return RedirectToAction("Attributes", "MainItem");
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -32,15 +54,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg =  new ColorCollection().Create(model.Name, model.Hex);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    TempData["ColorName"] = model.Name;
-                    TempData["ColorHex"] = model.Hex;
-                    return RedirectToAction("Create", "Color");
-                }
+                return MessageHandler(msg, model, "Create");
             }
 
             return RedirectToAction("Attributes", "SubItem");
@@ -64,13 +78,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new ColorCollection().Get(model.ID).Update(model.Name, model.Hex);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Update", "Color", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Update");
             }
 
             return RedirectToAction("Attributes", "SubItem");
@@ -94,13 +102,7 @@ namespace RLIM.UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 IAdmin msg = new ColorCollection().Delete(model.ID);
-                TempData["MessageTitle"] = msg.Title;
-                TempData["MessageText"] = msg.Text;
-
-                if (msg.Status == "Error")
-                {
-                    return RedirectToAction("Delete", "Color", new { model.ID });
-                }
+                return MessageHandler(msg, model, "Delete");
             }
 
             return RedirectToAction("Attributes", "SubItem");

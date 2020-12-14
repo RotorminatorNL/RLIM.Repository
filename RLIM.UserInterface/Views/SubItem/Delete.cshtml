@@ -23,7 +23,7 @@
         </tbody>
     </table>
 
-    <form asp-controller="SubItem" asp-action="Delete">
+    <form asp-controller="SubItem" asp-action="Delete" class="form-group row justify-content-between">
         <input asp-for="ID" type="hidden" />
         <input asp-for="MainItemID" type="hidden" />
         <input asp-for="MainItemDisplay" type="hidden" value="@ViewData["MainItemName"]" />

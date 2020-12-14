@@ -92,10 +92,6 @@ h1,h2 {
     flex-direction: column;
     width: 100%;
 }
-    .content form {
-        width: 100%;
-        max-width: 400px;
-    }
 
     .content .choose-role {
         flex-direction: column;
@@ -103,7 +99,12 @@ h1,h2 {
         text-align: center;
     }
 
-.login-btn-container a{
+.login-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-btn-container a {
     margin: 0 20px;
     margin-top: 20px;
 }

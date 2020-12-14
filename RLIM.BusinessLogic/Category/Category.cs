@@ -17,13 +17,17 @@ namespace RLIM.BusinessLogic
 
         public IAdmin Update(string name)
         {
-            Name = name;
-
-            if (CategoryFactoryDAL.GetCollectionDAL().GetID(new CategoryDTO { Name = name }) != ID)
+            CategoryDTO categoryDTO = new CategoryDTO
             {
-                if (!CategoryFactoryDAL.GetDAL().Update(new CategoryDTO { ID = ID, Name = Name }))
+                ID = ID,
+                Name = name
+            };
+
+            if (CategoryFactoryDAL.GetCollectionDAL().GetID(categoryDTO) == 0)
+            {
+                if (!CategoryFactoryDAL.GetDAL().Update(categoryDTO))
                 {
-                    return new Error("Category", "Changed");
+                    return new Error("Category", "Update");
                 }
             }
             else
@@ -31,7 +35,7 @@ namespace RLIM.BusinessLogic
                 return new AlreadyExisting("Category");
             }
 
-            return new Success("Category", "Changed");
+            return new Success("Category", "Update");
         }
     }
 }

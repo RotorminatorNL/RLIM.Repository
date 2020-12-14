@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 
 namespace RLIM.BusinessLogic
@@ -16,17 +17,28 @@ namespace RLIM.BusinessLogic
             Rank = qualityDTO.Rank;
         }
 
-        public void Update(string name, int rank)
+        public IAdmin Update(string name, int rank)
         {
-            Name = name;
-            Rank = rank;
-
-            QualityFactoryDAL.GetDAL().Update(new QualityDTO
+            QualityDTO qualityDTO = new QualityDTO
             {
                 ID = ID,
-                Name = Name,
-                Rank = Rank
-            });
+                Name = name,
+                Rank = rank
+            };
+
+            if (QualityFactoryDAL.GetCollectionDAL().GetID(qualityDTO) == 0)
+            {
+                if (!QualityFactoryDAL.GetDAL().Update(qualityDTO))
+                {
+                    return new Error("Quality", "Update");
+                }
+            }
+            else
+            {
+                return new AlreadyExisting("Quality");
+            }
+
+            return new Success("Quality", "Update");
         }
     }
 }

@@ -22,14 +22,18 @@ namespace RLIM.BusinessLogic
 
         public IAdmin Update(string name, int tier)
         {
-            Name = name;
-            Tier = tier;
-
-            if (CertificateFactoryDAL.GetCollectionDAL().GetID(new CertificateDTO { Name = name, Tier = tier }) != ID)
+            CertificateDTO certificateDTO = new CertificateDTO
             {
-                if (!CertificateFactoryDAL.GetDAL().Update(new CertificateDTO { ID = ID, Name = Name, Tier = Tier }))
+                ID = ID,
+                Name = name,
+                Tier = tier
+            };
+
+            if (CertificateFactoryDAL.GetCollectionDAL().GetID(certificateDTO) == 0)
+            {
+                if (!CertificateFactoryDAL.GetDAL().Update(certificateDTO))
                 {
-                    return new Error("Certificate", "Changed");
+                    return new Error("Certificate", "Update");
                 }
             }
             else
@@ -37,7 +41,7 @@ namespace RLIM.BusinessLogic
                 return new AlreadyExisting("Certificate");
             }
 
-            return new Success("Certificate", "Changed");
+            return new Success("Certificate", "Update");
         }
     }
 }

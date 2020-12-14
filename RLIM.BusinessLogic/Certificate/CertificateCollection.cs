@@ -19,7 +19,7 @@ namespace RLIM.BusinessLogic
             {
                 if (!CertificateFactoryDAL.GetCollectionDAL().Create(certificateDTO))
                 {
-                    return new Error("Certificate", "Added");
+                    return new Error("Certificate", "Create");
                 }
             }
             else
@@ -27,7 +27,7 @@ namespace RLIM.BusinessLogic
                 return new AlreadyExisting("Certificate");
             }
 
-            return new Success("Certificate", "Added");
+            return new Success("Certificate", "Create");
         }
 
         public Certificate Get(int id)
@@ -51,10 +51,10 @@ namespace RLIM.BusinessLogic
         {
             if (!CertificateFactoryDAL.GetCollectionDAL().Delete(id))
             {
-                return new Error("Certificate", "Removed");
+                return new Error("Certificate", "Delete");
             }
 
-            return new Success("Certificate", "Removed");
+            return new Success("Certificate", "Delete");
         }
     }
 }

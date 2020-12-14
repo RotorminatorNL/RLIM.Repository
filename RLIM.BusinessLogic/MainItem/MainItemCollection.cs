@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace RLIM.BusinessLogic
 {
     public class MainItemCollection
     {
-        public void Create(string name, int categoryID, int platformID, int qualityID)
+        public IAdmin Create(string name, int categoryID, int platformID, int qualityID)
         {
             MainItemDTO mainItemDTO = new MainItemDTO
             {
@@ -20,10 +21,23 @@ namespace RLIM.BusinessLogic
             {
                 int id = MainItemFactoryDAL.GetCollectionDAL().Create(mainItemDTO);
 
-                SubItemDTO subItemDTO = new SubItemDTO { MainItemID = id };
+                if (MainItemFactoryDAL.GetCollectionDAL().Create(mainItemDTO) != 0)
+                {
+                    SubItemDTO subItemDTO = new SubItemDTO { MainItemID = id };
 
-                SubItemFactoryDAL.GetCollectionDAL().Create(subItemDTO);
+                    SubItemFactoryDAL.GetCollectionDAL().Create(subItemDTO);
+                }
+                else
+                {
+                    return new Error("Main-Item", "Create");
+                }
             }
+            else
+            {
+                return new AlreadyExisting("Main-Item");
+            }
+
+            return new Success("Main-Item", "Create");
         }
 
         public MainItem Get(int id)
@@ -43,10 +57,14 @@ namespace RLIM.BusinessLogic
             return mainItems;
         }
 
-        public void Delete(int id)
+        public IAdmin Delete(int id)
         {
-            SubItemFactoryDAL.GetCollectionDAL().DeleteAllWithMainItemID(id);
-            MainItemFactoryDAL.GetCollectionDAL().Delete(id);
+            if(!SubItemFactoryDAL.GetCollectionDAL().DeleteAllWithMainItemID(id) && !MainItemFactoryDAL.GetCollectionDAL().Delete(id))
+            {
+                return new Error("Main-Item", "Delete");
+            }
+
+            return new Success("Main-Item", "Delete");
         }
     }
 }

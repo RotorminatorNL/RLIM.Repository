@@ -6,6 +6,6 @@ namespace RLIM.ContractLayer
 {
     public interface IQualityDAL
     {
-        void Update(QualityDTO qualityDTO);
+        bool Update(QualityDTO qualityDTO);
     }
 }

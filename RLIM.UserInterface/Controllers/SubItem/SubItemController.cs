@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
+using RLIM.BusinessLogic.MessageToUI;
 using RLIM.UserInterface.Models;
 using System.Collections.Generic;
 
@@ -146,8 +147,16 @@ namespace RLIM.UserInterface.Controllers
         {
             if (model.ID == 0 && model.MainItemID > 0 && model.CertificateID >= 0 && model.ColorID >= 0)
             {
-                new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
-                return RedirectToRoute("SubItems", new { MainItemName = model.MainItemDisplay, MainItemID = model.MainItemID });
+                IAdmin msg = new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Create", "SubItem");
+                }
+
+                return RedirectToRoute("SubItems", new { MainItemName = model.MainItemDisplay, model.MainItemID });
             }
 
             return RedirectToAction("Index", "MainItem");
@@ -177,14 +186,22 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpPost("/Sub-Item/[action]")]
+        [HttpPost("/{MainItemName}/{MainItemID}/Sub-Item/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(SubItemModel model)
         {
             if (ModelState.IsValid)
             {
-                new SubItemCollection().Delete(model.ID);
-                return RedirectToRoute("SubItems", new { MainItemName = model.MainItemDisplay, MainItemID = model.MainItemID });
+                IAdmin msg = new SubItemCollection().Delete(model.ID);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Delete", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID, id = model.ID });
+                }
+
+                return RedirectToRoute("SubItems", new { MainItemName = model.MainItemDisplay, model.MainItemID });
             }
 
             return RedirectToAction("Index", "MainItem");

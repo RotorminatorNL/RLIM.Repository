@@ -8,8 +8,10 @@ namespace RLIM.DataAccess
 {
     public class QualityDAL : IQualityCollectionDAL, IQualityDAL
     {
-        public void Create(QualityDTO qualityDTO)
+        public bool Create(QualityDTO qualityDTO)
         {
+            bool isCreated = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -22,13 +24,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isCreated = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isCreated;
         }
 
         public QualityDTO Get(int id)
@@ -56,12 +63,14 @@ namespace RLIM.DataAccess
                         Rank = (int)reader["Rank"]
                     };
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return qualityDTO;
@@ -88,12 +97,14 @@ namespace RLIM.DataAccess
                 {
                     id = (int)reader["ID"];
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return id;
@@ -123,19 +134,23 @@ namespace RLIM.DataAccess
                             Rank = (int)reader["Rank"]
                         });
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return qualityDTOs;
         }
 
-        public void Update(QualityDTO qualityDTO)
+        public bool Update(QualityDTO qualityDTO)
         {
+            bool isUpdated = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -150,17 +165,24 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isUpdated = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isUpdated;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            bool isDeleted = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -172,13 +194,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isDeleted = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isDeleted;
         }
     }
 }

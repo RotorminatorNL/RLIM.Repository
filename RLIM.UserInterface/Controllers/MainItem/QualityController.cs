@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
+using RLIM.BusinessLogic.MessageToUI;
 using RLIM.UserInterface.Models;
 using System.Collections.Generic;
 
@@ -30,7 +31,16 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                new QualityCollection().Create(model.Name, model.Rank);
+                IAdmin msg = new QualityCollection().Create(model.Name, model.Rank);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    TempData["QualityName"] = model.Name;
+                    TempData["QualityRank"] = model.Rank;
+                    return RedirectToAction("Create", "Quality");
+                }
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -47,13 +57,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(QualityModel model)
         {
             if (ModelState.IsValid)
             {
-                new QualityCollection().Get(model.ID).Update(model.Name, model.Rank);
+                IAdmin msg = new QualityCollection().Get(model.ID).Update(model.Name, model.Rank);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Update", "Quality", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -70,13 +87,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(QualityModel model)
         {
             if (ModelState.IsValid)
             {
-                new QualityCollection().Delete(model.ID);
+                IAdmin msg = new QualityCollection().Delete(model.ID);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Delete", "Quality", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Attributes", "MainItem");

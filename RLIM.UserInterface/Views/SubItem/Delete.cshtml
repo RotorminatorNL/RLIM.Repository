@@ -23,7 +23,7 @@
         </tbody>
     </table>
 
-    <form action="/Sub-Item/Delete" method="post" asp-antiforgery="true">
+    <form asp-controller="SubItem" asp-action="Delete">
         <input asp-for="ID" type="hidden" />
         <input asp-for="MainItemID" type="hidden" />
         <input asp-for="MainItemDisplay" type="hidden" value="@ViewData["MainItemName"]" />

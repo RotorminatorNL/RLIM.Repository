@@ -11,13 +11,13 @@
 
     <div class="form-group">
         <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
+        <input asp-for="Name" class="form-control" value="@TempData["ColorName"]" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Hex" class="control-label"></label>
-        <input asp-for="Hex" class="form-control" />
+        <input asp-for="Hex" class="form-control" value="@TempData["ColorHex"]" />
         <span asp-validation-for="Hex" class="text-danger"></span>
     </div>
 

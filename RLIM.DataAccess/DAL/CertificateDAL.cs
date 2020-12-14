@@ -10,7 +10,7 @@ namespace RLIM.DataAccess
     {
         public bool Create(CertificateDTO certificateDTO)
         {
-            bool output = true;
+            bool isCreated = false;
 
             using SqlConnection conn = Db.Connect();
 
@@ -24,10 +24,10 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                isCreated = true;
             }
             catch (SqlException exception)
             {
-                output = false;
                 Console.WriteLine(exception);
             }
             finally
@@ -35,7 +35,7 @@ namespace RLIM.DataAccess
                 conn.Close();
             }
 
-            return output;
+            return isCreated;
         }
 
         public CertificateDTO Get(int id)
@@ -147,7 +147,7 @@ namespace RLIM.DataAccess
 
         public bool Update(CertificateDTO certificateDTO)
         {
-            bool output = true;
+            bool isUpdated = false;
 
             using SqlConnection conn = Db.Connect();
 
@@ -163,10 +163,10 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                isUpdated = true;
             }
             catch (SqlException exception)
             {
-                output = false;
                 Console.WriteLine(exception);
             }
             finally
@@ -174,12 +174,12 @@ namespace RLIM.DataAccess
                 conn.Close();
             }
 
-            return output;
+            return isUpdated;
         }
 
         public bool Delete(int id)
         {
-            bool output = true;
+            bool isDeleted = false;
 
             using SqlConnection conn = Db.Connect();
 
@@ -192,10 +192,10 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                isDeleted = true;
             }
             catch (SqlException exception)
             {
-                output = false;
                 Console.WriteLine(exception);
             }
             finally
@@ -203,7 +203,7 @@ namespace RLIM.DataAccess
                 conn.Close();
             }
 
-            return output;
+            return isDeleted;
         }
     }
 }

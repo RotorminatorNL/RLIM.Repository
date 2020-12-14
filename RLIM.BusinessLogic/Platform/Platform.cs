@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 
 namespace RLIM.BusinessLogic
@@ -14,15 +15,27 @@ namespace RLIM.BusinessLogic
             Name = platformDTO.Name;
         }
 
-        public void Update(string name)
+        public IAdmin Update(string name)
         {
-            Name = name;
-
-            PlatformFactoryDAL.GetDAL().Update(new PlatformDTO
+            PlatformDTO platformDTO = new PlatformDTO
             {
                 ID = ID,
-                Name = Name
-            });
+                Name = name
+            };
+
+            if (PlatformFactoryDAL.GetCollectionDAL().GetID(platformDTO) == 0)
+            {
+                if (!PlatformFactoryDAL.GetDAL().Update(platformDTO))
+                {
+                    return new Error("Platform", "Update");
+                }
+            }
+            else
+            {
+                return new AlreadyExisting("Platform");
+            }
+
+            return new Success("Platform", "Update");
         }
     }
 }

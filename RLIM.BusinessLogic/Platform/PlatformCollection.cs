@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace RLIM.BusinessLogic
 {
     public class PlatformCollection
     {
-        public void Create(string name)
+        public IAdmin Create(string name)
         {
             PlatformDTO platformDTO = new PlatformDTO
             {
@@ -15,8 +16,17 @@ namespace RLIM.BusinessLogic
 
             if (PlatformFactoryDAL.GetCollectionDAL().GetID(platformDTO) == 0)
             {
-                PlatformFactoryDAL.GetCollectionDAL().Create(platformDTO);
+                if (!PlatformFactoryDAL.GetCollectionDAL().Create(platformDTO))
+                {
+                    return new Error("Platform", "Create");
+                }
             }
+            else
+            {
+                return new AlreadyExisting("Platform");
+            }
+
+            return new Success("Platform", "Create");
         }
 
         public Platform Get(int id)
@@ -36,9 +46,14 @@ namespace RLIM.BusinessLogic
             return platforms;
         }
 
-        public void Delete(int id)
+        public IAdmin Delete(int id)
         {
-            PlatformFactoryDAL.GetCollectionDAL().Delete(id);
+            if (!PlatformFactoryDAL.GetCollectionDAL().Delete(id))
+            {
+                return new Error("Platform", "Delete");
+            }
+
+            return new Success("Platform", "Delete");
         }
     }
 

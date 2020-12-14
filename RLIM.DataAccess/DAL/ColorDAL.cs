@@ -9,8 +9,10 @@ namespace RLIM.DataAccess
 {
     public class ColorDAL : IColorCollectionDAL, IColorDAL
     {
-        public void Create(ColorDTO colorDTO)
+        public bool Create(ColorDTO colorDTO)
         {
+            bool isCreated = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -23,13 +25,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isCreated = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isCreated;
         }
 
         public ColorDTO Get(int id)
@@ -56,12 +63,14 @@ namespace RLIM.DataAccess
                         Hex = (string)reader["Hex"]
                     };
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return colorDTO;
@@ -88,12 +97,14 @@ namespace RLIM.DataAccess
                 {
                     id = (int)reader["Id"];
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return id;
@@ -123,19 +134,23 @@ namespace RLIM.DataAccess
                             Hex = (string)reader["Hex"]
                         });
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return colorDTOs;
         }
 
-        public void Update(ColorDTO colorDTO)
+        public bool Update(ColorDTO colorDTO)
         {
+            bool isUpdated = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -150,17 +165,24 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isUpdated = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isUpdated;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            bool isDeleted = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -172,13 +194,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isDeleted = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isDeleted;
         }
     }
 }

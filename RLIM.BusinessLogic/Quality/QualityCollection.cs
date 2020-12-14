@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace RLIM.BusinessLogic
 {
     public class QualityCollection
     {
-        public void Create(string name, int rank)
+        public IAdmin Create(string name, int rank)
         {
             QualityDTO qualityDTO = new QualityDTO
             {
@@ -16,8 +17,17 @@ namespace RLIM.BusinessLogic
 
             if (QualityFactoryDAL.GetCollectionDAL().GetID(qualityDTO) == 0)
             {
-                QualityFactoryDAL.GetCollectionDAL().Create(qualityDTO);
+                if (!QualityFactoryDAL.GetCollectionDAL().Create(qualityDTO))
+                {
+                    return new Error("Quality", "Create");
+                }
             }
+            else
+            {
+                return new AlreadyExisting("Quality");
+            }
+
+            return new Success("Quality", "Create");
         }
 
         public Quality Get(int id)
@@ -37,9 +47,14 @@ namespace RLIM.BusinessLogic
             return qualities;
         }
 
-        public void Delete(int id)
+        public IAdmin Delete(int id)
         {
-            QualityFactoryDAL.GetCollectionDAL().Delete(id);
+            if (!QualityFactoryDAL.GetCollectionDAL().Delete(id))
+            {
+                return new Error("Quality", "Delete");
+            }
+
+            return new Success("Quality", "Delete");
         }
     }
 

@@ -2,6 +2,6 @@
 {
     public interface IColorDAL
     {
-        void Update(ColorDTO colorDTO);
+        bool Update(ColorDTO colorDTO);
     }
 }

@@ -18,7 +18,7 @@ namespace RLIM.BusinessLogic
             {
                 if (!CategoryFactoryDAL.GetCollectionDAL().Create(categoryDTO))
                 {
-                    return new Error("Category", "Added");
+                    return new Error("Category", "Create");
                 }
             }
             else
@@ -26,7 +26,7 @@ namespace RLIM.BusinessLogic
                 return new AlreadyExisting("Category");
             }
 
-            return new Success("Category", "Added");
+            return new Success("Category", "Create");
         }
 
         public Category Get(int id)
@@ -50,10 +50,10 @@ namespace RLIM.BusinessLogic
         {
             if (!CategoryFactoryDAL.GetCollectionDAL().Delete(id))
             {
-                return new Error("Category", "Removed");
+                return new Error("Category", "Delete");
             }
 
-            return new Success("Category", "Removed");
+            return new Success("Category", "Delete");
         }
     }
 

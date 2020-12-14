@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
+using RLIM.BusinessLogic.MessageToUI;
 using RLIM.UserInterface.Models;
 using System.Collections.Generic;
 
@@ -153,7 +154,18 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                new MainItemCollection().Create(model.Name, model.CategoryID, model.PlatformID, model.QualityID);
+                IAdmin msg = new MainItemCollection().Create(model.Name, model.CategoryID, model.PlatformID, model.QualityID);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    TempData["MainItemName"] = model.Name;
+                    //TempData["CategoryID"] = model.CategoryID;
+                    //TempData["PlatformID"] = model.PlatformID;
+                    //TempData["QualityID"] = model.QualityID;
+                    return RedirectToAction("Create", "MainItem");
+                }
             }
 
             return RedirectToAction("Index");
@@ -170,13 +182,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost("/Main-Item/[action]")]
+        [HttpPost("/Main-Item/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(MainItemModel model)
         {
             if (ModelState.IsValid)
             {
-                new MainItemCollection().Delete(model.ID);
+                IAdmin msg = new MainItemCollection().Delete(model.ID);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Delete", "MainItem", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Index");

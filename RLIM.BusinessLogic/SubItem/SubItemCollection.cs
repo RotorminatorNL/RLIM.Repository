@@ -1,14 +1,13 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RLIM.BusinessLogic
 {
     public class SubItemCollection
     {
-        public void Create(int mainItemID, int certificateID, int colorID)
+        public IAdmin Create(int mainItemID, int certificateID, int colorID)
         {
 
             SubItemDTO subItemDTO = new SubItemDTO
@@ -20,8 +19,17 @@ namespace RLIM.BusinessLogic
 
             if (SubItemFactoryDAL.GetCollectionDAL().GetID(subItemDTO) == 0)
             {
-                SubItemFactoryDAL.GetCollectionDAL().Create(subItemDTO);
+                if (!SubItemFactoryDAL.GetCollectionDAL().Create(subItemDTO))
+                {
+                    return new Error("Sub-Item", "Create");
+                }
             }
+            else
+            {
+                return new AlreadyExisting("Sub-Item");
+            }
+
+            return new Success("Sub-Item", "Create");
         }
 
         public SubItem Get(int id)
@@ -41,9 +49,14 @@ namespace RLIM.BusinessLogic
             return subItems;
         }
 
-        public void Delete(int id)
+        public IAdmin Delete(int id)
         {
-            SubItemFactoryDAL.GetCollectionDAL().Delete(id);
+            if (!SubItemFactoryDAL.GetCollectionDAL().Delete(id))
+            {
+                return new Error("Sub-Item", "Delete");
+            }
+
+            return new Success("Sub-Item", "Delete");
         }
     }
 }

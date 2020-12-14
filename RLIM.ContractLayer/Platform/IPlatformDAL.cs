@@ -6,6 +6,6 @@ namespace RLIM.ContractLayer
 {
     public interface IPlatformDAL
     {
-        void Update(PlatformDTO platformDTO);
+        bool Update(PlatformDTO platformDTO);
     }
 }

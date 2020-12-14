@@ -27,12 +27,14 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 id = (int)cmd.ExecuteScalar();
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return id;
@@ -65,12 +67,14 @@ namespace RLIM.DataAccess
                         QualityID = (int)reader["QualityID"]
                     };
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return mainItemDTO;
@@ -99,12 +103,14 @@ namespace RLIM.DataAccess
                 {
                     id = (int)reader["ID"];
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return id;
@@ -136,19 +142,23 @@ namespace RLIM.DataAccess
                             QualityID = (int)reader["QualityID"]
                         });
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return mainItemDTOs;
         }
 
-        public void Update(MainItemDTO mainItemDTO)
+        public bool Update(MainItemDTO mainItemDTO)
         {
+            bool isUpdated = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -165,6 +175,7 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                isUpdated = true;
             }
             catch (SqlException exception)
             {
@@ -174,10 +185,14 @@ namespace RLIM.DataAccess
             {
                 conn.Close();
             }
+
+            return isUpdated;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            bool isDeleted = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -189,13 +204,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isDeleted = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isDeleted;
         }
     }
 }

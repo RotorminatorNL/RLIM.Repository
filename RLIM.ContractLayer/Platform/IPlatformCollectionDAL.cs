@@ -6,10 +6,10 @@ namespace RLIM.ContractLayer
 {
     public interface IPlatformCollectionDAL
     {
-        void Create(PlatformDTO platformDTO);
+        bool Create(PlatformDTO platformDTO);
         PlatformDTO Get(int id);
         int GetID(PlatformDTO platformDTO);
         List<PlatformDTO> GetAll();
-        void Delete(int id);
+        bool Delete(int id);
     }
 }

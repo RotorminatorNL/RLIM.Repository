@@ -57,7 +57,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/{id?}/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(CategoryModel model)
         {
@@ -87,7 +87,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/{id?}/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(CategoryModel model)
         {

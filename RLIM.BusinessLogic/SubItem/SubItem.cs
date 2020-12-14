@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 
 namespace RLIM.BusinessLogic
@@ -18,19 +19,29 @@ namespace RLIM.BusinessLogic
             ColorID = subItemDTO.ColorID;
         }
 
-        public void Update(int mainItemID, int certificateID, int colorID)
+        public IAdmin Update(int mainItemID, int certificateID, int colorID)
         {
-            MainItemID = mainItemID;
-            CertificateID = certificateID;
-            ColorID = colorID;
-
-            SubItemFactoryDAL.GetDAL().Update(new SubItemDTO
+            SubItemDTO subItemDTO = new SubItemDTO
             {
                 ID = ID,
-                MainItemID = MainItemID,
-                CertificateID = CertificateID,
-                ColorID = ColorID
-            });
+                MainItemID = mainItemID,
+                CertificateID = certificateID,
+                ColorID = colorID
+            };
+
+            if (SubItemFactoryDAL.GetCollectionDAL().GetID(subItemDTO) == 0)
+            {
+                if (!SubItemFactoryDAL.GetDAL().Update(subItemDTO))
+                {
+                    return new Error("Sub-Item", "Update");
+                }
+            }
+            else
+            {
+                return new AlreadyExisting("Sub-Item");
+            }
+
+            return new Success("Sub-Item", "Update");
         }
     }
 }

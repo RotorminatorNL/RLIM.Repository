@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System;
 using System.Collections.Generic;
@@ -19,17 +20,28 @@ namespace RLIM.BusinessLogic
             Hex = colorDTO.Hex;
         }
 
-        public void Update(string name, string hex)
+        public IAdmin Update(string name, string hex)
         {
-            Name = name;
-            Hex = hex;
-
-            ColorFactoryDAL.GetDAL().Update(new ColorDTO
+            ColorDTO colorDTO = new ColorDTO
             {
                 ID = ID,
-                Name = Name,
-                Hex = Hex
-            });
+                Name = name,
+                Hex = hex
+            };
+
+            if (ColorFactoryDAL.GetCollectionDAL().GetID(colorDTO) == 0)
+            {
+                if (!ColorFactoryDAL.GetDAL().Update(colorDTO))
+                {
+                    return new Error("Color", "Update");
+                }
+            }
+            else
+            {
+                return new AlreadyExisting("Color");
+            }
+
+            return new Success("Color", "Update");
         }
     }
 }

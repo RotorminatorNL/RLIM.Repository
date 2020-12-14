@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
+using RLIM.BusinessLogic.MessageToUI;
 using RLIM.UserInterface.Models;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,15 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                new PlatformCollection().Create(model.Name);
+                IAdmin msg = new PlatformCollection().Create(model.Name);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    TempData["PlatformName"] = model.Name;
+                    return RedirectToAction("Create", "Platform");
+                }
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -49,13 +58,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(PlatformModel model)
         {
             if (ModelState.IsValid)
             {
-                new PlatformCollection().Get(model.ID).Update(model.Name);
+                IAdmin msg = new PlatformCollection().Get(model.ID).Update(model.Name);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Update", "Platform", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Attributes", "MainItem");
@@ -72,13 +88,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(PlatformModel model)
         {
             if (ModelState.IsValid)
             {
-                new PlatformCollection().Delete(model.ID);
+                IAdmin msg = new PlatformCollection().Delete(model.ID);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Delete", "Platform", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Attributes", "MainItem");

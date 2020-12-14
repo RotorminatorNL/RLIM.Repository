@@ -6,6 +6,6 @@ namespace RLIM.ContractLayer
 {
     public interface IMainItemDAL
     {
-        void Update(MainItemDTO mainItemDTO);
+        bool Update(MainItemDTO mainItemDTO);
     }
 }

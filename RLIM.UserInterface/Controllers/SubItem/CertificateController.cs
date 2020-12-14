@@ -59,7 +59,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("/[controller]/{id?}/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(CertificateModel model)
         {
@@ -89,7 +89,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("/[controller]/{id?}/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(CertificateModel model)
         {

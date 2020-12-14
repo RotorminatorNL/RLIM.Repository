@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
+using RLIM.BusinessLogic.MessageToUI;
 using RLIM.UserInterface.Models;
 
 namespace RLIM.UserInterface.Controllers
@@ -30,7 +31,16 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                new ColorCollection().Create(model.Name, model.Hex);
+                IAdmin msg =  new ColorCollection().Create(model.Name, model.Hex);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    TempData["ColorName"] = model.Name;
+                    TempData["ColorHex"] = model.Hex;
+                    return RedirectToAction("Create", "Color");
+                }
             }
 
             return RedirectToAction("Attributes", "SubItem");
@@ -47,13 +57,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(ColorModel model)
         {
             if (ModelState.IsValid)
             {
-                new ColorCollection().Get(model.ID).Update(model.Name, model.Hex);
+                IAdmin msg = new ColorCollection().Get(model.ID).Update(model.Name, model.Hex);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Update", "Color");
+                }
             }
 
             return RedirectToAction("Attributes", "SubItem");
@@ -70,13 +87,20 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("/[controller]/[action]")]
+        [HttpPost("/[controller]/{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(ColorModel model)
         {
             if (ModelState.IsValid)
             {
-                new ColorCollection().Delete(model.ID);
+                IAdmin msg = new ColorCollection().Delete(model.ID);
+                TempData["MessageTitle"] = msg.Title;
+                TempData["MessageText"] = msg.Text;
+
+                if (msg.Status == "Error")
+                {
+                    return RedirectToAction("Delete", "Color", new { id = model.ID });
+                }
             }
 
             return RedirectToAction("Attributes", "SubItem");

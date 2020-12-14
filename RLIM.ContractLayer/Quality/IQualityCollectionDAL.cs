@@ -6,10 +6,10 @@ namespace RLIM.ContractLayer
 {
     public interface IQualityCollectionDAL
     {
-        void Create(QualityDTO qualityDTO);
+        bool Create(QualityDTO qualityDTO);
         QualityDTO Get(int id);
         int GetID(QualityDTO qualityDTO);
         List<QualityDTO> GetAll();
-        void Delete(int id);
+        bool Delete(int id);
     }
 }

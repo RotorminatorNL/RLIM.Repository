@@ -9,8 +9,10 @@ namespace RLIM.DataAccess
 {
     public class SubItemDAL : ISubItemCollectionDAL, ISubItemDAL
     {
-        public void Create(SubItemDTO subItemDTO)
+        public bool Create(SubItemDTO subItemDTO)
         {
+            bool isCreated = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -24,13 +26,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isCreated = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isCreated;
         }
 
         public SubItemDTO Get(int id)
@@ -62,12 +69,14 @@ namespace RLIM.DataAccess
                         ColorID = (int)colorID
                     };
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return subItemDTO;
@@ -96,12 +105,14 @@ namespace RLIM.DataAccess
                 {
                     id = (int)reader["ID"];
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return id;
@@ -134,12 +145,14 @@ namespace RLIM.DataAccess
                         ColorID = (int)colorID
                     });
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return subItemDTOs;
@@ -174,19 +187,23 @@ namespace RLIM.DataAccess
                         ColorID = (int)colorID
                     });
                 }
-                conn.Close();
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return subItemDTOs;
         }
 
-        public void Update(SubItemDTO subItemDTO)
+        public bool Update(SubItemDTO subItemDTO)
         {
+            bool isUpdated = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -201,17 +218,24 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isUpdated = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isUpdated;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            bool isDeleted = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -223,17 +247,24 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                isDeleted = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return isDeleted;
         }
 
-        public void DeleteAllWithMainItemID(int maintItemID)
+        public bool DeleteAllWithMainItemID(int maintItemID)
         {
+            bool areAllDeleted = false;
+
             using SqlConnection conn = Db.Connect();
 
             try
@@ -245,13 +276,18 @@ namespace RLIM.DataAccess
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                conn.Close();
+                areAllDeleted = true;
             }
             catch (SqlException exception)
             {
-                conn.Close();
                 Console.WriteLine(exception);
             }
+            finally
+            {
+                conn.Close();
+            }
+
+            return areAllDeleted;
         }
     }
 }

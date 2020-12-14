@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
 
@@ -21,21 +22,30 @@ namespace RLIM.BusinessLogic
             QualityID = mainItemDTO.QualityID;
         }
 
-        public void Update(string name, int categoryID, int platformID, int qualityID)
+        public IAdmin Update(string name, int categoryID, int platformID, int qualityID)
         {
-            Name = name;
-            CategoryID = categoryID;
-            PlatformID = platformID;
-            QualityID = qualityID;
-
-            MainItemFactoryDAL.GetDAL().Update(new MainItemDTO 
-            { 
+            MainItemDTO mainItemDTO = new MainItemDTO
+            {
                 ID = ID,
-                Name = Name,
-                CategoryID = CategoryID,
-                PlatformID = PlatformID,
-                QualityID = QualityID
-            });
+                Name = name,
+                CategoryID = categoryID,
+                PlatformID = platformID,
+                QualityID = qualityID
+            };
+
+            if (MainItemFactoryDAL.GetCollectionDAL().GetID(mainItemDTO) == 0)
+            {
+                if (!MainItemFactoryDAL.GetDAL().Update(mainItemDTO))
+                {
+                    return new Error("Main-Item", "Update");
+                }
+            }
+            else
+            {
+                return new AlreadyExisting("Main-Item");
+            }
+
+            return new Success("Main-Item","Update");
         }
 
         public List<SubItem> GetSubItems()

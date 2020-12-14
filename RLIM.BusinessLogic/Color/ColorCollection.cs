@@ -1,4 +1,5 @@
-﻿using RLIM.ContractLayer;
+﻿using RLIM.BusinessLogic.MessageToUI;
+using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace RLIM.BusinessLogic
 {
     public class ColorCollection
     {
-        public void Create(string name, string hex)
+        public IAdmin Create(string name, string hex)
         {
             ColorDTO certificateDTO = new ColorDTO
             {
@@ -16,8 +17,17 @@ namespace RLIM.BusinessLogic
 
             if (ColorFactoryDAL.GetCollectionDAL().GetID(certificateDTO) == 0)
             {
-                ColorFactoryDAL.GetCollectionDAL().Create(certificateDTO);
+                if (!ColorFactoryDAL.GetCollectionDAL().Create(certificateDTO))
+                {
+                    return new Error("Color", "Create");
+                }
             }
+            else
+            {
+                return new AlreadyExisting("Color");
+            }
+
+            return new Success("Color", "Create");
         }
 
         public Color Get(int id)
@@ -37,9 +47,14 @@ namespace RLIM.BusinessLogic
             return colors;
         }
 
-        public void Delete(int id)
+        public IAdmin Delete(int id)
         {
-            ColorFactoryDAL.GetCollectionDAL().Delete(id);
+            if (!ColorFactoryDAL.GetCollectionDAL().Delete(id))
+            {
+                return new Error("Color", "Delete");
+            }
+
+            return new Success("Color", "Delete");
         }
     }
 }

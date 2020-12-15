@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace RLIM.UserInterface.Controllers
 {
+    [Route("/[controller]")]
     public class QualityController : Controller
     {
         private QualityModel GetQuality(int id)
@@ -60,18 +61,18 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("/[controller]/{ID}/[action]")]
-        public IActionResult Update(int ID)
+        [HttpGet("{id}/[action]")]
+        public IActionResult Update(int id)
         {
-            if (ID > 0)
+            if (id > 0)
             {
-                return View(GetQuality(ID));
+                return View(GetQuality(id));
             }
 
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/{ID}/[action]")]
+        [HttpPost("{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(QualityModel model)
         {
@@ -84,18 +85,18 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("/[controller]/{ID}/[action]")]
-        public IActionResult Delete(int ID)
+        [HttpGet("{id}/[action]")]
+        public IActionResult Delete(int id)
         {
-            if (ID > 0)
+            if (id > 0)
             {
-                return View(GetQuality(ID));
+                return View(GetQuality(id));
             }
 
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/{ID}/[action]")]
+        [HttpPost("{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(QualityModel model)
         {

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace RLIM.UserInterface.Controllers
 {
+    [Route("/[controller]")]
     public class PlatformController : Controller
     {
         private PlatformModel GetPlatform(int id)
@@ -61,18 +62,18 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("/[controller]/{ID}/[action]")]
-        public IActionResult Update(int ID)
+        [HttpGet("{id}/[action]")]
+        public IActionResult Update(int id)
         {
-            if (ID >= 0)
+            if (id >= 0)
             {
-                return View(GetPlatform(ID));
+                return View(GetPlatform(id));
             }
 
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/{ID}/[action]")]
+        [HttpPost("{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(PlatformModel model)
         {
@@ -85,18 +86,18 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("/[controller]/{ID}/[action]")]
-        public IActionResult Delete(int ID)
+        [HttpGet("{id}/[action]")]
+        public IActionResult Delete(int id)
         {
-            if (ID >= 0)
+            if (id >= 0)
             {
-                return View(GetPlatform(ID));
+                return View(GetPlatform(id));
             }
 
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("/[controller]/{ID}/[action]")]
+        [HttpPost("{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(PlatformModel model)
         {

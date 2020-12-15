@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace RLIM.UserInterface.Controllers
 {
+    [Route("/Main-Item")]
     public class MainItemController : Controller
     {
         private CategoryModel GetCategory(int id)
@@ -146,6 +147,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index", "MainItem");
         }
 
+        [Route("/Main-Items")]
         public IActionResult Index()
         {
             return View(GetMainItems());
@@ -159,7 +161,6 @@ namespace RLIM.UserInterface.Controllers
             return View();
         }
 
-        [Route("/Main-Item/[action]")]
         public IActionResult Create()
         {
             ViewBag.Categories = GetCategories();
@@ -168,7 +169,7 @@ namespace RLIM.UserInterface.Controllers
             return View();
         }
 
-        [HttpPost("/Main-Item/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(MainItemModel model)
         {
@@ -181,18 +182,18 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index");
         }
         
-        [HttpGet("/Main-Item/{ID}/[action]")]
-        public IActionResult Delete(int ID)
+        [HttpGet("{id}/[action]")]
+        public IActionResult Delete(int id)
         {
-            if (ID > 0)
+            if (id > 0)
             {
-                return View(GetMainItem(ID));
+                return View(GetMainItem(id));
             }
 
             return RedirectToAction("Index");
         }
 
-        [HttpPost("/Main-Item/{ID}/[action]")]
+        [HttpPost("{id}/[action]")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(MainItemModel model)
         {

@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 namespace RLIM.UserInterface.Controllers
 {
-    [Route("/Main-Item")]
+    [Route("/Main-Item/[action]")]
+    [Route("/Main-Item/{id}/[action]")]
     public class MainItemController : Controller
     {
         private CategoryModel GetCategory(int id)
@@ -182,7 +183,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index");
         }
         
-        [HttpGet("{id}/[action]")]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -193,7 +194,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost("{id}/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(MainItemModel model)
         {

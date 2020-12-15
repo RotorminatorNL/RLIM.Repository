@@ -9,8 +9,8 @@
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.CertificateDisplay)</th>
-            <th>@Html.DisplayNameFor(model => model.ColorDisplay)</th>
+            <th>@Html.DisplayNameFor(model => model.CertificateDisplay) (tier)</th>
+            <th>@Html.DisplayNameFor(model => model.ColorDisplay) (hex)</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -26,10 +26,7 @@
                 <td>@Html.DisplayFor(modelItem => item.CertificateDisplay)</td>
                 <td>@Html.DisplayFor(modelItem => item.ColorDisplay)</td>
                 <td>
-                    @* Full link = "/{MainItemName}/{MainItemID}/Sub-Item/{id}/Update" *@
                     <a href="Sub-Item/@item.ID/Update" class="btn btn-warning">Update</a>
-
-                    @* Full link = "/{MainItemName}/{MainItemID}/Sub-Item/{id}/Delete" *@
                     <a href="Sub-Item/@item.ID/Delete" class="btn btn-danger">Delete</a>
                 </td>
             </tr>

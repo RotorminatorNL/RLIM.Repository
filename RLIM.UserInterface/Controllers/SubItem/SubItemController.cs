@@ -7,6 +7,8 @@ using System.Collections.Generic;
 namespace RLIM.UserInterface.Controllers
 {
     [Route("/{MainItemName}/{MainItemID}")]
+    [Route("/{MainItemName}/{MainItemID}/Sub-Item/[action]")]
+    [Route("/{MainItemName}/{MainItemID}/Sub-Item/{id?}/[action]")]
     public class SubItemController : Controller
     {
         private CertificateModel GetCertificate(int id)
@@ -144,7 +146,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpGet("Sub-Item/[action]")]
+        [HttpGet]
         public IActionResult Create(int MainItemID, string MainItemName)
         {
             if (MainItemID != 0 && MainItemName != "")
@@ -165,7 +167,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpPost("Sub-Item/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(SubItemModel model)
         {
@@ -178,7 +180,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpGet("Sub-Item/{ID}/[action]")]
+        [HttpGet]
         public IActionResult Update(int MainItemID, string MainItemName, int ID)
         {
             if (MainItemID != 0 && MainItemName != "" && ID != 0)
@@ -189,7 +191,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpGet("Sub-Item/{ID}/[action]")]
+        [HttpGet]
         public IActionResult Delete(int MainItemID, string MainItemName, int ID)
         {
             if (MainItemID != 0 && MainItemName != "" && ID != 0)
@@ -203,7 +205,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpPost("Sub-Item/{ID}/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(SubItemModel model)
         {

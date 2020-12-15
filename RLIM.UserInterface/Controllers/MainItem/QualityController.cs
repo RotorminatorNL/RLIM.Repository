@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 namespace RLIM.UserInterface.Controllers
 {
-    [Route("/[controller]")]
+    [Route("/[controller]/[action]")]
+    [Route("/[controller]/{id?}/[action]")]
     public class QualityController : Controller
     {
         private QualityModel GetQuality(int id)
@@ -61,7 +62,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("{id}/[action]")]
+        [HttpGet]
         public IActionResult Update(int id)
         {
             if (id > 0)
@@ -72,7 +73,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("{id}/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(QualityModel model)
         {
@@ -85,7 +86,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("{id}/[action]")]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             if (id > 0)
@@ -96,7 +97,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("{id}/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(QualityModel model)
         {

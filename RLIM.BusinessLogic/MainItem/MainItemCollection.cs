@@ -21,7 +21,7 @@ namespace RLIM.BusinessLogic
             {
                 int id = MainItemFactoryDAL.GetCollectionDAL().Create(mainItemDTO);
 
-                if (MainItemFactoryDAL.GetCollectionDAL().Create(mainItemDTO) != 0)
+                if (id != 0)
                 {
                     SubItemDTO subItemDTO = new SubItemDTO { MainItemID = id };
 

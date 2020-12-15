@@ -6,7 +6,8 @@ using RLIM.UserInterface.Models;
 
 namespace RLIM.UserInterface.Controllers
 {
-    [Route("/[controller]")]
+    [Route("/[controller]/[action]")]
+    [Route("/[controller]/{id?}/[action]")]
     public class ColorController : Controller
     {
         private ColorModel GetColor(int id)
@@ -61,7 +62,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpGet("{id}/[action]")]
+        [HttpGet]
         public IActionResult Update(int ID)
         {
             if (ID > 0)
@@ -72,7 +73,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("{id}/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(ColorModel model)
         {
@@ -85,7 +86,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpGet("{id}/[action]")]
+        [HttpGet]
         public IActionResult Delete(int ID)
         {
             if (ID > 0)
@@ -96,7 +97,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "SubItem");
         }
 
-        [HttpPost("{id}/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(ColorModel model)
         {

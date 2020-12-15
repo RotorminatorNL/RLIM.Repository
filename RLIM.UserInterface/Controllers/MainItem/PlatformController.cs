@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace RLIM.UserInterface.Controllers
 {
-    [Route("/[controller]")]
+    [Route("/[controller]/[action]")]
+    [Route("/[controller]/{id?}/[action]")]
     public class PlatformController : Controller
     {
         private PlatformModel GetPlatform(int id)
@@ -62,7 +63,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("{id}/[action]")]
+        [HttpGet]
         public IActionResult Update(int id)
         {
             if (id >= 0)
@@ -73,7 +74,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("{id}/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(PlatformModel model)
         {
@@ -86,7 +87,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpGet("{id}/[action]")]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             if (id >= 0)
@@ -97,7 +98,7 @@ namespace RLIM.UserInterface.Controllers
             return RedirectToAction("Attributes", "MainItem");
         }
 
-        [HttpPost("{id}/[action]")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(PlatformModel model)
         {

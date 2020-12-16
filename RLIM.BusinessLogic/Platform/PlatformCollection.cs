@@ -7,6 +7,8 @@ namespace RLIM.BusinessLogic
 {
     public class PlatformCollection
     {
+        private readonly List<Platform> platforms = new List<Platform>();
+
         public IAdmin Create(string name)
         {
             PlatformDTO platformDTO = new PlatformDTO
@@ -36,8 +38,6 @@ namespace RLIM.BusinessLogic
 
         public List<Platform> GetAll()
         {
-            List<Platform> platforms = new List<Platform>();
-
             foreach (PlatformDTO platformDTO in PlatformFactoryDAL.GetCollectionDAL().GetAll())
             {
                 platforms.Add(new Platform(platformDTO));

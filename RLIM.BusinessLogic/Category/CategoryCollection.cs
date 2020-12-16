@@ -7,6 +7,8 @@ namespace RLIM.BusinessLogic
 {
     public class CategoryCollection
     {
+        private readonly List<Category> categories = new List<Category>();
+
         public IAdmin Create(string name)
         {
             CategoryDTO categoryDTO = new CategoryDTO
@@ -36,8 +38,6 @@ namespace RLIM.BusinessLogic
 
         public List<Category> GetAll()
         {
-            List<Category> categories = new List<Category>();
-
             foreach (CategoryDTO categoryDTO in CategoryFactoryDAL.GetCollectionDAL().GetAll())
             {
                 categories.Add(new Category(categoryDTO));

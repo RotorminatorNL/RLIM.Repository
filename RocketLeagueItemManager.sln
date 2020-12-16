@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLIM.ContractLayer", "RLIM.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RLIM.UserInterface", "RLIM.UserInterface\RLIM.UserInterface.csproj", "{653AF33A-1B94-4969-AD87-50DBAA0B4DFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RLIM.Tests", "RLIM.Tests\RLIM.Tests.csproj", "{6C8BCB78-6014-477D-9F8C-47EB6E4634A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{653AF33A-1B94-4969-AD87-50DBAA0B4DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{653AF33A-1B94-4969-AD87-50DBAA0B4DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{653AF33A-1B94-4969-AD87-50DBAA0B4DFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C8BCB78-6014-477D-9F8C-47EB6E4634A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C8BCB78-6014-477D-9F8C-47EB6E4634A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C8BCB78-6014-477D-9F8C-47EB6E4634A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8BCB78-6014-477D-9F8C-47EB6E4634A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

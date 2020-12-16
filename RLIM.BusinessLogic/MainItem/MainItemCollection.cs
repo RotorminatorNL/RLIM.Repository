@@ -7,6 +7,8 @@ namespace RLIM.BusinessLogic
 {
     public class MainItemCollection
     {
+        private readonly List<MainItem> mainItems = new List<MainItem>();
+
         public IAdmin Create(string name, int categoryID, int platformID, int qualityID)
         {
             MainItemDTO mainItemDTO = new MainItemDTO
@@ -47,8 +49,6 @@ namespace RLIM.BusinessLogic
 
         public List<MainItem> GetAll()
         {
-            List<MainItem> mainItems = new List<MainItem>();
-
             foreach (MainItemDTO mainItemDTO in MainItemFactoryDAL.GetCollectionDAL().GetAll())
             {
                 mainItems.Add(new MainItem(mainItemDTO));

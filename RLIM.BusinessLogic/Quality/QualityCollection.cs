@@ -7,6 +7,8 @@ namespace RLIM.BusinessLogic
 {
     public class QualityCollection
     {
+        private readonly List<Quality> qualities = new List<Quality>();
+
         public IAdmin Create(string name, int rank)
         {
             QualityDTO qualityDTO = new QualityDTO
@@ -37,8 +39,6 @@ namespace RLIM.BusinessLogic
 
         public List<Quality> GetAll()
         {
-            List<Quality> qualities = new List<Quality>();
-
             foreach (QualityDTO qualityDTO in QualityFactoryDAL.GetCollectionDAL().GetAll())
             {
                 qualities.Add(new Quality(qualityDTO));

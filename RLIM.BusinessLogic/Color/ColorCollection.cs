@@ -7,6 +7,8 @@ namespace RLIM.BusinessLogic
 {
     public class ColorCollection
     {
+        private readonly List<Color> colors = new List<Color>();
+
         public IAdmin Create(string name, string hex)
         {
             ColorDTO certificateDTO = new ColorDTO
@@ -37,8 +39,6 @@ namespace RLIM.BusinessLogic
 
         public List<Color> GetAll()
         {
-            List<Color> colors = new List<Color>();
-
             foreach (ColorDTO colorDTO in ColorFactoryDAL.GetCollectionDAL().GetAll())
             {
                 colors.Add(new Color(colorDTO));

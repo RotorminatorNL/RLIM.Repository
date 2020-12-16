@@ -7,6 +7,8 @@ namespace RLIM.BusinessLogic
 {
     public class CertificateCollection
     {
+        private readonly List<Certificate> certificates = new List<Certificate>();
+
         public IAdmin Create(string name, int tier)
         {
             CertificateDTO certificateDTO = new CertificateDTO
@@ -37,8 +39,6 @@ namespace RLIM.BusinessLogic
 
         public List<Certificate> GetAll()
         {
-            List<Certificate> certificates = new List<Certificate>();
-
             foreach (CertificateDTO certificateDTO in CertificateFactoryDAL.GetCollectionDAL().GetAll())
             {
                 certificates.Add(new Certificate(certificateDTO));

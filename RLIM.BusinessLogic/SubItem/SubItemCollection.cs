@@ -7,6 +7,8 @@ namespace RLIM.BusinessLogic
 {
     public class SubItemCollection
     {
+        private readonly List<SubItem> subItems = new List<SubItem>();
+
         public IAdmin Create(int mainItemID, int certificateID, int colorID)
         {
 
@@ -39,8 +41,6 @@ namespace RLIM.BusinessLogic
 
         public List<SubItem> GetAll()
         {
-            List<SubItem> subItems = new List<SubItem>();
-
             foreach (SubItemDTO subItemDTO in SubItemFactoryDAL.GetCollectionDAL().GetAll())
             {
                 subItems.Add(new SubItem(subItemDTO));

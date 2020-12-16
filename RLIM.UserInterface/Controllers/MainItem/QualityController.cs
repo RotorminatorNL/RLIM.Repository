@@ -77,8 +77,11 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new QualityCollection().Get(model.ID).Update(model.Name, model.Rank);
-                return MessageHandler(msg, model, "Update");
+                Quality quality = new QualityCollection().Get(model.ID);
+                quality.SetName(model.Name);
+                quality.SetRank(model.Rank);
+
+                return MessageHandler(quality.Update(), model, "Update");
             }
 
             return RedirectToAction("Attributes", "MainItem");

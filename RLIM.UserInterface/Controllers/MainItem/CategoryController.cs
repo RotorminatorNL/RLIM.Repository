@@ -77,8 +77,10 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new CategoryCollection().Get(model.ID).Update(model.Name);
-                return MessageHandler(msg, model, "Update");
+                Category category = new CategoryCollection().Get(model.ID);
+                category.SetName(model.Name);
+
+                return MessageHandler(category.Update(), model, "Update");
             }
 
             return RedirectToAction("Attributes", "MainItem");

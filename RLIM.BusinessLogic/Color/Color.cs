@@ -11,22 +11,36 @@ namespace RLIM.BusinessLogic
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
+        private readonly string previousName;
         public string Hex { get; private set; }
+        private readonly string previousHex;
 
         public Color(ColorDTO colorDTO)
         {
             ID = colorDTO.ID;
             Name = colorDTO.Name;
+            previousName = Name;
             Hex = colorDTO.Hex;
+            previousHex = Hex;
         }
 
-        public IAdmin Update(string name, string hex)
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+
+        public void SetHex(string hex)
+        {
+            Hex = hex;
+        }
+
+        public IAdmin Update()
         {
             ColorDTO colorDTO = new ColorDTO
             {
                 ID = ID,
-                Name = name,
-                Hex = hex
+                Name = Name,
+                Hex = Hex
             };
 
             if (ColorFactoryDAL.GetCollectionDAL().GetID(colorDTO) == 0)
@@ -38,6 +52,8 @@ namespace RLIM.BusinessLogic
             }
             else
             {
+                Name = previousName;
+                Hex = previousHex;
                 return new AlreadyExisting("Color");
             }
 

@@ -11,22 +11,36 @@ namespace RLIM.BusinessLogic
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
+        private readonly string previousName;
         public int Tier { get; private set; }
+        private readonly int previousTier;
 
         public Certificate(CertificateDTO certificateDTO)
         {
             ID = certificateDTO.ID;
             Name = certificateDTO.Name;
+            previousName = certificateDTO.Name;
             Tier = certificateDTO.Tier;
+            previousTier = certificateDTO.Tier;
         }
 
-        public IAdmin Update(string name, int tier)
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+
+        public void SetTier(int tier)
+        {
+            Tier = tier;
+        }
+
+        public IAdmin Update()
         {
             CertificateDTO certificateDTO = new CertificateDTO
             {
                 ID = ID,
-                Name = name,
-                Tier = tier
+                Name = Name,
+                Tier = Tier
             };
 
             if (CertificateFactoryDAL.GetCollectionDAL().GetID(certificateDTO) == 0)
@@ -38,6 +52,8 @@ namespace RLIM.BusinessLogic
             }
             else
             {
+                Name = previousName;
+                Tier = previousTier;
                 return new AlreadyExisting("Certificate");
             }
 

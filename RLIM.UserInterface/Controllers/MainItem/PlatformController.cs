@@ -78,8 +78,10 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new PlatformCollection().Get(model.ID).Update(model.Name);
-                return MessageHandler(msg, model, "Update");
+                Platform platform = new PlatformCollection().Get(model.ID);
+                platform.SetName(model.Name);
+
+                return MessageHandler(platform.Update(), model, "Update");
             }
 
             return RedirectToAction("Attributes", "MainItem");

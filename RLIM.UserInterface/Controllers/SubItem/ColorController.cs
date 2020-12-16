@@ -77,8 +77,11 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new ColorCollection().Get(model.ID).Update(model.Name, model.Hex);
-                return MessageHandler(msg, model, "Update");
+                Color color = new ColorCollection().Get(model.ID);
+                color.SetName(model.Name);
+                color.SetHex(model.Hex);
+
+                return MessageHandler(color.Update(), model, "Update");
             }
 
             return RedirectToAction("Attributes", "SubItem");

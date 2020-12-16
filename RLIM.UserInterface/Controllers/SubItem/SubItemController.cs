@@ -205,8 +205,11 @@ namespace RLIM.UserInterface.Controllers
         {
             if (model.ID > 0 && model.MainItemID > 0 && model.CertificateID >= 0 && model.ColorID >= 0)
             {
-                IAdmin msg = new SubItemCollection().Get(model.ID).Update(model.MainItemID, model.CertificateID, model.ColorID);
-                return MessageHandler(msg, model, "Update");
+                SubItem subItem = new SubItemCollection().Get(model.ID);
+                subItem.SetCertificateID(model.CertificateID);
+                subItem.SetColorID(model.ColorID);
+
+                return MessageHandler(subItem.Update(), model, "Update");
             }
 
             return RedirectToAction("Index", "MainItem");

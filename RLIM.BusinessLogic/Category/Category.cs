@@ -8,19 +8,26 @@ namespace RLIM.BusinessLogic
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
+        private readonly string previousName;
 
         public Category(CategoryDTO categoryDTO)
         {
             ID = categoryDTO.ID;
             Name = categoryDTO.Name;
+            previousName = categoryDTO.Name;
         }
 
-        public IAdmin Update(string name)
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+
+        public IAdmin Update()
         {
             CategoryDTO categoryDTO = new CategoryDTO
             {
                 ID = ID,
-                Name = name
+                Name = Name
             };
 
             if (CategoryFactoryDAL.GetCollectionDAL().GetID(categoryDTO) == 0)
@@ -32,6 +39,7 @@ namespace RLIM.BusinessLogic
             }
             else
             {
+                Name = previousName;
                 return new AlreadyExisting("Category");
             }
 

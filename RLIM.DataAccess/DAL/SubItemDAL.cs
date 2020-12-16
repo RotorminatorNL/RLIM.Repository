@@ -209,10 +209,9 @@ namespace RLIM.DataAccess
             try
             {
                 string sql = "UPDATE dbo.SubItem ";
-                sql += "SET MainItemID = @mainItemID, CertificateID = @certificateID, ColorID = @colorID ";
+                sql += "SET CertificateID = @certificateID, ColorID = @colorID ";
                 sql += "WHERE ID = @id";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@mainItemID", SqlDbType.Int).Value = subItemDTO.MainItemID;
                 cmd.Parameters.Add("@certificateID", SqlDbType.Int).Value = subItemDTO.CertificateID;
                 cmd.Parameters.Add("@colorID", SqlDbType.Int).Value = subItemDTO.ColorID;
 

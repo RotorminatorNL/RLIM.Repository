@@ -8,19 +8,26 @@ namespace RLIM.BusinessLogic
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
+        private readonly string previousName;
 
         public Platform(PlatformDTO platformDTO)
         {
             ID = platformDTO.ID;
             Name = platformDTO.Name;
+            previousName = platformDTO.Name;
         }
 
-        public IAdmin Update(string name)
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+
+        public IAdmin Update()
         {
             PlatformDTO platformDTO = new PlatformDTO
             {
                 ID = ID,
-                Name = name
+                Name = Name
             };
 
             if (PlatformFactoryDAL.GetCollectionDAL().GetID(platformDTO) == 0)
@@ -32,6 +39,7 @@ namespace RLIM.BusinessLogic
             }
             else
             {
+                Name = previousName;
                 return new AlreadyExisting("Platform");
             }
 

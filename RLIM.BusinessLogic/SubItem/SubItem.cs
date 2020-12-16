@@ -9,24 +9,39 @@ namespace RLIM.BusinessLogic
         public int ID { get; private set; }
         public int MainItemID { get; private set; }
         public int CertificateID { get; private set; }
+        private readonly int previousCertificateID;
         public int ColorID { get; private set; }
+        private readonly int previousColorID;
 
         public SubItem(SubItemDTO subItemDTO)
         {
             ID = subItemDTO.ID;
             MainItemID = subItemDTO.MainItemID;
+
             CertificateID = subItemDTO.CertificateID;
+            previousCertificateID = subItemDTO.CertificateID;
+
             ColorID = subItemDTO.ColorID;
+            previousColorID = subItemDTO.ColorID;
         }
 
-        public IAdmin Update(int mainItemID, int certificateID, int colorID)
+        public void SetCertificateID(int id)
+        {
+            CertificateID = id;
+        }
+
+        public void SetColorID(int id)
+        {
+            ColorID = id;
+        }
+
+        public IAdmin Update()
         {
             SubItemDTO subItemDTO = new SubItemDTO
             {
                 ID = ID,
-                MainItemID = mainItemID,
-                CertificateID = certificateID,
-                ColorID = colorID
+                CertificateID = CertificateID,
+                ColorID = ColorID
             };
 
             if (SubItemFactoryDAL.GetCollectionDAL().GetID(subItemDTO) == 0)
@@ -38,6 +53,9 @@ namespace RLIM.BusinessLogic
             }
             else
             {
+                CertificateID = previousCertificateID;
+                ColorID = previousColorID;
+
                 return new AlreadyExisting("Sub-Item");
             }
 

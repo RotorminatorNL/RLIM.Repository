@@ -9,28 +9,60 @@ namespace RLIM.BusinessLogic
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
+        private readonly string previousName;
         public int CategoryID { get; private set; }
+        private readonly int previousCategoryID;
         public int PlatformID { get; private set; }
+        private readonly int previousPlatformID;
         public int QualityID { get; private set; }
+        private readonly int previousQualityID;
 
         public MainItem(MainItemDTO mainItemDTO)
         {
             ID = mainItemDTO.ID;
+
             Name = mainItemDTO.Name;
+            previousName = mainItemDTO.Name;
+
             CategoryID = mainItemDTO.CategoryID;
+            previousCategoryID = mainItemDTO.CategoryID;
+
             PlatformID = mainItemDTO.PlatformID;
+            previousPlatformID = mainItemDTO.PlatformID;
+
             QualityID = mainItemDTO.QualityID;
+            previousQualityID = mainItemDTO.QualityID;
         }
 
-        public IAdmin Update(string name, int categoryID, int platformID, int qualityID)
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+
+        public void SetCategoryID(int id)
+        {
+            CategoryID = id;
+        }
+
+        public void SetPlatformID(int id)
+        {
+            PlatformID = id;
+        }
+
+        public void SetQualityID(int id)
+        {
+            QualityID = id;
+        }
+
+        public IAdmin Update()
         {
             MainItemDTO mainItemDTO = new MainItemDTO
             {
                 ID = ID,
-                Name = name,
-                CategoryID = categoryID,
-                PlatformID = platformID,
-                QualityID = qualityID
+                Name = Name,
+                CategoryID = CategoryID,
+                PlatformID = PlatformID,
+                QualityID = QualityID
             };
 
             if (MainItemFactoryDAL.GetCollectionDAL().GetID(mainItemDTO) == 0)
@@ -42,6 +74,11 @@ namespace RLIM.BusinessLogic
             }
             else
             {
+                Name = previousName;
+                CategoryID = previousCategoryID;
+                PlatformID = previousPlatformID;
+                QualityID = previousQualityID;
+
                 return new AlreadyExisting("Main-Item");
             }
 

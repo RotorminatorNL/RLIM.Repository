@@ -79,8 +79,11 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new CertificateCollection().Get(model.ID).Update(model.Name, model.Tier);
-                return MessageHandler(msg, model, "Update");
+                Certificate certificate = new CertificateCollection().Get(model.ID);
+                certificate.SetName(model.Name);
+                certificate.SetTier(model.Tier);
+
+                return MessageHandler(certificate.Update(), model, "Update");
             }
 
             return RedirectToAction("Attributes", "SubItem");

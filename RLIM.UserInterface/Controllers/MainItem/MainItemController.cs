@@ -209,8 +209,13 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new MainItemCollection().Get(model.ID).Update(model.Name, model.CategoryID, model.PlatformID, model.QualityID);
-                return MessageHandler(msg, model, "Update");
+                MainItem mainItem = new MainItemCollection().Get(model.ID);
+                mainItem.SetName(model.Name);
+                mainItem.SetCategoryID(model.CategoryID);
+                mainItem.SetPlatformID(model.PlatformID);
+                mainItem.SetQualityID(model.QualityID);
+
+                return MessageHandler(mainItem.Update(), model, "Update");
             }
 
             return RedirectToAction("Index");

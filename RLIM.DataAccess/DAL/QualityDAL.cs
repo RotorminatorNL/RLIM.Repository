@@ -119,7 +119,8 @@ namespace RLIM.DataAccess
             try
             {
                 string sql = "SELECT * ";
-                sql += "FROM dbo.Quality";
+                sql += "FROM dbo.Quality ";
+                sql += "ORDER BY Rank";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
 
                 conn.Open();

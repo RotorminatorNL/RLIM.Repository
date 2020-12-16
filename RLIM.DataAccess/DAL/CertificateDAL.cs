@@ -117,7 +117,8 @@ namespace RLIM.DataAccess
             try
             {
                 string sql = "SELECT * ";
-                sql += "FROM dbo.Certificate";
+                sql += "FROM dbo.Certificate ";
+                sql += "ORDER BY Tier";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
 
                 conn.Open();

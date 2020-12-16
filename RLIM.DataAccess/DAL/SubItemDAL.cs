@@ -127,7 +127,8 @@ namespace RLIM.DataAccess
             try
             {
                 string sql = "SELECT * ";
-                sql += "FROM dbo.SubItem";
+                sql += "FROM dbo.SubItem ";
+                sql += "ORDER BY Name";
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
                 conn.Open();

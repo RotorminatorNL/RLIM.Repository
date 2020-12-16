@@ -125,7 +125,7 @@ namespace RLIM.UserInterface.Controllers
                 }
             }
 
-            return RedirectToAction("Index", "SubItem", new { MainItemName = model.MainItemDisplay, model.MainItemID });
+            return RedirectToRoute("Sub-Items", new { MainItemName = model.MainItemDisplay, model.MainItemID });
         }
 
         [Route("/Sub-Item/[action]")]

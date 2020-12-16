@@ -40,6 +40,7 @@ namespace RLIM.BusinessLogic
             SubItemDTO subItemDTO = new SubItemDTO
             {
                 ID = ID,
+                MainItemID = MainItemID,
                 CertificateID = CertificateID,
                 ColorID = ColorID
             };

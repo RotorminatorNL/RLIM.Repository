@@ -212,6 +212,7 @@ namespace RLIM.DataAccess
                 sql += "SET CertificateID = @certificateID, ColorID = @colorID ";
                 sql += "WHERE ID = @id";
                 using SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = subItemDTO.ID;
                 cmd.Parameters.Add("@certificateID", SqlDbType.Int).Value = subItemDTO.CertificateID;
                 cmd.Parameters.Add("@colorID", SqlDbType.Int).Value = subItemDTO.ColorID;
 

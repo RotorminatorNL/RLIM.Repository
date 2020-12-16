@@ -164,7 +164,7 @@ namespace RLIM.DataAccess
             try
             {
                 string sql = "UPDATE dbo.MainItem ";
-                sql += "SET Name = @name, CategoryID = @categoryID, PlatformID = @platformID, QualityID = @qualityID";
+                sql += "SET Name = @name, CategoryID = @categoryID, PlatformID = @platformID, QualityID = @qualityID ";
                 sql += "WHERE ID = @id";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = mainItemDTO.ID;

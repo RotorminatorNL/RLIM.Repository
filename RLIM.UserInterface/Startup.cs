@@ -70,6 +70,10 @@ namespace RLIM.UserInterface
                 endpoints.MapControllerRoute(
                     name: "Sub-Item_ID_Action",
                     pattern: "{MainItemName?}/{MainItemID?}/Sub-Item/{id?}/{action?}");
+
+                endpoints.MapControllerRoute(
+                    name: "Sub-Items",
+                    pattern: "{MainItemName?}/{MainItemID?}/Sub-Items");
             });
         }
     }

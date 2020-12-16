@@ -7,8 +7,6 @@ using System.Collections.Generic;
 
 namespace RLIM.UserInterface.Controllers
 {
-    [Route("/[controller]/[action]")]
-    [Route("/[controller]/{id?}/[action]")]
     public class CategoryController : Controller
     {
         private CategoryModel GetCategory(int id)
@@ -37,7 +35,7 @@ namespace RLIM.UserInterface.Controllers
                 }
                 else
                 {
-                    return RedirectToAction(action, "Category", new { model.ID });
+                    return RedirectToRoute("Controller_ID_Action", new { model.ID });
                 }
             }
                 

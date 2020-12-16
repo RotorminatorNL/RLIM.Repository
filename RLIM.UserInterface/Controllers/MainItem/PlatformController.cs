@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace RLIM.UserInterface.Controllers
 {
-    [Route("/[controller]/[action]")]
-    [Route("/[controller]/{id?}/[action]")]
     public class PlatformController : Controller
     {
         private PlatformModel GetPlatform(int id)
@@ -38,7 +36,7 @@ namespace RLIM.UserInterface.Controllers
                 }
                 else
                 {
-                    return RedirectToAction(action, "Platform", new { model.ID });
+                    return RedirectToRoute("Controller_ID_Action", new { model.ID });
                 }
             }
 

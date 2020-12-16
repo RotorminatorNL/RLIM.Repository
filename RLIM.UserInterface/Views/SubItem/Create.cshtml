@@ -15,7 +15,7 @@
             <select asp-for="CertificateID" class="form-control">
                 <option disabled selected>Select a Certificate</option>
                 <option value="null">No Certificate</option>
-                @foreach (CertificateModel certificate in (List<CertificateModel>)ViewData["Certificates"])
+                @foreach (CertificateModel certificate in ViewBag.Certificates)
                 {
                     <option value="@certificate.ID">@certificate.Display</option>
                 }
@@ -28,7 +28,7 @@
             <select asp-for="ColorID" class="form-control">
                 <option disabled selected>Select a Color</option>
                 <option value="null">Default</option>
-                @foreach (ColorModel color in (List<ColorModel>)ViewData["Colors"])
+                @foreach (ColorModel color in ViewBag.Colors)
                 {
                     <option value="@color.ID">@color.Display</option>
                 }
@@ -44,6 +44,14 @@
         </div>
     </form>
 </div>
+
+@if (TempData["CertificateID"] != null && TempData["ColorID"] != null)
+{
+    <script>
+        document.getElementById("CertificateID").value = @TempData["CertificateID"] != 0 ? TempData["CertificateID"] : null;
+        document.getElementById("ColorID").value = @TempData["ColorID"] != 0 ? @TempData["ColorID"] : null;
+    </script>
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

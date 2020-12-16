@@ -137,11 +137,14 @@ namespace RLIM.UserInterface.Controllers
                 if (action == "Create")
                 {
                     TempData["MainItemName"] = model.Name;
+                    TempData["CategoryID"] = model.CategoryID;
+                    TempData["PlatformID"] = model.CategoryID;
+                    TempData["QualityID"] = model.CategoryID;
                     return RedirectToAction("Create", "MainItem");
                 }
                 else
                 {
-                    return RedirectToAction(action, "MainItem", new { model.ID });
+                    return RedirectToRoute("Main-Item_ID_Action", new { model.ID });
                 }
             }
 
@@ -159,6 +162,7 @@ namespace RLIM.UserInterface.Controllers
             ViewBag.Categories = GetCategories();
             ViewBag.Platforms = GetPlatforms();
             ViewBag.Qualities = GetQualities();
+
             return View();
         }
 
@@ -167,6 +171,7 @@ namespace RLIM.UserInterface.Controllers
             ViewBag.Categories = GetCategories();
             ViewBag.Platforms = GetPlatforms();
             ViewBag.Qualities = GetQualities();
+
             return View();
         }
 
@@ -182,7 +187,35 @@ namespace RLIM.UserInterface.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            if (id > 0)
+            {
+                ViewBag.Categories = GetCategories();
+                ViewBag.Platforms = GetPlatforms();
+                ViewBag.Qualities = GetQualities();
+
+                return View(GetMainItem(id));
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(MainItemModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                IAdmin msg = new MainItemCollection().Get(model.ID).Update(model.Name, model.CategoryID, model.PlatformID, model.QualityID);
+                return MessageHandler(msg, model, "Update");
+            }
+
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public IActionResult Delete(int id)
         {

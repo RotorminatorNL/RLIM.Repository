@@ -6,8 +6,6 @@ using RLIM.UserInterface.Models;
 
 namespace RLIM.UserInterface.Controllers
 {
-    [Route("/[controller]/[action]")]
-    [Route("/[controller]/{id?}/[action]")]
     public class ColorController : Controller
     {
         private ColorModel GetColor(int id)
@@ -37,7 +35,7 @@ namespace RLIM.UserInterface.Controllers
                 }
                 else
                 {
-                    return RedirectToAction(action, "Color", new { model.ID });
+                    return RedirectToRoute("Controller_ID_Action", new { model.ID });
                 }
             }
 

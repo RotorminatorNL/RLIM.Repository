@@ -6,8 +6,6 @@ using System.Collections.Generic;
 
 namespace RLIM.UserInterface.Controllers
 {
-    [Route("/[controller]/[action]")]
-    [Route("/[controller]/{id?}/[action]")]
     public class QualityController : Controller
     {
         private QualityModel GetQuality(int id)
@@ -37,7 +35,7 @@ namespace RLIM.UserInterface.Controllers
                 }
                 else
                 {
-                    return RedirectToAction(action, "Quality", new { model.ID });
+                    return RedirectToRoute("Controller_ID_Action", new { model.ID });
                 }
             }
 

@@ -8,7 +8,7 @@ namespace RLIM.UserInterface.Controllers
 {
     [Route("/{MainItemName}/{MainItemID}")]
     [Route("/{MainItemName}/{MainItemID}/Sub-Item/[action]")]
-    [Route("/{MainItemName}/{MainItemID}/Sub-Item/{id?}/[action]")]
+    [Route("/{MainItemName}/{MainItemID}/Sub-Item/{id}/[action]")]
     public class SubItemController : Controller
     {
         private CertificateModel GetCertificate(int id)
@@ -115,11 +115,13 @@ namespace RLIM.UserInterface.Controllers
             {
                 if (action == "Create")
                 {
+                    TempData["CertificateID"] = model.CertificateID;
+                    TempData["ColorID"] = model.ColorID;
                     return RedirectToAction("Create", "SubItem");
                 }
                 else
                 {
-                    return RedirectToAction(action, "SubItem", new { model.ID });
+                    return RedirectToRoute("Sub-Item_ID_Action", new { MainItemName = model.MainItemDisplay, model.MainItemID, model.ID });
                 }
             }
 
@@ -151,8 +153,8 @@ namespace RLIM.UserInterface.Controllers
         {
             if (MainItemID != 0 && MainItemName != "")
             {
-                ViewData["Certificates"] = GetCertificates();
-                ViewData["Colors"] = GetColors();
+                ViewBag.Certificates = GetCertificates();
+                ViewBag.Colors = GetColors();
 
                 ViewData["MainItemID"] = MainItemID;
                 ViewData["MainItemName"] = MainItemName;
@@ -181,25 +183,44 @@ namespace RLIM.UserInterface.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int MainItemID, string MainItemName, int ID)
+        public IActionResult Update(int MainItemID, string MainItemName, int id)
         {
-            if (MainItemID != 0 && MainItemName != "" && ID != 0)
+            if (MainItemID != 0 && MainItemName != "" && id != 0)
             {
-                return View();
+                ViewBag.Certificates = GetCertificates();
+                ViewBag.Colors = GetColors();
+
+                SubItemModel model = GetSubItem(id);
+                model.MainItemDisplay = MainItemName;
+
+                return View(model);
             }
                 
             return RedirectToAction("Index", "MainItem");
         }
 
-        [HttpGet]
-        public IActionResult Delete(int MainItemID, string MainItemName, int ID)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(SubItemModel model)
         {
-            if (MainItemID != 0 && MainItemName != "" && ID != 0)
+            if (model.ID > 0 && model.MainItemID > 0 && model.CertificateID >= 0 && model.ColorID >= 0)
+            {
+                IAdmin msg = new SubItemCollection().Get(model.ID).Update(model.MainItemID, model.CertificateID, model.ColorID);
+                return MessageHandler(msg, model, "Update");
+            }
+
+            return RedirectToAction("Index", "MainItem");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int MainItemID, string MainItemName, int id)
+        {
+            if (MainItemID != 0 && MainItemName != "" && id != 0)
             {
                 ViewData["MainItemID"] = MainItemID;
                 ViewData["MainItemName"] = MainItemName;
 
-                return View(GetSubItem(ID));
+                return View(GetSubItem(id));
             }
 
             return RedirectToAction("Index", "MainItem");

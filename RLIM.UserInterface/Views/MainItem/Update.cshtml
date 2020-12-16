@@ -1,0 +1,47 @@
+﻿@model RLIM.UserInterface.Models.MainItemModel
+
+@{
+    ViewData["Title"] = "Update Main-Item";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="form-container">
+    <form asp-controller="MainItem" asp-action="Update">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategoryID" class="control-label"></label>
+            <select asp-for="CategoryID" asp-items="@(new SelectList(ViewBag.Categories,"ID","Name"))" class="form-control"></select>
+            <span asp-validation-for="CategoryID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PlatformID" class="control-label"></label>
+            <select asp-for="PlatformID" asp-items="@(new SelectList(ViewBag.Platforms,"ID","Name"))" class="form-control"></select>
+            <span asp-validation-for="PlatformID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="QualityID" class="control-label"></label>
+            <select asp-for="QualityID" asp-items="@(new SelectList(ViewBag.Qualities,"ID","Display"))" class="form-control"></select>
+            <span asp-validation-for="QualityID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row justify-content-between">
+            <input asp-for="ID" type="hidden"/>
+            <input type="submit" value="Update" class="btn btn-primary" />
+            <a asp-controller="MainItem" asp-action="Index" class="btn btn-outline-primary">Back to Main-items</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

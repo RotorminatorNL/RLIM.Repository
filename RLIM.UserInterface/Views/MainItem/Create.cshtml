@@ -47,6 +47,15 @@
     </form>
 </div>
 
+@if (TempData["CategoryID"] != null && TempData["PlatformID"] != null && TempData["QualityID"] != null)
+{
+    <script>
+        document.getElementById("CategoryID").value = @TempData["CategoryID"] != 0 ? @TempData["CategoryID"] : null;
+        document.getElementById("PlatformID").value = @TempData["PlatformID"] != 0 ? @TempData["PlatformID"] : null;
+        document.getElementById("QualityID").value = @TempData["QualityID"] != 0 ? @TempData["QualityID"] : null;
+    </script>
+}
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

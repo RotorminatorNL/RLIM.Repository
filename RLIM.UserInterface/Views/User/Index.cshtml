@@ -5,26 +5,73 @@
 <h1>@ViewData["Title"]</h1>
 <hr />
 <div class="row justify-content-center main-item-container">
-    @for (int i = 0; i < 4; i++)
+    @foreach (MainItemModel mainItem in ViewBag.MainItems)
     {
-        <div class="main-item">
-            <div class="img-container">
-                <img alt="Image for main-item" />
+        <div class="main-item" id="MainItemID_@mainItem.ID" onclick="ShowSubItems(this)">
+            <div class="row justify-content-center img-container">
+                <img alt="Image for main-item" src="~/img/rocket-league-logo.svg" />
             </div>
             <div class="info">
-                <h3>Main-Item @i</h3>
-            </div>
-            <div class="sub-item-container" style="display: none;">
-                @for (int j = 0; j < 4; j++)
-                {
-                    <div class="img-container">
-                        <img alt="Image for sub-item" />
+                <h3>@mainItem.Name</h3>
+                <div class="row justify-content-center attribute-container">
+                    <div class="attribute-name">
+                        <span>Category: </span>
+                        <span>Platform: </span>
+                        <span>Quality (rank): </span>
                     </div>
-                    <div class="info">
-                        <h3>Sub-Item @j</h3>
+                    <div class="attribute-value">
+                        <span>@mainItem.CategoryDisplay</span>
+                        <span>@mainItem.PlatformDisplay</span>
+                        <span>@mainItem.QualityDisplay</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-around sub-item-container hide" id="SubItems_@mainItem.ID">
+                @foreach (SubItemModel subItem in mainItem.SubItemModels)
+                {
+                    <div class="sub-item">
+                        <div class="row justify-content-center img-container">
+                            <img alt="Image for sub-item" src="~/img/rocket-league-logo.svg" />
+                        </div>
+                        <div class="info">
+                            <div class="row attribute-container">
+                                <div class="attribute-name">
+                                    <span>Certificate (tier): </span>
+                                    <span>Color (hex): </span>
+                                </div>
+                                <div class="attribute-value">
+                                    <span>@subItem.CertificateDisplay</span>
+                                    <span>@subItem.ColorDisplay</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 }
             </div>
         </div>
     }
 </div>
+
+<script>
+    function ShowSubItems(e) {
+        let mainItemContainer = e;
+        let mainItemID = e.id.split("_")[1];
+        let subItemContainer = document.getElementById(`SubItems_${mainItemID}`);
+        if (subItemContainer.classList.contains("hide")) {
+            mainItemContainer.classList.add("sub-items-visible");
+
+            setTimeout(() => {
+                subItemContainer.classList.remove("hide");
+                subItemContainer.classList.add("show");
+                mainItemContainer.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+            }, 300);
+        } else {
+            subItemContainer.classList.remove("show");
+            subItemContainer.classList.add("hide");
+
+            setTimeout(() => {
+                mainItemContainer.classList.remove("sub-items-visible");
+            }, 100);
+        }
+    }
+</script>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RLIM.UserInterface.Models
 {
@@ -23,5 +24,7 @@ namespace RLIM.UserInterface.Models
         public int QualityID { get; set; }
         [Display(Name = "Quality")]
         public string QualityDisplay { get; set; }
+
+        public List<SubItemModel> SubItemModels { get; set; }
     }
 }

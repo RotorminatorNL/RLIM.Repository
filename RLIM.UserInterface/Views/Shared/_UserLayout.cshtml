@@ -6,15 +6,12 @@
     <title>@ViewData["Title"] - Rocket League Item Manager</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/user.css" />
 </head>
 <body>
     <div class="container row">
         <div class="side-menu">
             <a class="nav-link app-name" asp-controller="Home" asp-action="Index">RLIM</a>
-
-            @{
-                string action = ViewContext.RouteData.Values["Action"].ToString();
-            }
 
             <div class="signed-as-container">
                 <span>Logged in as User</span>

@@ -1,1 +1,30 @@
-﻿<h1>You logged in as an User</h1>
+﻿@{
+    ViewData["Title"] = "Show All Items";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row justify-content-center main-item-container">
+    @for (int i = 0; i < 4; i++)
+    {
+        <div class="main-item">
+            <div class="img-container">
+                <img alt="Image for main-item" />
+            </div>
+            <div class="info">
+                <h3>Main-Item @i</h3>
+            </div>
+            <div class="sub-item-container" style="display: none;">
+                @for (int j = 0; j < 4; j++)
+                {
+                    <div class="img-container">
+                        <img alt="Image for sub-item" />
+                    </div>
+                    <div class="info">
+                        <h3>Sub-Item @j</h3>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

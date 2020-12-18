@@ -1,0 +1,10 @@
+﻿.main-item-container {
+    padding: 0 10px;
+}
+
+.main-item {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 5px;
+}

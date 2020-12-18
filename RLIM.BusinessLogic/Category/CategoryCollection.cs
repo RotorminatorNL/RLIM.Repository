@@ -8,6 +8,17 @@ namespace RLIM.BusinessLogic
     public class CategoryCollection
     {
         private readonly List<Category> categories = new List<Category>();
+        private readonly ICategoryCollectionDAL categoryCollectionDAL;
+
+        public CategoryCollection()
+        {
+            categoryCollectionDAL = CategoryFactoryDAL.GetCollectionDAL();
+        }
+
+        public CategoryCollection(ICategoryCollectionDAL categoryCollectionDAL)
+        {
+            this.categoryCollectionDAL = categoryCollectionDAL;
+        }
 
         public IAdmin Create(string name)
         {
@@ -16,9 +27,9 @@ namespace RLIM.BusinessLogic
                 Name = name
             };
 
-            if (CategoryFactoryDAL.GetCollectionDAL().GetID(categoryDTO) == 0)
+            if (categoryCollectionDAL.GetID(categoryDTO) == 0)
             {
-                if (!CategoryFactoryDAL.GetCollectionDAL().Create(categoryDTO))
+                if (!categoryCollectionDAL.Create(categoryDTO))
                 {
                     return new Error("Category", "Create");
                 }
@@ -33,12 +44,12 @@ namespace RLIM.BusinessLogic
 
         public Category Get(int id)
         {
-            return new Category(CategoryFactoryDAL.GetCollectionDAL().Get(id));
+            return new Category(categoryCollectionDAL.Get(id));
         }
 
         public List<Category> GetAll()
         {
-            foreach (CategoryDTO categoryDTO in CategoryFactoryDAL.GetCollectionDAL().GetAll())
+            foreach (CategoryDTO categoryDTO in categoryCollectionDAL.GetAll())
             {
                 categories.Add(new Category(categoryDTO));
             }
@@ -48,7 +59,7 @@ namespace RLIM.BusinessLogic
 
         public IAdmin Delete(int id)
         {
-            if (!CategoryFactoryDAL.GetCollectionDAL().Delete(id))
+            if (!categoryCollectionDAL.Delete(id))
             {
                 return new Error("Category", "Delete");
             }

@@ -4,7 +4,7 @@
 
 <h1>@ViewData["Title"]</h1>
 <hr />
-<div class="row justify-content-center main-item-container">
+<div class="row justify-content-center main-item-container" id="MainItemsContainer">
     @foreach (MainItemModel mainItem in ViewBag.MainItems)
     {
         <div class="main-item" id="MainItemID_@mainItem.ID" onclick="ShowSubItems(this)">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-around sub-item-container hide" id="SubItems_@mainItem.ID">
+            <div class="row justify-content-around sub-item-container hide" id="SubItems">
                 @foreach (SubItemModel subItem in mainItem.SubItemModels)
                 {
                     <div class="sub-item">
@@ -52,26 +52,4 @@
     }
 </div>
 
-<script>
-    function ShowSubItems(e) {
-        let mainItemContainer = e;
-        let mainItemID = e.id.split("_")[1];
-        let subItemContainer = document.getElementById(`SubItems_${mainItemID}`);
-        if (subItemContainer.classList.contains("hide")) {
-            mainItemContainer.classList.add("sub-items-visible");
-
-            setTimeout(() => {
-                subItemContainer.classList.remove("hide");
-                subItemContainer.classList.add("show");
-                mainItemContainer.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-            }, 300);
-        } else {
-            subItemContainer.classList.remove("show");
-            subItemContainer.classList.add("hide");
-
-            setTimeout(() => {
-                mainItemContainer.classList.remove("sub-items-visible");
-            }, 100);
-        }
-    }
-</script>
+<script src="~/js/user.js" asp-append-version="true"></script>

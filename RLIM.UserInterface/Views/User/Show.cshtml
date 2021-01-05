@@ -1,13 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "Show All Items";
+    ViewData["Title"] = "Show Items";
 }
 
 <h1>@ViewData["Title"]</h1>
 <hr />
-<div class="row justify-content-center main-item-container" id="MainItemsContainer">
+<div class="row align-items-center justify-content-center main-item-container" id="MainItemsContainer">
     @foreach (MainItemModel mainItem in ViewBag.MainItems)
     {
-        <div class="main-item" id="MainItemID_@mainItem.ID" onclick="ShowSubItems(this)">
+        <div class="main-item" id="MainItemID_@mainItem.ID" onclick="ShowSubItems(event, this)">
             <div class="row justify-content-center img-container">
                 <img alt="Image for main-item" src="~/img/rocket-league-logo.svg" />
             </div>
@@ -51,5 +51,3 @@
         </div>
     }
 </div>
-
-<script src="~/js/user.js" asp-append-version="true"></script>

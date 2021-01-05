@@ -57,6 +57,29 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
+        private List<CategoryModel> GetCategoryModels()
+        {
+            List<CategoryModel> categories = new List<CategoryModel>();
+
+            foreach (Category category in new CategoryCollection().GetAll())
+            {
+                string[] categoryNameArr = category.Name.Split(" ");
+                string newCategoryName = "";
+                if (categoryNameArr.Length > 1)
+                {
+                    newCategoryName = $"{categoryNameArr[0]}-{categoryNameArr[1]}";
+                }
+
+                categories.Add(new CategoryModel
+                {
+                    ID = category.ID,
+                    Name = newCategoryName == "" ? category.Name : newCategoryName
+                });
+            }
+
+            return categories;
+        }
+
         private PlatformModel GetPlatformModel(int id)
         {
             Platform platform = new PlatformCollection().Get(id);
@@ -77,29 +100,48 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
-        private List<MainItemModel> GetMainItemModels()
+        private List<MainItemModel> GetMainItemModels(string categoryName)
         {
             List<MainItemModel> mainItemModels = new List<MainItemModel>();
 
             foreach (MainItem mainItem in new MainItemCollection().GetAll())
             {
-                mainItemModels.Add(new MainItemModel
+                CategoryModel category = GetCategoryModel(mainItem.CategoryID);
+
+                if (categoryName == "All" || category.Name == categoryName)
                 {
-                    ID = mainItem.ID,
-                    Name = mainItem.Name,
-                    CategoryDisplay = GetCategoryModel(mainItem.CategoryID).Name,
-                    PlatformDisplay = GetPlatformModel(mainItem.PlatformID).Name,
-                    QualityDisplay = GetQualityModel(mainItem.QualityID).Display,
-                    SubItemModels = GetSubItemModels(mainItem.GetSubItems())
-                });
+                    mainItemModels.Add(new MainItemModel
+                    {
+                        ID = mainItem.ID,
+                        Name = mainItem.Name,
+                        CategoryDisplay = category.Name,
+                        PlatformDisplay = GetPlatformModel(mainItem.PlatformID).Name,
+                        QualityDisplay = GetQualityModel(mainItem.QualityID).Display,
+                        SubItemModels = GetSubItemModels(mainItem.GetSubItems())
+                    });
+                }
             }
 
             return mainItemModels;
         }
 
-        public IActionResult Index()
+        [Route("[controller]/[action]/{categoryName}")]
+        public IActionResult Show(string categoryName)
         {
-            ViewBag.MainItems = GetMainItemModels();
+            ViewBag.SelectedCategory = categoryName;
+
+            try
+            {
+                string[] categoryNameArr = categoryName.Split("-");
+                categoryName = $"{categoryNameArr[0]} {categoryNameArr[1]}";
+            }
+            catch (Exception)
+            {
+
+            }
+
+            ViewBag.Categories = GetCategoryModels();
+            ViewBag.MainItems = GetMainItemModels(categoryName);
 
             return View();
         }

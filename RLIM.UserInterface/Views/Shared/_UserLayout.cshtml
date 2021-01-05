@@ -13,6 +13,15 @@
         <div class="side-menu">
             <a class="nav-link app-name" asp-controller="Home" asp-action="Index">RLIM</a>
 
+            <div class="menu-items">
+                <a class="nav-link @(ViewBag.SelectedCategory == "All" ? "active" : "")" asp-controller="User" asp-action="Show" asp-route-categoryName="All">All</a>
+
+                @foreach (CategoryModel item in ViewBag.Categories)
+                {
+                    <a class="nav-link @(ViewBag.SelectedCategory == item.Name ? "active" : "")" asp-controller="User" asp-action="Show" asp-route-categoryName="@item.Name">@item.Name</a>
+                }
+            </div>
+
             <div class="signed-as-container">
                 <span>Logged in as User</span>
                 <a class="nav-link" asp-controller="Home" asp-action="Index">Log out</a>
@@ -31,6 +40,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/user.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

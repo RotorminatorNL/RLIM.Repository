@@ -37,7 +37,7 @@ h1,h2,h3 {
     height: 100vh;
     padding: 10px;
     overflow-x: auto;
-    width: 200px;
+    width: 250px;
 }
 
     .side-menu a {
@@ -56,21 +56,48 @@ h1,h2,h3 {
             font-weight: 500;
         }
 
-        .side-menu a:first-child:hover {
+        .side-menu > a:first-child:hover {
             border-bottom-color: rgb(0,11,40);
             font-weight: 400;
         }
 
-        .side-menu > a.active {
+        .side-menu a.active {
             border-bottom-color: rgb(13,178,255);
             font-weight: 500;
         }
+
 
     .side-menu .app-name {
         font-size: 26px;
         margin: 0 auto;
         width: fit-content;
     }
+
+    .side-menu .menu-items {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgba(255,255,255,.1);
+        border-radius: 5px;
+        overflow: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgb(13,178,255) rgba(13,178,255,.5);
+        margin-bottom: 100px;
+        width: 200px;
+    }
+
+        .side-menu .menu-items::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .side-menu .menu-items::-webkit-scrollbar-thumb {
+            background-color: rgba(13,178,255,.5);
+            border-radius: 5px;
+        }
+
+            .side-menu .menu-items::-webkit-scrollbar-thumb:hover {
+                background-color: rgb(13,178,255);
+            }
 
 .signed-as-container {
     position: absolute;
@@ -88,7 +115,7 @@ h1,h2,h3 {
     }
 
 .content {
-    margin-left: 200px;
+    margin-left: 250px;
     flex-direction: column;
     width: 100%;
 }
@@ -117,13 +144,6 @@ a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
-}
-
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
 }
 
 .border-top {
@@ -165,10 +185,10 @@ form.subitem-form .inputfields div > * {
     position: absolute;
     bottom: 0;
     background-color: white;
-    margin-left: 200px;
+    margin-left: 250px;
     line-height: 60px;
     text-align: center;
-    width: calc(100% - 200px);
+    width: calc(100% - 250px);
     white-space: nowrap;
 }
 

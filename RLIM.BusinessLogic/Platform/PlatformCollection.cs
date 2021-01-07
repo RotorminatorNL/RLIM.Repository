@@ -1,4 +1,4 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace RLIM.BusinessLogic
     {
         private readonly List<Platform> platforms = new List<Platform>();
 
-        public IAdmin Create(string name)
+        public IMessageToAdmin Create(string name)
         {
             PlatformDTO platformDTO = new PlatformDTO
             {
@@ -46,7 +46,7 @@ namespace RLIM.BusinessLogic
             return platforms;
         }
 
-        public IAdmin Delete(int id)
+        public IMessageToAdmin Delete(int id)
         {
             if (!PlatformFactoryDAL.GetCollectionDAL().Delete(id))
             {

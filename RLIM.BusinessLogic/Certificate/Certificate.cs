@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using RLIM.FactoryDAL;
+﻿using RLIM.FactoryDAL;
 using RLIM.ContractLayer;
-using RLIM.BusinessLogic.MessageToUI;
+using RLIM.BusinessLogic.MessageToUI.Admin;
 
 namespace RLIM.BusinessLogic
 {
@@ -34,7 +31,7 @@ namespace RLIM.BusinessLogic
             Tier = tier;
         }
 
-        public IAdmin Update()
+        public IMessageToAdmin Update()
         {
             CertificateDTO certificateDTO = new CertificateDTO
             {

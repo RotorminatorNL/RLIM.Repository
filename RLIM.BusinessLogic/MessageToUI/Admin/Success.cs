@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RLIM.BusinessLogic.MessageToUI
+namespace RLIM.BusinessLogic.MessageToUI.Admin
 {
-    public class Success : IAdmin
+    public class Success : IMessageToAdmin
     {
         public string Status { get; } = "Success";
         public string Title { get; } = "Success!";

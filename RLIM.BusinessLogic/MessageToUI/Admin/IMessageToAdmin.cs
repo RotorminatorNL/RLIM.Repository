@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RLIM.BusinessLogic.MessageToUI
+namespace RLIM.BusinessLogic.MessageToUI.Admin
 {
-    public interface IAdmin
+    public interface IMessageToAdmin
     {
         string Status { get; }
         string Title { get; }

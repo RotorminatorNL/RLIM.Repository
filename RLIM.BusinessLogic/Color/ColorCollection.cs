@@ -1,4 +1,4 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace RLIM.BusinessLogic
     {
         private readonly List<Color> colors = new List<Color>();
 
-        public IAdmin Create(string name, string hex)
+        public IMessageToAdmin Create(string name, string hex)
         {
             ColorDTO certificateDTO = new ColorDTO
             {
@@ -47,7 +47,7 @@ namespace RLIM.BusinessLogic
             return colors;
         }
 
-        public IAdmin Delete(int id)
+        public IMessageToAdmin Delete(int id)
         {
             if (!ColorFactoryDAL.GetCollectionDAL().Delete(id))
             {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RLIM.BusinessLogic.MessageToUI;
+using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.Tests;
 using System.Collections.Generic;
@@ -15,10 +15,10 @@ namespace RLIM.BusinessLogic.Tests
             // Arrange
             CategoryCollection categoryCollection = new CategoryCollection(new TestCategoryDAL());
 
-            IAdmin expected = new Success("Category","Create");
+            IMessageToAdmin expected = new Success("Category","Create");
 
             // Act
-            IAdmin actual = categoryCollection.Create("Test Category");
+            IMessageToAdmin actual = categoryCollection.Create("Test Category");
 
             // Assert
             Assert.AreEqual(expected.Status, actual.Status);
@@ -32,10 +32,10 @@ namespace RLIM.BusinessLogic.Tests
             // Arrange
             CategoryCollection categoryCollection = new CategoryCollection(new TestCategoryDAL());
 
-            IAdmin expected = new Error("Category", "Create");
+            IMessageToAdmin expected = new Error("Category", "Create");
 
             // Act
-            IAdmin actual = categoryCollection.Create("");
+            IMessageToAdmin actual = categoryCollection.Create("");
 
             // Assert
             Assert.AreEqual(expected.Status, actual.Status);
@@ -50,10 +50,10 @@ namespace RLIM.BusinessLogic.Tests
             CategoryCollection categoryCollection = new CategoryCollection(new TestCategoryDAL());
             categoryCollection.Create("Test Category");
 
-            IAdmin expected = new AlreadyExisting("Category");
+            IMessageToAdmin expected = new AlreadyExisting("Category");
 
             // Act
-            IAdmin actual = categoryCollection.Create("Test Category");
+            IMessageToAdmin actual = categoryCollection.Create("Test Category");
 
             // Assert
             Assert.AreEqual(expected.Status, actual.Status);
@@ -135,10 +135,10 @@ namespace RLIM.BusinessLogic.Tests
             CategoryCollection categoryCollection = new CategoryCollection(new TestCategoryDAL());
             categoryCollection.Create("Test Category");
 
-            IAdmin expected = new Success("Category", "Delete");
+            IMessageToAdmin expected = new Success("Category", "Delete");
 
             // Act
-            IAdmin actual = categoryCollection.Delete(1);
+            IMessageToAdmin actual = categoryCollection.Delete(1);
 
             // Assert
             Assert.AreEqual(expected.Status, actual.Status);
@@ -153,10 +153,10 @@ namespace RLIM.BusinessLogic.Tests
             CategoryCollection categoryCollection = new CategoryCollection(new TestCategoryDAL());
             categoryCollection.Create("Test Category");
 
-            IAdmin expected = new Error("Category", "Delete");
+            IMessageToAdmin expected = new Error("Category", "Delete");
 
             // Act
-            IAdmin actual = categoryCollection.Delete(2);
+            IMessageToAdmin actual = categoryCollection.Delete(2);
 
             // Assert
             Assert.AreEqual(expected.Status, actual.Status);

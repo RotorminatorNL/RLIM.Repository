@@ -1,9 +1,6 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RLIM.BusinessLogic
 {
@@ -34,7 +31,7 @@ namespace RLIM.BusinessLogic
             Hex = hex;
         }
 
-        public IAdmin Update()
+        public IMessageToAdmin Update()
         {
             ColorDTO colorDTO = new ColorDTO
             {

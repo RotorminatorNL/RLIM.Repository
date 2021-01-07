@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RLIM.BusinessLogic.MessageToUI;
+using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.Tests;
 
@@ -51,10 +51,10 @@ namespace RLIM.BusinessLogic.Tests
             Category category = categoryCollection.Get(2);
             category.SetName("Test Category");
 
-            IAdmin expected = new Success("Category", "Update");
+            IMessageToAdmin expected = new Success("Category", "Update");
 
             // Act
-            IAdmin actual = category.Update(testCategoryDAL, testCategoryDAL);
+            IMessageToAdmin actual = category.Update(testCategoryDAL, testCategoryDAL);
 
             // Assert
             Assert.AreEqual(expected.Status, actual.Status);
@@ -75,10 +75,10 @@ namespace RLIM.BusinessLogic.Tests
             Category category = categoryCollection.Get(2);
             category.SetName("Example Category");
 
-            IAdmin expected = new AlreadyExisting("Category");
+            IMessageToAdmin expected = new AlreadyExisting("Category");
 
             // Act
-            IAdmin actual = category.Update(testCategoryDAL, testCategoryDAL);
+            IMessageToAdmin actual = category.Update(testCategoryDAL, testCategoryDAL);
 
             // Assert
             Assert.AreEqual(expected.Status, actual.Status);

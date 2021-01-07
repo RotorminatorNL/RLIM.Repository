@@ -1,4 +1,4 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 
@@ -22,7 +22,7 @@ namespace RLIM.BusinessLogic
             Name = name;
         }
 
-        public IAdmin Update()
+        public IMessageToAdmin Update()
         {
             PlatformDTO platformDTO = new PlatformDTO
             {

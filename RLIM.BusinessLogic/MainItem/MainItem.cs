@@ -1,4 +1,4 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
@@ -54,7 +54,7 @@ namespace RLIM.BusinessLogic
             QualityID = id;
         }
 
-        public IAdmin Update()
+        public IMessageToAdmin Update()
         {
             MainItemDTO mainItemDTO = new MainItemDTO
             {

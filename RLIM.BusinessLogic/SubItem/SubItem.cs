@@ -1,4 +1,4 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 
@@ -35,7 +35,7 @@ namespace RLIM.BusinessLogic
             ColorID = id;
         }
 
-        public IAdmin Update()
+        public IMessageToAdmin Update()
         {
             SubItemDTO subItemDTO = new SubItemDTO
             {

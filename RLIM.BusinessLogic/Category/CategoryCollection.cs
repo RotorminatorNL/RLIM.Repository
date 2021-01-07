@@ -1,4 +1,4 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace RLIM.BusinessLogic
             this.categoryCollectionDAL = categoryCollectionDAL;
         }
 
-        public IAdmin Create(string name)
+        public IMessageToAdmin Create(string name)
         {
             CategoryDTO categoryDTO = new CategoryDTO
             {
@@ -57,7 +57,7 @@ namespace RLIM.BusinessLogic
             return categories;
         }
 
-        public IAdmin Delete(int id)
+        public IMessageToAdmin Delete(int id)
         {
             if (!categoryCollectionDAL.Delete(id))
             {

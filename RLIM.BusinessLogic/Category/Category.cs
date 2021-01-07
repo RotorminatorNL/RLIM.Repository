@@ -1,4 +1,4 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 
@@ -28,7 +28,7 @@ namespace RLIM.BusinessLogic
             Name = name != "" ? name : Name;
         }
 
-        public IAdmin Update()
+        public IMessageToAdmin Update()
         {
             CategoryDTO categoryDTO = new CategoryDTO
             {
@@ -52,7 +52,7 @@ namespace RLIM.BusinessLogic
             return new Success("Category", "Update");
         }
 
-        public IAdmin Update(ICategoryCollectionDAL categoryCollectionDAL, ICategoryDAL categoryDAL)
+        public IMessageToAdmin Update(ICategoryCollectionDAL categoryCollectionDAL, ICategoryDAL categoryDAL)
         {
             this.categoryCollectionDAL = categoryCollectionDAL;
             this.categoryDAL = categoryDAL;

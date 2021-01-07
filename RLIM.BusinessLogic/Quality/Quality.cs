@@ -1,4 +1,4 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 
@@ -31,7 +31,7 @@ namespace RLIM.BusinessLogic
             Rank = rank;
         }
 
-        public IAdmin Update()
+        public IMessageToAdmin Update()
         {
             QualityDTO qualityDTO = new QualityDTO
             {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RLIM.BusinessLogic.MessageToUI
+namespace RLIM.BusinessLogic.MessageToUI.Admin
 {
-    public class AlreadyExisting : IAdmin
+    public class AlreadyExisting : IMessageToAdmin
     {
         public string Status { get; } = "Error";
         public string Title { get; } = "Whoops!";

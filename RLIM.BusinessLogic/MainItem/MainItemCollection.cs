@@ -1,4 +1,4 @@
-﻿using RLIM.BusinessLogic.MessageToUI;
+﻿using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.ContractLayer;
 using RLIM.FactoryDAL;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace RLIM.BusinessLogic
     {
         private readonly List<MainItem> mainItems = new List<MainItem>();
 
-        public IAdmin Create(string name, int categoryID, int platformID, int qualityID)
+        public IMessageToAdmin Create(string name, int categoryID, int platformID, int qualityID)
         {
             MainItemDTO mainItemDTO = new MainItemDTO
             {
@@ -57,7 +57,7 @@ namespace RLIM.BusinessLogic
             return mainItems;
         }
 
-        public IAdmin Delete(int id)
+        public IMessageToAdmin Delete(int id)
         {
             if(!SubItemFactoryDAL.GetCollectionDAL().DeleteAllWithMainItemID(id) || !MainItemFactoryDAL.GetCollectionDAL().Delete(id))
             {

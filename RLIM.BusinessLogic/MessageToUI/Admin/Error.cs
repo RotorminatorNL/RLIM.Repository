@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RLIM.BusinessLogic.MessageToUI
+namespace RLIM.BusinessLogic.MessageToUI.Admin
 {
-    public class Error : IAdmin
+    public class Error : IMessageToAdmin
     {
         public string Status { get; } = "Error";
         public string Title { get; } = "Sorry!";

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
-using RLIM.BusinessLogic.MessageToUI;
+using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.UserInterface.Models;
 using System.Collections.Generic;
 
@@ -20,7 +20,7 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
-        private IActionResult MessageHandler(IAdmin msg, QualityModel model, string action)
+        private IActionResult MessageHandler(IMessageToAdmin msg, QualityModel model, string action)
         {
             TempData["MessageTitle"] = msg.Title;
             TempData["MessageText"] = msg.Text;
@@ -53,7 +53,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new QualityCollection().Create(model.Name, model.Rank);
+                IMessageToAdmin msg = new QualityCollection().Create(model.Name, model.Rank);
                 return MessageHandler(msg, model, "Create");
             }
 
@@ -104,7 +104,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new QualityCollection().Delete(model.ID);
+                IMessageToAdmin msg = new QualityCollection().Delete(model.ID);
                 return MessageHandler(msg, model, "Delete");
             }
 

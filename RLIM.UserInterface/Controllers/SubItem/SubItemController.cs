@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
-using RLIM.BusinessLogic.MessageToUI;
+using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.UserInterface.Models;
 using System.Collections.Generic;
 
@@ -106,7 +106,7 @@ namespace RLIM.UserInterface.Controllers
             return subItemModels;
         }
 
-        private IActionResult MessageHandler(IAdmin msg, SubItemModel model, string action)
+        private IActionResult MessageHandler(IMessageToAdmin msg, SubItemModel model, string action)
         {
             TempData["MessageTitle"] = msg.Title;
             TempData["MessageText"] = msg.Text;
@@ -175,7 +175,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (model.ID == 0 && model.MainItemID > 0 && model.CertificateID >= 0 && model.ColorID >= 0)
             {
-                IAdmin msg = new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
+                IMessageToAdmin msg = new SubItemCollection().Create(model.MainItemID, model.CertificateID, model.ColorID);
                 return MessageHandler(msg, model, "Create");
             }
                 
@@ -235,7 +235,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new SubItemCollection().Delete(model.ID);
+                IMessageToAdmin msg = new SubItemCollection().Delete(model.ID);
                 return MessageHandler(msg, model, "Delete");
             }
             

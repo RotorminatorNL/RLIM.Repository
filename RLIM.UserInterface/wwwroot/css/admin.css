@@ -1,0 +1,15 @@
+﻿.table {
+    margin-bottom: 0;
+}
+
+.table td, .table th, .table thead th {
+    border-color: black;
+}
+
+.form-container {
+    padding-bottom: 20px;
+}
+
+.background-transparent-white {
+    border-radius: 0;
+}

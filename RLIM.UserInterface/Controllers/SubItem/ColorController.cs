@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
-using RLIM.BusinessLogic.MessageToUI;
+using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.UserInterface.Models;
 
 namespace RLIM.UserInterface.Controllers
@@ -20,7 +20,7 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
-        private IActionResult MessageHandler(IAdmin msg, ColorModel model, string action)
+        private IActionResult MessageHandler(IMessageToAdmin msg, ColorModel model, string action)
         {
             TempData["MessageTitle"] = msg.Title;
             TempData["MessageText"] = msg.Text;
@@ -53,7 +53,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg =  new ColorCollection().Create(model.Name, model.Hex);
+                IMessageToAdmin msg =  new ColorCollection().Create(model.Name, model.Hex);
                 return MessageHandler(msg, model, "Create");
             }
 
@@ -104,7 +104,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new ColorCollection().Delete(model.ID);
+                IMessageToAdmin msg = new ColorCollection().Delete(model.ID);
                 return MessageHandler(msg, model, "Delete");
             }
 

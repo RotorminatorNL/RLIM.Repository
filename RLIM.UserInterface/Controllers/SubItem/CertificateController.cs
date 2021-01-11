@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RLIM.BusinessLogic;
-using RLIM.BusinessLogic.MessageToUI;
+using RLIM.BusinessLogic.MessageToUI.Admin;
 using RLIM.UserInterface.Models;
 using System.Collections.Generic;
 
@@ -22,7 +22,7 @@ namespace RLIM.UserInterface.Controllers
             };
         }
 
-        private IActionResult MessageHandler(IAdmin msg, CertificateModel model, string action)
+        private IActionResult MessageHandler(IMessageToAdmin msg, CertificateModel model, string action)
         {
             TempData["MessageTitle"] = msg.Title;
             TempData["MessageText"] = msg.Text;
@@ -55,7 +55,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new CertificateCollection().Create(model.Name, model.Tier);
+                IMessageToAdmin msg = new CertificateCollection().Create(model.Name, model.Tier);
                 return MessageHandler(msg, model, "Create");
             }
 
@@ -106,7 +106,7 @@ namespace RLIM.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                IAdmin msg = new CertificateCollection().Delete(model.ID);
+                IMessageToAdmin msg = new CertificateCollection().Delete(model.ID);
                 return MessageHandler(msg, model, "Delete");
             }
 

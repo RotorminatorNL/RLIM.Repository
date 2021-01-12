@@ -46,7 +46,7 @@
             <div class="background-container">
                 <div></div>
             </div>
-            <div class="background-transparent-white row justify-content-center">
+            <div class="background-transparent-white row justify-content-center @(ViewData["Title"].ToString() == "Main-Items" ? "main-items" : "attributes")">
                 @RenderBody()
             </div>
         </main>
@@ -73,7 +73,13 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Rocket League Item Manager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <span>
+                &copy; 2020 -&nbsp;
+            </span>
+            <span>
+                Rocket League Item Manager -&nbsp;
+            </span>
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

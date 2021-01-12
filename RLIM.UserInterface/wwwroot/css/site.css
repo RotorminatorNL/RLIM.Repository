@@ -37,7 +37,9 @@ h1, h2, h3 {
     height: 100vh;
     padding: 10px;
     overflow-x: auto;
+    transition: all 300ms;
     width: 250px;
+    z-index: 9999;
 }
 
     .side-menu a {
@@ -118,12 +120,13 @@ h1, h2, h3 {
     position: relative;
     flex-direction: column;
     margin-left: 250px;
+    overflow: auto;
     width: 100%;
 }
 
     .content .background-container {
-        height: 100vh;
-        width: 100vw;
+        height: 100%;
+        width: 100%;
         position: fixed;
         z-index: -9999;
     }
@@ -131,9 +134,10 @@ h1, h2, h3 {
         .content .background-container div {
             background-image: url(/img/background_championsfield.jpg);
             background-size: cover;
-            height: 100vh;
-            width: 100vw;
-            margin-left: -135px;
+            background-position: center;
+            height: 100%;
+            width: 100%;
+            margin-left: -250px;
         }
 
     .content .choose-role {
@@ -147,7 +151,7 @@ h1, h2, h3 {
 .background-transparent-white {
     background-color: rgba(255,255,255,.8);
     border-radius: 5px;
-    width: 100%;
+    width: calc(100% - 20px);
 }
 
 .form-container {
@@ -211,17 +215,6 @@ form.subitem-form .inputfields div > * {
     margin: 5px 2px;
 }
 
-.footer {
-    position: absolute;
-    bottom: 0;
-    background-color: white;
-    margin-left: 250px;
-    line-height: 60px;
-    text-align: center;
-    width: calc(100% - 250px);
-    white-space: nowrap;
-}
-
 .message-container {
     position: fixed;
     top: 0;
@@ -277,8 +270,92 @@ form.subitem-form .inputfields div > * {
         font-weight: 500;
     }
 
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    margin-left: 250px;
+    padding: 10px;
+    text-align: center;
+    width: calc(100% - 250px);
+}
+
+.footer .container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 1024px) {
+    .side-menu {
+        height: 74px;
+        width: 100vw;
+    }
+
+        .side-menu:before {
+            content: url(/img/menu-icon-white.svg);
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            height: 30px;
+            width: 30px;
+        }
+
+        .side-menu.open {
+            height: 100vh;
+        }
+
+            .side-menu.open .signed-as-container {
+                display: flex;
+            }
+
+        .signed-as-container {
+            display: none;
+        }
+
+    .content {
+        margin-left: 0;
+        margin-top: 74px;
+    }
+
+        .content .background-container div {
+            margin-left: 0;
+        }
+
+        .content .choose-role{
+            margin-top: 10px;
+        }
+
+    .footer {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    html {
+        font-size: 12px;
+    }
+
+    body {
+        font-size: 16px;
+        margin-bottom: 115px;
+    }
+
+    .content .choose-role {
+        border-radius: 0;
+        width: 100%;
+    }
+
+    .footer .container {
+        flex-direction: column;
     }
 }

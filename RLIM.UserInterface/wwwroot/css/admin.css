@@ -1,15 +1,85 @@
-﻿.table {
+﻿.content {
+    border-radius: 5px;
+    margin: 10px;
+    margin-left: 260px;
     margin-bottom: 0;
 }
 
-.table td, .table th, .table thead th {
-    border-color: black;
+    .content .background-container {
+        top: -10px;
+        height: calc(100% + 10px)
+    }
+
+.background-transparent-white {
+    width: 100%;
 }
+
+.main-items, .attributes {
+    padding: 10px;
+}
+
+.main-items {
+    min-width: 1000px;
+}
+
+.attributes {
+    min-width: 450px;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+    .table td, .table th, .table thead th {
+        border-color: black;
+        word-break: break-word;
+    }
+
+    .table.main-items td {
+        min-width: 0;
+        max-width: 200px;
+    }
+
+td.main-item-actions {
+    width: 365px;
+}
+
+.main-item-attributes, .sub-item-attributes {
+    width: 450px;
+}
+
+    .main-item-attributes tr td:last-child, .sub-item-attributes tr td:last-child {
+        width: 205px;
+    }
 
 .form-container {
     padding-bottom: 20px;
 }
 
-.background-transparent-white {
-    border-radius: 0;
+@media only screen and (max-width: 1024px) {
+    .content {
+        margin-top: 84px;
+        margin-left: 10px;
+    }
+
+        .content .background-container {
+            left: -10px;
+            width: calc(100% + 10px);
+        }
+}
+
+@media only screen and (max-width: 450px) {
+    body {
+        margin-bottom: 100px;
+    }
+
+    .content {
+        border-radius: 0;
+        margin: 0;
+        margin-top: 84px;
+    }
+
+    .content div {
+        border-radius: 0;
+    }
 }

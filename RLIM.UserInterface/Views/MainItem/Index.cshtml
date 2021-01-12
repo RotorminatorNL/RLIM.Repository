@@ -6,7 +6,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<table class="table">
+<table class="table main-items">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
@@ -24,14 +24,14 @@
             <td></td>
             <td><a asp-controller="MainItem" asp-action="Create" class="btn btn-primary">New Main-Item</a></td>
         </tr>
-       @foreach (var item in Model)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.CategoryDisplay)</td>
                 <td>@Html.DisplayFor(modelItem => item.PlatformDisplay)</td>
                 <td>@Html.DisplayFor(modelItem => item.QualityDisplay)</td>
-                <td>
+                <td class="main-item-actions">
                     <a href="/@item.Name/@item.ID/Sub-Items" class="btn btn-primary">See Sub-Items</a>
                     <a href="/Main-Item/@item.ID/Update" class="btn btn-warning">Update</a>
                     <a href="/Main-Item/@item.ID/Delete" class="btn btn-danger">Delete</a>

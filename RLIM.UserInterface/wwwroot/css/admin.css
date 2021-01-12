@@ -23,7 +23,7 @@
 }
 
 .attributes {
-    min-width: 450px;
+    min-width: 550px;
 }
 
 .table {
@@ -45,7 +45,7 @@ td.main-item-actions {
 }
 
 .main-item-attributes, .sub-item-attributes {
-    width: 450px;
+    width: 550px;
 }
 
     .main-item-attributes tr td:last-child, .sub-item-attributes tr td:last-child {
@@ -69,10 +69,6 @@ td.main-item-actions {
 }
 
 @media only screen and (max-width: 450px) {
-    body {
-        margin-bottom: 100px;
-    }
-
     .content {
         border-radius: 0;
         margin: 0;

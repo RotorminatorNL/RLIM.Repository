@@ -11,10 +11,20 @@ function ShowSubItems(event, element) {
     CloseAllMainItemContainers(mainItemContainer.id);
 
     if (subItemContainer.classList.contains("hide")) {
-        OpenMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer);
+        if (event.view.screen.width > 1024) {
+            FancyOpenMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer);
+        } else {
+            NormalOpenMainItemContainer(subItemContainer, mainItemContainer);
+        }
     } else {
-        if (!ClickedOnSubItem(event.path)) {
-            CloseMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer);
+        if (event.view.screen.width > 1024) {
+            if (!ClickedOnSubItem(event.path)) {
+                FancyCloseMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer);
+            }
+        } else {
+            if (!ClickedOnSubItem(event.path)) {
+                NormalCloseMainItemContainer(subItemContainer, mainItemContainer);
+            }
         }
     }
 }
@@ -40,7 +50,8 @@ function CloseAllMainItemContainers(mainItemContainerID) {
     }
 }
 
-function CloseMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer) {
+// Big screen
+function FancyCloseMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer) {
     subItemContainer.classList.remove("show");
     subItemContainer.classList.add("hide");
     mainItemsContainer.style.flexDirection = "column";
@@ -52,7 +63,15 @@ function CloseMainItemContainer(subItemContainer, mainItemsContainer, mainItemCo
     }, 500);
 }
 
-function OpenMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer) {
+// Small screen
+function NormalCloseMainItemContainer(subItemContainer, mainItemContainer) {
+    subItemContainer.classList.add("hide");
+    mainItemContainer.classList.remove("sub-items-visible");
+    subItemContainer.classList.remove("show");
+}
+
+// Big screen
+function FancyOpenMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer) {
     mainItemContainer.classList.add("sub-items-visible");
     mainItemsContainer.style.flexDirection = "column";
 
@@ -65,4 +84,11 @@ function OpenMainItemContainer(subItemContainer, mainItemsContainer, mainItemCon
 
         mainItemContainer.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     }, 500);
+}
+
+// Small screen
+function NormalOpenMainItemContainer(subItemContainer, mainItemContainer) {
+    subItemContainer.classList.remove("hide");
+    mainItemContainer.classList.add("sub-items-visible");
+    subItemContainer.classList.add("show");
 }

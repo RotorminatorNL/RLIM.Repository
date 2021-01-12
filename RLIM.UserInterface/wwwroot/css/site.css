@@ -101,6 +101,16 @@ h1, h2, h3 {
                 background-color: rgb(13,178,255);
             }
 
+    .side-menu .menu-icon {
+        display: none;
+        content: url(/img/menu-icon-white.svg);
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        height: 30px;
+        width: 30px;
+    }
+
 .signed-as-container {
     position: absolute;
     display: flex;
@@ -294,26 +304,30 @@ form.subitem-form .inputfields div > * {
         width: 100vw;
     }
 
-        .side-menu:before {
-            content: url(/img/menu-icon-white.svg);
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            height: 30px;
-            width: 30px;
+        .side-menu .menu-items {
+            display: none;
+            width: calc(100% - 20px);
         }
 
         .side-menu.open {
             height: 100vh;
         }
 
+            .side-menu.open .menu-items {
+                display: flex;
+            }
+
             .side-menu.open .signed-as-container {
                 display: flex;
             }
 
-        .signed-as-container {
-            display: none;
+        .side-menu .menu-icon {
+            display: block;
         }
+
+    .signed-as-container {
+        display: none;
+    }
 
     .content {
         margin-left: 0;
@@ -347,7 +361,7 @@ form.subitem-form .inputfields div > * {
 
     body {
         font-size: 16px;
-        margin-bottom: 115px;
+        margin-bottom: 100px;
     }
 
     .content .choose-role {

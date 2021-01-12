@@ -1,4 +1,9 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function OpenMenu() {
+    let menuElement = document.getElementsByClassName("side-menu")[0];
 
-// Write your JavaScript code.
+    if (menuElement.classList.contains("open")) {
+        menuElement.classList.remove("open");
+    } else {
+        menuElement.classList.add("open");
+    }
+}

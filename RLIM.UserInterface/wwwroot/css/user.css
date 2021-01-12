@@ -7,7 +7,6 @@
 }
 
 .main-item, .sub-item {
-    background-color: #000;
     border-radius: 5.5px;
     box-shadow: rgba(0,0,0,.5) 0px 7px 15px 0px;
     color: #fff;
@@ -15,6 +14,10 @@
     margin: 10px;
     transition: all 500ms;
 }
+
+    .main-item .info, .sub-item .info {
+        background-color: #000;
+    }
 
 .main-item {
     width: 100%;
@@ -68,9 +71,9 @@
 
 .sub-item-container {
     display: none;
+    cursor: auto;
     flex-direction: row;
     align-items: center;
-
     background-color: white;
     border-radius: 0 0 5px 5px;
     border-top: solid 5px rgb(13,178,255);
@@ -78,28 +81,44 @@
     transition: all 500ms;
 }
 
-    .sub-item-container.show {
-        display: flex;
-    }
-
-.sub-item {
-    cursor: default;
+.sub-item-container.show {
+    display: flex;
 }
 
-    .sub-item:hover {
-        transform: scale(1.02);
+.sub-item:hover {
+    transform: scale(1.02);
+}
+
+.sub-item.collected {
+    position: relative;
+    border: solid 3px rgb(0,230,118);
+    box-shadow: rgba(0,230,118,.5) 0px 7px 15px 0px;
+}
+
+    .sub-item.collected:before {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        content: url(/img/check-icon.svg);
+        height: 50px;
+        width: 50px;
     }
 
-    .sub-item .img-container {
-        height: 150px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+    .sub-item.collected .info {
+        border-radius: 0 0 3px 3px;
+        border-top-color: rgb(0,230,118);
     }
 
-    .sub-item .info {
-        height: 100px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
+.sub-item .img-container {
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sub-item .info {
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

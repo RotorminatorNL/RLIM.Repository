@@ -18,7 +18,7 @@ function ShowSubItems(event, element) {
         }
     } else {
         if (event.view.screen.width > 1024) {
-            if (!ClickedOnSubItem(event.path)) {
+            if (!ClickedOnSubItemContainer(event.path)) {
                 FancyCloseMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer);
             }
         } else {
@@ -29,9 +29,9 @@ function ShowSubItems(event, element) {
     }
 }
 
-function ClickedOnSubItem(path) {
+function ClickedOnSubItemContainer(path) {
     for (var i = 0; i < path.length; i++) {
-        if (path[i].className == "sub-item") {
+        if (path[i].id == "SubItems") {
             return true;
         }
     }
@@ -91,4 +91,8 @@ function NormalOpenMainItemContainer(subItemContainer, mainItemContainer) {
     subItemContainer.classList.remove("hide");
     mainItemContainer.classList.add("sub-items-visible");
     subItemContainer.classList.add("show");
+}
+
+function ChangeStatus() {
+    alert("xd");
 }

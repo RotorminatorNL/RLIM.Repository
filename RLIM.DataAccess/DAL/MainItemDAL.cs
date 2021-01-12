@@ -42,7 +42,7 @@ namespace RLIM.DataAccess
 
         public MainItemDTO Get(int id)
         {
-            MainItemDTO mainItemDTO = new MainItemDTO { ID = 0, Name = "No Main-Item" };
+            MainItemDTO mainItemDTO = new MainItemDTO();
 
             using SqlConnection conn = Db.Connect();
 

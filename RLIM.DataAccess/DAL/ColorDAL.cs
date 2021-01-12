@@ -41,7 +41,7 @@ namespace RLIM.DataAccess
 
         public ColorDTO Get(int id)
         {
-            ColorDTO colorDTO = new ColorDTO { ID = 0, Name = "Default" };
+            ColorDTO colorDTO = new ColorDTO();
 
             using SqlConnection conn = Db.Connect();
 

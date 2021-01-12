@@ -59,7 +59,7 @@ namespace RLIM.BusinessLogic
 
         public IMessageToAdmin Delete(int id)
         {
-            if(!SubItemFactoryDAL.GetCollectionDAL().DeleteAllWithMainItemID(id) || !MainItemFactoryDAL.GetCollectionDAL().Delete(id))
+            if(!MainItemFactoryDAL.GetCollectionDAL().Delete(id))
             {
                 return new Error("Main-Item", "Delete");
             }

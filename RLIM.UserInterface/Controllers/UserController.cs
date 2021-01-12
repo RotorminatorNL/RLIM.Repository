@@ -40,7 +40,8 @@ namespace RLIM.UserInterface.Controllers
                 {
                     ID = subItem.ID,
                     CertificateDisplay = GetCertificateModel(subItem.CertificateID).Display,
-                    ColorDisplay = GetColorModel(subItem.ColorID).Display
+                    ColorDisplay = GetColorModel(subItem.ColorID).Display,
+                    InCollection = IsInCollection(subItem.ID)
                 });
             }
 
@@ -123,6 +124,21 @@ namespace RLIM.UserInterface.Controllers
             }
 
             return mainItemModels;
+        }
+
+        private bool IsInCollection(int id)
+        {
+            User user = new UserCollection().Get();
+
+            foreach (int subItemID in user.SubItemsInventory)
+            {
+                if (subItemID == id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         [Route("[controller]/[action]/{categoryName}")]

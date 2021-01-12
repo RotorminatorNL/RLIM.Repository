@@ -12,6 +12,5 @@ namespace RLIM.ContractLayer
         List<SubItemDTO> GetAll();
         List<SubItemDTO> GetAllWithMainItemID(int mainItemID);
         bool Delete(int id);
-        bool DeleteAllWithMainItemID(int mainItemID);
     }
 }

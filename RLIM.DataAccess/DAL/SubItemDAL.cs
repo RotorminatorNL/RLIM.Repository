@@ -42,7 +42,7 @@ namespace RLIM.DataAccess
 
         public SubItemDTO Get(int id)
         {
-            SubItemDTO subItemDTO = new SubItemDTO { ID = 0 };
+            SubItemDTO subItemDTO = new SubItemDTO();
 
             using SqlConnection conn = Db.Connect();
 
@@ -260,35 +260,6 @@ namespace RLIM.DataAccess
             }
 
             return isDeleted;
-        }
-
-        public bool DeleteAllWithMainItemID(int maintItemID)
-        {
-            bool areAllDeleted = false;
-
-            using SqlConnection conn = Db.Connect();
-
-            try
-            {
-                string sql = "DELETE dbo.SubItem ";
-                sql += "WHERE MainItemID = @id";
-                using SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = maintItemID;
-
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                areAllDeleted = true;
-            }
-            catch (SqlException exception)
-            {
-                Console.WriteLine(exception);
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            return areAllDeleted;
         }
     }
 }

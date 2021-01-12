@@ -29,7 +29,7 @@
             <div class="row justify-content-around sub-item-container hide" id="SubItems">
                 @foreach (SubItemModel subItem in mainItem.SubItemModels)
                 {
-                    <div class="sub-item">
+                    <div class="sub-item @(subItem.InCollection == true ? "collected" : "")" onclick="ChangeStatus()">
                         <div class="row justify-content-center img-container">
                             <img alt="Image for sub-item" src="~/img/rocket-league-logo.svg" />
                         </div>

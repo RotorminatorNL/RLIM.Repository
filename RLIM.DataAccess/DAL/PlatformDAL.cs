@@ -39,7 +39,7 @@ namespace RLIM.DataAccess
 
         public PlatformDTO Get(int id)
         {
-            PlatformDTO platformDTO = new PlatformDTO { ID = 0, Name = "No Platform" };
+            PlatformDTO platformDTO = new PlatformDTO();
 
             using SqlConnection conn = Db.Connect();
 

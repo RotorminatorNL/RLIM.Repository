@@ -2,8 +2,8 @@
 {
     public class CertificateDTO
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int Tier { get; set; }
+        public int ID { get; set; } = 0;
+        public string Name { get; set; } = "No Certificate";
+        public int Tier { get; set; } = 0;
     }
 }

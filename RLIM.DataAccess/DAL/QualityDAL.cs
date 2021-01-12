@@ -40,7 +40,7 @@ namespace RLIM.DataAccess
 
         public QualityDTO Get(int id)
         {
-            QualityDTO qualityDTO = new QualityDTO { ID = 0, Name = "No Quality" };
+            QualityDTO qualityDTO = new QualityDTO();
 
             using SqlConnection conn = Db.Connect();
 

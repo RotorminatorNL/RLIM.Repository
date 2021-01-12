@@ -6,8 +6,8 @@ namespace RLIM.ContractLayer
 {
     public class QualityDTO
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int Rank { get; set; }
+        public int ID { get; set; } = 0;
+        public string Name { get; set; } = "No Quality";
+        public int Rank { get; set; } = 0;
     }
 }

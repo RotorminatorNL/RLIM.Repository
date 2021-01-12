@@ -6,9 +6,9 @@ namespace RLIM.ContractLayer
 {
     public class SubItemDTO
     {
-        public int ID { get; set; }
-        public int MainItemID { get; set; }
-        public int CertificateID { get; set; }
-        public int ColorID { get; set; }
+        public int ID { get; set; } = 0;
+        public int MainItemID { get; set; } = 0;
+        public int CertificateID { get; set; } = 0;
+        public int ColorID { get; set; } = 0;
     }
 }

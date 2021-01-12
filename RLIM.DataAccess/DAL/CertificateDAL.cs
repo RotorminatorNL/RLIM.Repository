@@ -40,7 +40,7 @@ namespace RLIM.DataAccess
 
         public CertificateDTO Get(int id)
         {
-            CertificateDTO certificateDTO = new CertificateDTO { ID = 0, Name = "No Certificate" };
+            CertificateDTO certificateDTO = new CertificateDTO();
 
             using SqlConnection conn = Db.Connect();
 

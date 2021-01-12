@@ -39,7 +39,7 @@ namespace RLIM.DataAccess
 
         public CategoryDTO Get(int id)
         {
-            CategoryDTO categoryDTO = new CategoryDTO { ID = 0, Name = "No Category" };
+            CategoryDTO categoryDTO = new CategoryDTO();
 
             using SqlConnection conn = Db.Connect();
 

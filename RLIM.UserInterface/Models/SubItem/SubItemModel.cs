@@ -20,5 +20,7 @@ namespace RLIM.UserInterface.Models
         public int ColorID { get; set; }
         [Display(Name = "Color")]
         public string ColorDisplay { get; set; }
+
+        public bool InCollection { get; set; } = false;
     }
 }

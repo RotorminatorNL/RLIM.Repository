@@ -26,7 +26,6 @@
 
             <div class="signed-as-container">
                 <span>Logged in as User</span>
-                <a class="nav-link @(ViewBag.SelectedCategory == "Inventory" ? "active" : "")" asp-controller="User" asp-action="Show" asp-route-categoryName="Inventory">Inventory</a>
                 <a class="nav-link" asp-controller="Home" asp-action="Index">Log out</a>
             </div>
         </div>

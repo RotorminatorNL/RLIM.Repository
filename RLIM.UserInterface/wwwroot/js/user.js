@@ -93,6 +93,32 @@ function NormalOpenMainItemContainer(subItemContainer, mainItemContainer) {
     subItemContainer.classList.add("show");
 }
 
-function ChangeStatus() {
-    alert("xd");
+function ChangeStatus(subItemID, element) {
+    let subItemClassList = element.classList;
+
+    if (!subItemClassList.contains("collected")) {
+        $.ajax({
+            type: "POST",
+            url: `/User/AddToInventory/${subItemID}`,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                subItemClassList.add("collected");
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: `/User/RemoveFromInventory/${subItemID}`,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                subItemClassList.remove("collected");
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
 }

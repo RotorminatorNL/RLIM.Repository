@@ -161,5 +161,25 @@ namespace RLIM.UserInterface.Controllers
 
             return View();
         }
+
+        [HttpPost("/[controller]/[action]/{id}")]
+        public bool AddToInventory(int id)
+        {
+            UserCollection userCollection = new UserCollection();
+            User user = userCollection.Get();
+            user.SetSubItemID(id);
+
+            return user.AddSubItemToInventory();
+        }
+
+        [HttpPost("/[controller]/[action]/{id}")]
+        public bool RemoveFromInventory(int id)
+        {
+            UserCollection userCollection = new UserCollection();
+            User user = userCollection.Get();
+            user.SetSubItemID(id);
+
+            return user.RemoveSubItemFromInventory();
+        }
     }
 }

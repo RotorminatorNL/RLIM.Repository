@@ -22,7 +22,7 @@ function ShowSubItems(event, element) {
                 FancyCloseMainItemContainer(subItemContainer, mainItemsContainer, mainItemContainer);
             }
         } else {
-            if (!ClickedOnSubItem(event.path)) {
+            if (!ClickedOnSubItemContainer(event.path)) {
                 NormalCloseMainItemContainer(subItemContainer, mainItemContainer);
             }
         }

@@ -68,11 +68,21 @@ h1, h2, h3 {
             font-weight: 500;
         }
 
+    .side-menu .signed-as-container a.active {
+        border-bottom-color: rgb(245,130,32);
+    }
 
     .side-menu .app-name {
         font-size: 26px;
         margin: 0 auto;
         width: fit-content;
+    }
+
+    .side-menu .menu-items-title {
+        color: white;
+        font-size: 20px;
+        font-weight: 400;
+        margin: 10px 0;
     }
 
     .side-menu .menu-items {
@@ -84,7 +94,7 @@ h1, h2, h3 {
         overflow: auto;
         scrollbar-width: thin;
         scrollbar-color: rgb(13,178,255) rgba(13,178,255,.5);
-        margin-bottom: 100px;
+        margin-bottom: 175px;
         width: 200px;
     }
 
